@@ -1,0 +1,130 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+h1 {
+    font-size: 1.6em;
+    text-align: center;
+}
+
+p {
+    margin: 0;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+}
+
+.game {
+    position: relative;
+    width: 100%;
+    min-width: 320px;
+    max-width: 412px;
+    padding: 16px;
+    margin: 0 auto;
+}
+
+.game-result {
+    overflow: hidden;
+    text-align: center;
+}
+
+.game-result__text {
+    padding: 8px 0;
+    font-size: 20px;
+}
+
+.game-result__button {
+    float: right;
+    padding: 8px;
+}
+
+.board {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+.guess-panel {
+    display: flex;
+    flex: auto;
+    justify-content: center;
+    margin-right: 16px;
+}
+
+.ball {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    position: relative;
+    box-shadow: inset -10px -10px 20px rgba(0,0,0,0.2);
+    &:last-child {
+        margin-right: 0;
+    }
+    &:before {
+        content: "";
+        position: absolute;
+        top: 4%;
+        left: 4%;
+        width: 116%;
+        height: 116%;
+        background-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.25) 50%, transparent 70%);
+        z-index: -1;
+    }
+    &:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 5%;
+        left: 10%;
+        border-radius: 50%;
+        background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0) 40%);
+        transform: translateX(-25%) translateY(-25%) skewX(-30deg);
+        -webkit-filter: blur(8px);
+        filter: blur(8px);
+    }
+    &.active {
+        cursor: pointer;
+    }
+}
+
+.result-panel {
+    display: flex;
+    flex-wrap: wrap;
+    width: 40px;
+    padding: 2px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.key {
+    margin: 2px 4px;
+    border: 1px solid;
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 50%;
+    box-sizing: border-box;
+    &.bull {
+        background-color: black;
+    }
+    &.cow {
+        background-color: white;
+    }
+}
