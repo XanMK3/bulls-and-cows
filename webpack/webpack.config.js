@@ -39,10 +39,10 @@ module.exports = {
             lang: "en-US",
             display: "fullscreen",
             orientation: "portrait",
+            start_url: './',
             background_color: '#f0f0f0',
             theme_color: "#f0f0f0",
             'theme-color': '#f0f0f0',
-            start_url: '/',
             icons: [
                 {
                     src: path.resolve('src/assets/icons/icon.png'),

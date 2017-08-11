@@ -10,7 +10,7 @@ ReactDOM.render(<App />, document.querySelector('.root'));
 
 (function () {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./service-worker.js', { scope: '/' })
+        navigator.serviceWorker.register('./service-worker.js')
             .then(() => console.info('Service Worker registered successfully.'))
             .catch(error => console.error('Service Worker registration failed:', error));
     }
