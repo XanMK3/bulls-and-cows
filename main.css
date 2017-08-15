@@ -6,8 +6,11 @@ body {
   font-family: Helvetica, Arial, sans-serif; }
 
 h1 {
-  font-size: 1.6em;
-  text-align: center; }
+  margin: 0;
+  font-size: 1rem;
+  line-height: 2em;
+  text-align: center;
+  background-color: whitesmoke; }
 
 p {
   margin: 0; }
@@ -17,7 +20,7 @@ button {
   justify-content: center;
   align-items: center;
   background-color: transparent;
-  border-radius: 8px;
+  border-radius: 0.5em;
   cursor: pointer;
   outline: none; }
 
@@ -26,37 +29,35 @@ button {
   width: 100%;
   min-width: 320px;
   max-width: 412px;
-  padding: 16px;
+  padding: 0 1em;
   margin: 0 auto; }
 
 .game-result {
-  overflow: hidden;
   text-align: center; }
 
 .game-result__text {
-  padding: 8px 0;
-  font-size: 20px; }
-
-.game-result__button {
-  float: right;
-  padding: 8px; }
+  padding: 0.5em 0;
+  font-size: 1rem; }
 
 .board {
   display: flex;
   justify-content: space-between;
-  padding: 8px 0; }
+  padding: 0.5em 0; }
 
 .guess-panel {
   display: flex;
   flex: auto;
   justify-content: center;
-  margin-right: 16px; }
+  margin-right: 1em; }
+
+.guess-panel__btn {
+  width: 40px; }
 
 .ball {
   display: inline-block;
   width: 40px;
   height: 40px;
-  margin-right: 8px;
+  margin-right: 0.5em;
   border-radius: 50%;
   box-sizing: border-box;
   -webkit-user-select: none;
@@ -92,8 +93,8 @@ button {
   display: flex;
   flex-wrap: wrap;
   width: 40px;
-  padding: 2px;
-  justify-content: space-between;
+  padding: 2px 0;
+  justify-content: space-around;
   align-items: center; }
 
 .key {
@@ -108,3 +109,17 @@ button {
     background-color: black; }
   .key.cow {
     background-color: white; }
+  .key:nth-child(3n):not(:nth-last-child(2)) {
+    margin-left: calc((100% - 8px)/2);
+    margin-right: calc((100% - 8px)/2); }
+
+.btn-block {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5em 0; }
+
+.btn-block__button {
+  padding: 0.5em;
+  margin-right: 0.5em; }
+  .btn-block__button:last-child {
+    margin-right: 0; }

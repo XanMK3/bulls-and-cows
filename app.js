@@ -23648,7 +23648,7 @@ function Board(props) {
         ),
         props.readOnly ? _react2.default.createElement(_result2.default, props.result) : _react2.default.createElement(
             'button',
-            { type: 'button', onClick: props.onSubmit },
+            { className: 'guess-panel__btn', type: 'button', onClick: props.onSubmit },
             _react2.default.createElement(
                 'svg',
                 { xmlns: 'http://www.w3.org/2000/svg', width: '24', height: '24', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
@@ -23764,11 +23764,22 @@ var Game = function (_Component) {
                             'Congratulations, You win!'
                         ),
                         _react2.default.createElement(
-                            'button',
-                            { className: 'game-result__button', onClick: function onClick(e) {
-                                    onReset();
-                                } },
-                            'Play Again'
+                            'div',
+                            { className: 'btn-block' },
+                            _react2.default.createElement(
+                                'button',
+                                { className: 'btn-block__button', onClick: function onClick(e) {
+                                        onReset(4);
+                                    } },
+                                'New game (easy)'
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { className: 'btn-block__button', onClick: function onClick(e) {
+                                        onReset(5);
+                                    } },
+                                'New game (hard)'
+                            )
                         )
                     );
                 case GAME_STATUS.LOSING:
@@ -23783,20 +23794,23 @@ var Game = function (_Component) {
                         ),
                         _react2.default.createElement(_board2.default, { colors: secret, readOnly: true }),
                         _react2.default.createElement(
-                            'button',
-                            { className: 'game-result__button', onClick: function onClick(e) {
-                                    onReset();
-                                } },
-                            'Play Again'
+                            'div',
+                            { className: 'btn-block' },
+                            _react2.default.createElement(
+                                'button',
+                                { className: 'btn-block__button', onClick: function onClick(e) {
+                                        onReset(4);
+                                    } },
+                                'New game (easy)'
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { className: 'btn-block__button', onClick: function onClick(e) {
+                                        onReset(5);
+                                    } },
+                                'New game (hard)'
+                            )
                         )
-                    );
-                default:
-                    return _react2.default.createElement(
-                        'button',
-                        { className: 'game-result__button', onClick: function onClick(e) {
-                                onReset();
-                            } },
-                        'Play Again'
                     );
             }
         }
@@ -23815,7 +23829,6 @@ var Game = function (_Component) {
                     null,
                     'Bulls & Cows'
                 ),
-                _react2.default.createElement('hr', null),
                 history.map(function (entry, i) {
                     return _react2.default.createElement(_board2.default, { key: i, colors: entry.colors, result: entry.result, readOnly: true });
                 }),
@@ -23910,7 +23923,7 @@ var GameManager = function (_Component) {
         value: function startNewGame() {
             var max = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_HOLES_NUMBER;
 
-            this.setState({ gameId: getUniqueId(), secret: getSecret(max), attemptsNumber: max * 2 });
+            this.setState({ gameId: getUniqueId(), secret: getSecret(max), attemptsNumber: (2 * max - DEFAULT_HOLES_NUMBER) * 2 });
         }
     }, {
         key: 'render',
