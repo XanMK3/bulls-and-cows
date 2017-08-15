@@ -55,17 +55,19 @@ class Game extends Component {
                 return (<div className='game-result'>
                     <hr />
                     <p className='game-result__text'>Congratulations, You win!</p>
-                    <button className='game-result__button' onClick={e => { onReset() }}>Play Again</button>
+                    <div className='btn-block'>
+                        <button className='btn-block__button' onClick={e => { onReset() }}>New game</button>
+                    </div>
                 </div>)
             case GAME_STATUS.LOSING:
                 return (<div className='game-result'>
                     <hr />
                     <p className='game-result__text'>You lose! Secret is:</p>
                     <Board colors={secret} readOnly={true} />
-                    <button className='game-result__button' onClick={e => { onReset() }}>Play Again</button>
+                    <div className='btn-block'>
+                        <button className='btn-block__button' onClick={e => { onReset() }}>New game</button>
+                    </div>
                 </div>)
-            default:
-                return <button className='game-result__button' onClick={e => { onReset() }}>Play Again</button>
         }
     }
 
@@ -76,7 +78,6 @@ class Game extends Component {
         return (
             <div className='game'>
                 <h1>Bulls & Cows</h1>
-                <hr />
                 {history.map((entry, i) => <Board key={i} colors={entry.colors} result={entry.result} readOnly={true} />)}
                 {this.renderLastLine()}
             </div>
