@@ -21,7 +21,7 @@ class GameManager extends Component {
     }
 
     startNewGame(max = DEFAULT_HOLES_NUMBER) {
-        this.setState({ gameId: getUniqueId(), secret: getSecret(max), attemptsNumber: max * 2, });
+        this.setState({ gameId: getUniqueId(), secret: getSecret(max), attemptsNumber: (2 * max - DEFAULT_HOLES_NUMBER) * 2, });
     }
 
     render() {

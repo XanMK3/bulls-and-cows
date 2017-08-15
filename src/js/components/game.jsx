@@ -56,7 +56,8 @@ class Game extends Component {
                     <hr />
                     <p className='game-result__text'>Congratulations, You win!</p>
                     <div className='btn-block'>
-                        <button className='btn-block__button' onClick={e => { onReset() }}>New game</button>
+                        <button className='btn-block__button' onClick={e => { onReset(4) }}>New game (easy)</button>
+                        <button className='btn-block__button' onClick={e => { onReset(5) }}>New game (hard)</button>
                     </div>
                 </div>)
             case GAME_STATUS.LOSING:
@@ -65,7 +66,8 @@ class Game extends Component {
                     <p className='game-result__text'>You lose! Secret is:</p>
                     <Board colors={secret} readOnly={true} />
                     <div className='btn-block'>
-                        <button className='btn-block__button' onClick={e => { onReset() }}>New game</button>
+                        <button className='btn-block__button' onClick={e => { onReset(4) }}>New game (easy)</button>
+                        <button className='btn-block__button' onClick={e => { onReset(5) }}>New game (hard)</button>
                     </div>
                 </div>)
         }
