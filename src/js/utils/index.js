@@ -30,8 +30,8 @@ export function countMatchElements(array, target) {
     const sortedArray = array.slice().sort((a, b) => a > b).reduce((obj, v) =>
         (obj[v] > 0 ? obj[v]++ : obj[v] = 1, obj), {})
 
-    const looseMath = Object.keys(sortedTarget).reduce((matchNumber, key) =>
+    const looseMatch = Object.keys(sortedTarget).reduce((matchNumber, key) =>
         matchNumber += Math.min(sortedTarget[key], sortedArray[key] || 0), 0) - exactMatch;
 
-    return { exactMatch, looseMath };
+    return { exactMatch, looseMatch };
 }
