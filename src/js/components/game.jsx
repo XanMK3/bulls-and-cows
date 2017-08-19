@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 import Board from './board';
 
+import { countMatchElements } from 'js/utils';
+
 const GAME_STATUS = {
     PROGRESS: 'progress',
     WIN: 'win',
@@ -30,9 +32,9 @@ class Game extends Component {
     }
 
     submit() {
-        const result = checkResult(this.state.currentTry, this.props.secret);
+        const result = countMatchElements(this.state.currentTry, this.props.secret);
 
-        if (result.bulls == this.props.secret.length) {
+        if (result.exactMatch == this.props.secret.length) {
             this.setState({ status: GAME_STATUS.WIN });
         }
         else if (this.state.history.length + 1 == this.props.attemptsNumber) {
@@ -85,21 +87,6 @@ class Game extends Component {
             </div>
         )
     }
-}
-
-function checkResult(target, secret) {
-    const bulls = secret.reduce((sum, v, i) => v === target[i] ? ++sum : sum, 0);
-
-    const sortedSecret = secret.slice().sort((a, b) => a > b).reduce((obj, v) => 
-                         (obj[v] > 0 ? obj[v]++ : obj[v] = 1, obj), {})
-
-    const sortedTarget = target.slice().sort((a, b) => a > b).reduce((obj, v) => 
-                         (obj[v] > 0 ? obj[v]++ : obj[v] = 1, obj), {})
-
-    const cows = Object.keys(sortedSecret).reduce((matchNumber, key) => 
-                 matchNumber += Math.min(sortedSecret[key], sortedTarget[key] || 0), 0) - bulls;
-
-    return { bulls, cows };
 }
 
 export default Game;

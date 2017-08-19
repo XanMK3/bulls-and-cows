@@ -3,17 +3,17 @@
 import React, { Component } from 'react';
 import Game from './game';
 
-const DEFAULT_HOLES_NUMBER = 4;
+import { getId, getRandomArray } from 'js/utils';
 
-let _id = 0;
+const DEFAULT_HOLES_NUMBER = 4;
 
 class GameManager extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            gameId: getUniqueId(),
-            secret: getSecret(DEFAULT_HOLES_NUMBER),
+            gameId: getId(),
+            secret: getRandomArray(DEFAULT_HOLES_NUMBER),
             attemptsNumber: DEFAULT_HOLES_NUMBER * 2,
         }
 
@@ -21,7 +21,7 @@ class GameManager extends Component {
     }
 
     startNewGame(max = DEFAULT_HOLES_NUMBER) {
-        this.setState({ gameId: getUniqueId(), secret: getSecret(max), attemptsNumber: (2 * max - DEFAULT_HOLES_NUMBER) * 2, });
+        this.setState({ gameId: getId(), secret: getRandomArray(max), attemptsNumber: (2 * max - DEFAULT_HOLES_NUMBER) * 2, });
     }
 
     render() {
@@ -30,18 +30,6 @@ class GameManager extends Component {
                      attemptsNumber={this.state.attemptsNumber}
                      onReset={this.startNewGame} />
     }
-}
-
-function getSecret(max) {
-    return Array.apply(null, { length: max }).map(() => getRandomInt(0, max - 1));
-}
-
-function getUniqueId() {
-    return _id++;
-}
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 export default GameManager;

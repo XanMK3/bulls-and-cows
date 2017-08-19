@@ -21,7 +21,7 @@ module.exports = {
         publicPath: '',
     },
     resolve: {
-        modules: ["node_modules"],
+        modules: ["node_modules", srcPath],
         extensions: [".js", ".json", ".jsx", ".css", ".scss"],
     },
     plugins: [
