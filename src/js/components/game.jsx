@@ -81,9 +81,11 @@ class Game extends Component {
 
         return (
             <div className='game'>
-                <h1>Bulls & Cows</h1>
-                {history.map((entry, i) => <Board key={i} colors={entry.colors} result={entry.result} readOnly={true} />)}
-                {this.renderLastLine()}
+                <header><h1>Bulls & Cows</h1></header>
+                <main>
+                    {history.map((entry, i) => <Board key={i} colors={entry.colors} result={entry.result} readOnly={true} />)}
+                    {this.renderLastLine()}
+                </main>
             </div>
         )
     }
