@@ -1,5 +1,6 @@
 $width: 412px;
-$minPadding: 16px;
+$padding: 16px;
+$headerHeight: 32px;
 
 * {
     box-sizing: border-box;
@@ -11,26 +12,28 @@ body {
 }
 
 header {
-    padding: 0 $minPadding;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    height: $headerHeight;
+    padding: 0 $padding;
     @media only screen and (min-width: $width) {
-        padding: 0 calc(50% - #{$width}/2 + #{$minPadding});
+        padding: 0 calc(50% - #{$width}/2 + #{$padding});
     }
     background-color: whitesmoke;
-
 }
 
 main {
-    padding: 0 $minPadding;
+    padding: 0 $padding;
     @media only screen and (min-width: $width) {
-        padding: 0 calc(50% - #{$width}/2 + #{$minPadding});
+        padding: 0 calc(50% - #{$width}/2 + #{$padding});
     }
-}
-
-h1 {
-    margin: 0;
-    font-size: 1rem;
-    line-height: 2em;
-    text-align: center;
+    margin-top: $headerHeight;
 }
 
 p {
@@ -49,6 +52,12 @@ button {
 
 .game {
     position: relative;
+}
+
+.game-stats {
+    display: flex;
+    align-items: center;
+    font-size: 0.75em;
 }
 
 .game-result {
@@ -159,4 +168,9 @@ button {
     &:last-child {
         margin-right: 0;
     }
+}
+
+.icon {
+    width: 40px;
+    border: none;
 }

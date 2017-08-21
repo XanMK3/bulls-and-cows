@@ -2,14 +2,11 @@
 
 import React, { Component } from 'react';
 import Board from './board';
+import Header from './header';
 
 import { countMatchElements } from 'js/utils';
 
-const GAME_STATUS = {
-    PROGRESS: 'progress',
-    WIN: 'win',
-    LOSING: 'losing',
-}
+import { GAME_STATUS } from 'js/const';
 
 class Game extends Component {
     constructor(props) {
@@ -38,7 +35,7 @@ class Game extends Component {
             this.setState({ status: GAME_STATUS.WIN });
         }
         else if (this.state.history.length + 1 == this.props.attemptsNumber) {
-            this.setState({ status: GAME_STATUS.LOSING });
+            this.setState({ status: GAME_STATUS.FAIL });
         }
 
         const history = this.state.history.slice();
@@ -58,18 +55,18 @@ class Game extends Component {
                     <hr />
                     <p className='game-result__text'>Congratulations, You win!</p>
                     <div className='btn-block'>
-                        <button className='btn-block__button' onClick={e => { onReset(4) }}>New game (easy)</button>
-                        <button className='btn-block__button' onClick={e => { onReset(5) }}>New game (hard)</button>
+                        <button type='button' className='btn-block__button' onClick={e => { onReset(4) }}>New game (easy)</button>
+                        <button type='button' className='btn-block__button' onClick={e => { onReset(5) }}>New game (hard)</button>
                     </div>
                 </div>)
-            case GAME_STATUS.LOSING:
+            case GAME_STATUS.FAIL:
                 return (<div className='game-result'>
                     <hr />
                     <p className='game-result__text'>You lose! Secret is:</p>
                     <Board colors={secret} readOnly={true} />
                     <div className='btn-block'>
-                        <button className='btn-block__button' onClick={e => { onReset(4) }}>New game (easy)</button>
-                        <button className='btn-block__button' onClick={e => { onReset(5) }}>New game (hard)</button>
+                        <button type='button' className='btn-block__button' onClick={e => { onReset(4) }}>New game (easy)</button>
+                        <button type='button' className='btn-block__button' onClick={e => { onReset(5) }}>New game (hard)</button>
                     </div>
                 </div>)
         }
@@ -77,11 +74,11 @@ class Game extends Component {
 
     render() {
         const { secret } = this.props;
-        const { history } = this.state;
+        const { history, status } = this.state;
 
         return (
             <div className='game'>
-                <header><h1>Bulls & Cows</h1></header>
+                <Header status={status} attemptsNumber={this.props.attemptsNumber} attempt={history.length} />
                 <main>
                     {history.map((entry, i) => <Board key={i} colors={entry.colors} result={entry.result} readOnly={true} />)}
                     {this.renderLastLine()}
