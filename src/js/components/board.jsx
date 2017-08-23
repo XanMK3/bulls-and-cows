@@ -3,9 +3,9 @@
 import React from 'react';
 import cn from 'classnames';
 
-import Result from './result'
+import Result from './result';
 
-const COLORS = ['red', 'yellow', 'green', 'blue', 'orange', 'aqua', 'violet'];
+import { COLORS } from 'js/const';
 
 function Board(props) {
     const balls = props.colors.map((n, i) =>
