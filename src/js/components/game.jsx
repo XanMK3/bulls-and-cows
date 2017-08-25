@@ -1,6 +1,9 @@
 ﻿'use strict';
 
 import React, { Component } from 'react';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
 import Board from './board';
 import Header from './header';
 
@@ -19,12 +22,19 @@ class Game extends Component {
         }
 
         this.change = this.change.bind(this);
+        this.swap = this.swap.bind(this);
         this.submit = this.submit.bind(this);
     }
 
     change(i) {
         const currentTry = this.state.currentTry.slice();
         currentTry[i] >= this.state.currentTry.length - 1 ? currentTry[i] = 0 : currentTry[i]++;
+        this.setState({ currentTry });
+    }
+
+    swap(i1, i2) {
+        const currentTry = this.state.currentTry.slice();
+        [currentTry[i1], currentTry[i2]] = [currentTry[i2], currentTry[i1]];
         this.setState({ currentTry });
     }
 
@@ -49,7 +59,7 @@ class Game extends Component {
 
         switch (status) {
             case GAME_STATUS.PROGRESS:
-                return <Board colors={currentTry} onChange={this.change} onSubmit={this.submit} />
+                return <Board colors={currentTry} onChange={this.change} onSwap={this.swap} onSubmit={this.submit} />
             case GAME_STATUS.WIN:
                 return (<div className='game-result'>
                     <hr />
@@ -88,4 +98,4 @@ class Game extends Component {
     }
 }
 
-export default Game;
+export default DragDropContext(HTML5Backend)(Game);

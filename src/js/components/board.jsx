@@ -9,7 +9,7 @@ function Board(props) {
     return (
         <div className='board'>
             <div className='guess-panel'>{props.colors.map((type, i) =>
-                <Ball key={i} index={i} type={type} readOnly={props.readOnly} onChange={props.onChange} />
+                <Ball key={i} index={i} type={type} readOnly={props.readOnly} onChange={props.onChange} onSwap={props.onSwap} />
             )}</div>
             {props.readOnly ? <Result {...props.result} /> :
             <button type='button' className='guess-panel__btn' onClick={props.onSubmit}>
