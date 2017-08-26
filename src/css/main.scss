@@ -84,6 +84,9 @@ button {
 
 .guess-panel__btn {
     width: 40px;
+    svg {
+        width: 16px;
+    }
 }
 
 .ball {
@@ -184,4 +187,7 @@ button {
 .icon {
     width: 40px;
     border: none;
+    svg {
+        width: 16px;
+    }
 }
