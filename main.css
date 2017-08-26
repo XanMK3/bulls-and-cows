@@ -5,12 +5,28 @@ body {
   margin: 0;
   font-family: Helvetica, Arial, sans-serif; }
 
-h1 {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 2em;
-  text-align: center;
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  height: 32px;
+  padding: 0 16px;
   background-color: whitesmoke; }
+  @media only screen and (min-width: 412px) {
+    header {
+      padding: 0 calc(50% - 412px/2 + 16px); } }
+
+main {
+  padding: 0 16px;
+  margin-top: 32px; }
+  @media only screen and (min-width: 412px) {
+    main {
+      padding: 0 calc(50% - 412px/2 + 16px); } }
 
 p {
   margin: 0; }
@@ -24,13 +40,25 @@ button {
   cursor: pointer;
   outline: none; }
 
-.game {
-  position: relative;
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none; }
+
+.custom-drag-layer {
+  position: fixed;
+  top: 0;
   width: 100%;
-  min-width: 320px;
-  max-width: 412px;
-  padding: 0 1em;
-  margin: 0 auto; }
+  pointer-events: none;
+  z-index: 1000; }
+
+.game {
+  position: relative; }
+
+.game-stats {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem; }
 
 .game-result {
   text-align: center; }
@@ -40,8 +68,10 @@ button {
   font-size: 1rem; }
 
 .board {
+  box-sizing: content-box;
   display: flex;
   justify-content: space-between;
+  height: 40px;
   padding: 0.5em 0; }
 
 .guess-panel {
@@ -50,44 +80,64 @@ button {
   justify-content: center;
   margin-right: 1em; }
 
+.guess-panel__item {
+  margin-right: 0.5em; }
+  .guess-panel__item:last-child {
+    margin-right: 0; }
+
 .guess-panel__btn {
   width: 40px; }
+  .guess-panel__btn svg {
+    width: 16px; }
 
 .ball {
+  position: relative;
   display: inline-block;
   width: 40px;
   height: 40px;
-  margin-right: 0.5em;
-  border-radius: 50%;
-  box-sizing: border-box;
-  -webkit-user-select: none;
-  position: relative;
-  box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.2); }
-  .ball:last-child {
-    margin-right: 0; }
+  user-select: none;
+  transition: transform 0.2s ease-out; }
   .ball:before {
     content: "";
     position: absolute;
-    top: 4%;
-    left: 4%;
-    width: 116%;
-    height: 116%;
+    top: 6px;
+    left: 6px;
+    width: 100%;
+    height: 100%;
     background-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.25) 50%, transparent 70%);
-    z-index: -1; }
+    pointer-events: none;
+    transition: transform 0.2s ease-out; }
   .ball:after {
     content: "";
     position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 5%;
-    left: 10%;
+    width: 60%;
+    height: 60%;
+    top: 12%;
+    left: 24%;
     border-radius: 50%;
-    background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0) 40%);
+    background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 60%);
     transform: translateX(-25%) translateY(-25%) skewX(-30deg);
-    -webkit-filter: blur(8px);
-    filter: blur(8px); }
+    filter: blur(8px);
+    pointer-events: none; }
   .ball.active {
     cursor: pointer; }
+  .ball.preview:before {
+    content: none; }
+  .ball.dradding {
+    opacity: 0.6; }
+  .ball.over {
+    transform: translateY(-2px); }
+    .ball.over:before {
+      transform: translateY(2px); }
+
+.ball__content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 50%;
+  box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.2); }
 
 .result-panel {
   display: flex;
@@ -103,8 +153,7 @@ button {
   width: 8px;
   height: 8px;
   display: inline-block;
-  border-radius: 50%;
-  box-sizing: border-box; }
+  border-radius: 50%; }
   .key.bull {
     background-color: black; }
   .key.cow {
@@ -123,3 +172,9 @@ button {
   margin-right: 0.5em; }
   .btn-block__button:last-child {
     margin-right: 0; }
+
+.icon {
+  width: 40px;
+  border: none; }
+  .icon svg {
+    width: 16px; }
