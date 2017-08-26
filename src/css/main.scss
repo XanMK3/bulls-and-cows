@@ -50,6 +50,20 @@ button {
     outline: none;
 }
 
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.custom-drag-layer {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
 .game {
     position: relative;
 }
@@ -70,8 +84,10 @@ button {
 }
 
 .board {
+    box-sizing: content-box;
     display: flex;
     justify-content: space-between;
+    height: 40px;
     padding: 0.5em 0;
 }
 
@@ -80,6 +96,13 @@ button {
     flex: auto;
     justify-content: center;
     margin-right: 1em;
+}
+
+.guess-panel__item {
+    margin-right: 0.5em;
+    &:last-child {
+        margin-right: 0;
+    }
 }
 
 .guess-panel__btn {
@@ -94,12 +117,8 @@ button {
     display: inline-block;
     width: 40px;
     height: 40px;
-    margin-right: 0.5em;
     user-select: none;
     transition: transform 0.2s ease-out;
-    &:last-child {
-        margin-right: 0;
-    }
     &:before {
         content: "";
         position: absolute;
@@ -108,6 +127,8 @@ button {
         width: 100%;
         height: 100%;
         background-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.25) 50%, transparent 70%);
+        pointer-events: none;
+        transition: transform 0.2s ease-out;
     }
     &:after {
         content: "";
@@ -120,15 +141,24 @@ button {
         background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 60%);
         transform: translateX(-25%) translateY(-25%) skewX(-30deg);
         filter: blur(8px);
+        pointer-events: none;
     }
     &.active {
         cursor: pointer;
+    }
+    &.preview {
+        &:before {
+            content: none;
+        }
     }
     &.dradding {
         opacity: 0.6;
     }
     &.over {
         transform: translateY(-2px);
+        &:before {
+            transform: translateY(2px);
+        }
     }
 }
 

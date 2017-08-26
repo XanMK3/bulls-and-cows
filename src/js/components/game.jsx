@@ -2,7 +2,8 @@
 
 import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import TouchBackend from 'react-dnd-touch-backend';
+import CustomDragLayer from './CustomDragLayer';
 
 import Board from './board';
 import Header from './header';
@@ -93,9 +94,10 @@ class Game extends Component {
                     {history.map((entry, i) => <Board key={i} colors={entry.colors} result={entry.result} readOnly={true} />)}
                     {this.renderLastLine()}
                 </main>
+                <CustomDragLayer />
             </div>
         )
     }
 }
 
-export default DragDropContext(HTML5Backend)(Game);
+export default DragDropContext(TouchBackend({ enableMouseEvents: true }))(Game);
