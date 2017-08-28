@@ -154,7 +154,7 @@ ul {
     &.dradding {
         opacity: 0.6;
     }
-    &.over {
+    &.over:not(.dradding) {
         transform: translateY(-2px);
         &:before {
             transform: translateY(2px);
