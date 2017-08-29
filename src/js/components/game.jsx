@@ -7,6 +7,7 @@ import CustomDragLayer from './CustomDragLayer';
 
 import Board from './board';
 import Header from './header';
+import Menu from './menu';
 
 import { countMatchElements } from 'js/utils';
 
@@ -20,11 +21,17 @@ class Game extends Component {
             history: [],
             currentTry: Array.apply(null, { length: props.secret.length }).map((v, i) => i),
             status: GAME_STATUS.PROGRESS,
+            showMenu: false,
         }
 
         this.change = this.change.bind(this);
         this.swap = this.swap.bind(this);
         this.submit = this.submit.bind(this);
+        this.toggleMenu = this.toggleMenu.bind(this);
+    }
+
+    toggleMenu() {
+        this.setState({ showMenu: !this.state.showMenu });
     }
 
     change(i) {
@@ -89,7 +96,8 @@ class Game extends Component {
 
         return (
             <div className='game'>
-                <Header status={status} attemptsNumber={this.props.attemptsNumber} attempt={history.length} />
+                <Header status={status} attemptsNumber={this.props.attemptsNumber} attempt={history.length} toggleMenu={this.toggleMenu} />
+                <Menu showMenu={this.state.showMenu} />
                 <main>
                     {history.map((entry, i) => <Board key={i} colors={entry.colors} result={entry.result} readOnly={true} />)}
                     {this.renderLastLine()}

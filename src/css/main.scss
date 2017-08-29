@@ -64,6 +64,38 @@ ul {
     z-index: 1000;
 }
 
+.menu {
+    position: fixed;
+    top: 32px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 $padding;
+    @media only screen and (min-width: $width) {
+        padding: 0 calc(50% - #{$width}/2 + #{$padding});
+    }
+    background-color: whitesmoke;
+}
+
+.menu__list {
+    width: 100%;
+    text-align: center;
+}
+
+.menu__item {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    line-height: 2em;
+    &:hover {
+        background-color: white;
+    }
+}
+
 .game {
     position: relative;
 }
