@@ -1,17 +1,39 @@
 ﻿'use strict';
 
-import React from 'react';
+import React, { Component } from 'react';
 
-function Menu(props) {
-    if (!props.showMenu) return null;
+class Menu extends Component {
+    constructor(props) {
+        super(props);
 
-    return <div className='menu'>
-        <ul className='menu__list'>
-            <li><button className='menu__item'>Item1</button></li>
-            <li><button className='menu__item'>Item2</button></li>
-            <li><button className='menu__item'>Item3</button></li>
-        </ul>    
-    </div>
+        this.state = { visible: false };
+
+        this.toggle = this.toggle.bind(this);
+    }
+
+    toggle() {
+        this.setState({ visible: !this.state.visible });
+    }
+
+    render() {
+        if (!this.state.visible) return null;
+
+        return <div className='menu'>
+            <ul className='menu__list'>
+                {React.Children.map(this.props.children, Child => {
+                    return Child;
+                })}
+            </ul>
+        </div>
+    }
 }
+
+function MenuItem(props) {
+    return <li>
+        <button className='menu__item' onClick={props.handler}>{props.title}</button>
+    </li>;
+}
+
+export { Menu, MenuItem };
 
 export default Menu;

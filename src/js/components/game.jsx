@@ -7,7 +7,7 @@ import CustomDragLayer from './CustomDragLayer';
 
 import Board from './board';
 import Header from './header';
-import Menu from './menu';
+import { Menu, MenuItem } from './menu';
 
 import { countMatchElements } from 'js/utils';
 
@@ -21,7 +21,6 @@ class Game extends Component {
             history: [],
             currentTry: Array.apply(null, { length: props.secret.length }).map((v, i) => i),
             status: GAME_STATUS.PROGRESS,
-            showMenu: false,
         }
 
         this.change = this.change.bind(this);
@@ -31,7 +30,7 @@ class Game extends Component {
     }
 
     toggleMenu() {
-        this.setState({ showMenu: !this.state.showMenu });
+        this.menu.toggle();
     }
 
     change(i) {
@@ -91,13 +90,17 @@ class Game extends Component {
     }
 
     render() {
-        const { secret } = this.props;
+        const { secret, onReset } = this.props;
         const { history, status } = this.state;
 
         return (
             <div className='game'>
                 <Header status={status} attemptsNumber={this.props.attemptsNumber} attempt={history.length} toggleMenu={this.toggleMenu} />
-                <Menu showMenu={this.state.showMenu} />
+                <Menu showMenu={this.state.showMenu} ref={(instance) => {this.menu = instance}}>
+                    <MenuItem title='New game (easy)' handler={() => {onReset(4)}} />
+                    <MenuItem title='New game (medium)' handler={() => {onReset(5)}} />
+                    <MenuItem title='New game (hard)' handler={() => {onReset(6)}} />
+                </Menu>
                 <main>
                     {history.map((entry, i) => <Board key={i} colors={entry.colors} result={entry.result} readOnly={true} />)}
                     {this.renderLastLine()}
