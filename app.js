@@ -32430,13 +32430,13 @@ var _CustomDragLayer = __webpack_require__("./js/components/CustomDragLayer.jsx"
 
 var _CustomDragLayer2 = _interopRequireDefault(_CustomDragLayer);
 
-var _board = __webpack_require__("./js/components/board.jsx");
-
-var _board2 = _interopRequireDefault(_board);
-
 var _header = __webpack_require__("./js/components/header.jsx");
 
 var _header2 = _interopRequireDefault(_header);
+
+var _board = __webpack_require__("./js/components/board.jsx");
+
+var _board2 = _interopRequireDefault(_board);
 
 var _utils = __webpack_require__("./js/utils/index.js");
 
@@ -32458,6 +32458,35 @@ var Game = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
 
+        _this.change = function (i) {
+            var currentTry = _this.state.currentTry.slice();
+            currentTry[i] >= _this.state.currentTry.length - 1 ? currentTry[i] = 0 : currentTry[i]++;
+            _this.setState({ currentTry: currentTry });
+        };
+
+        _this.swap = function (i1, i2) {
+            var currentTry = _this.state.currentTry.slice();
+            var _ref = [currentTry[i2], currentTry[i1]];
+            currentTry[i1] = _ref[0];
+            currentTry[i2] = _ref[1];
+
+            _this.setState({ currentTry: currentTry });
+        };
+
+        _this.submit = function () {
+            var result = (0, _utils.countMatchElements)(_this.state.currentTry, _this.props.secret);
+
+            if (result.exactMatch == _this.props.secret.length) {
+                _this.setState({ status: _const.GAME_STATUS.WIN });
+            } else if (_this.state.history.length + 1 == _this.props.attemptsNumber) {
+                _this.setState({ status: _const.GAME_STATUS.FAIL });
+            }
+
+            var history = _this.state.history.slice();
+            history.push({ colors: _this.state.currentTry.slice(), result: result });
+            _this.setState({ history: history });
+        };
+
         _this.state = {
             history: [],
             currentTry: Array.apply(null, { length: props.secret.length }).map(function (v, i) {
@@ -32465,46 +32494,10 @@ var Game = function (_Component) {
             }),
             status: _const.GAME_STATUS.PROGRESS
         };
-
-        _this.change = _this.change.bind(_this);
-        _this.swap = _this.swap.bind(_this);
-        _this.submit = _this.submit.bind(_this);
         return _this;
     }
 
     _createClass(Game, [{
-        key: 'change',
-        value: function change(i) {
-            var currentTry = this.state.currentTry.slice();
-            currentTry[i] >= this.state.currentTry.length - 1 ? currentTry[i] = 0 : currentTry[i]++;
-            this.setState({ currentTry: currentTry });
-        }
-    }, {
-        key: 'swap',
-        value: function swap(i1, i2) {
-            var currentTry = this.state.currentTry.slice();
-            var _ref = [currentTry[i2], currentTry[i1]];
-            currentTry[i1] = _ref[0];
-            currentTry[i2] = _ref[1];
-
-            this.setState({ currentTry: currentTry });
-        }
-    }, {
-        key: 'submit',
-        value: function submit() {
-            var result = (0, _utils.countMatchElements)(this.state.currentTry, this.props.secret);
-
-            if (result.exactMatch == this.props.secret.length) {
-                this.setState({ status: _const.GAME_STATUS.WIN });
-            } else if (this.state.history.length + 1 == this.props.attemptsNumber) {
-                this.setState({ status: _const.GAME_STATUS.FAIL });
-            }
-
-            var history = this.state.history.slice();
-            history.push({ colors: this.state.currentTry.slice(), result: result });
-            this.setState({ history: history });
-        }
-    }, {
         key: 'renderLastLine',
         value: function renderLastLine() {
             var _props = this.props,
@@ -32534,16 +32527,9 @@ var Game = function (_Component) {
                             _react2.default.createElement(
                                 'button',
                                 { type: 'button', className: 'btn-block__button', onClick: function onClick(e) {
-                                        onReset(4);
+                                        onReset(secret.length);
                                     } },
-                                'New game (easy)'
-                            ),
-                            _react2.default.createElement(
-                                'button',
-                                { type: 'button', className: 'btn-block__button', onClick: function onClick(e) {
-                                        onReset(5);
-                                    } },
-                                'New game (hard)'
+                                'Play again'
                             )
                         )
                     );
@@ -32564,16 +32550,9 @@ var Game = function (_Component) {
                             _react2.default.createElement(
                                 'button',
                                 { type: 'button', className: 'btn-block__button', onClick: function onClick(e) {
-                                        onReset(4);
+                                        onReset(secret.length);
                                     } },
-                                'New game (easy)'
-                            ),
-                            _react2.default.createElement(
-                                'button',
-                                { type: 'button', className: 'btn-block__button', onClick: function onClick(e) {
-                                        onReset(5);
-                                    } },
-                                'New game (hard)'
+                                'Play again'
                             )
                         )
                     );
@@ -32582,7 +32561,11 @@ var Game = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var secret = this.props.secret;
+            var _props2 = this.props,
+                secret = _props2.secret,
+                attemptsNumber = _props2.attemptsNumber,
+                onReset = _props2.onReset,
+                toggleMenu = _props2.toggleMenu;
             var _state2 = this.state,
                 history = _state2.history,
                 status = _state2.status;
@@ -32591,15 +32574,11 @@ var Game = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'game' },
-                _react2.default.createElement(_header2.default, { status: status, attemptsNumber: this.props.attemptsNumber, attempt: history.length }),
-                _react2.default.createElement(
-                    'main',
-                    null,
-                    history.map(function (entry, i) {
-                        return _react2.default.createElement(_board2.default, { key: i, colors: entry.colors, result: entry.result, readOnly: true });
-                    }),
-                    this.renderLastLine()
-                ),
+                _react2.default.createElement(_header2.default, { status: status, attemptsNumber: attemptsNumber, attempt: history.length, toggleMenu: toggleMenu }),
+                history.map(function (entry, i) {
+                    return _react2.default.createElement(_board2.default, { key: i, colors: entry.colors, result: entry.result, readOnly: true });
+                }),
+                this.renderLastLine(),
                 _react2.default.createElement(_CustomDragLayer2.default, null)
             );
         }
@@ -32622,11 +32601,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__("../node_modules/react/react.js");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _menu = __webpack_require__("./js/components/menu.jsx");
 
 var _game = __webpack_require__("./js/components/game.jsx");
 
@@ -32643,6 +32626,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var DEFAULT_HOLES_NUMBER = 4;
+var SCREEN_QUERY_LIST_360 = window.matchMedia('(min-width: 360px)');
 
 var GameManager = function (_Component) {
     _inherits(GameManager, _Component);
@@ -32652,30 +32636,80 @@ var GameManager = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (GameManager.__proto__ || Object.getPrototypeOf(GameManager)).call(this, props));
 
-        _this.state = {
-            gameId: (0, _utils.getId)(),
-            secret: (0, _utils.getRandomArray)(DEFAULT_HOLES_NUMBER),
-            attemptsNumber: DEFAULT_HOLES_NUMBER * 2
+        _this.startNewGame = function () {
+            var max = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_HOLES_NUMBER;
+
+            _this.setState({
+                game: { key: (0, _utils.getId)(), secret: (0, _utils.getRandomArray)(max), attemptsNumber: (2 * max - DEFAULT_HOLES_NUMBER) * 2 }
+            });
         };
 
-        _this.startNewGame = _this.startNewGame.bind(_this);
+        _this.toggleMenu = function () {
+            _this.setState({ menuOpen: !_this.state.menuOpen });
+        };
+
+        _this.closeMenu = function () {
+            _this.setState({ menuOpen: false });
+        };
+
+        _this.state = {
+            game: null,
+            menuOpen: true
+        };
         return _this;
     }
 
     _createClass(GameManager, [{
-        key: 'startNewGame',
-        value: function startNewGame() {
-            var max = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_HOLES_NUMBER;
-
-            this.setState({ gameId: (0, _utils.getId)(), secret: (0, _utils.getRandomArray)(max), attemptsNumber: (2 * max - DEFAULT_HOLES_NUMBER) * 2 });
-        }
-    }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_game2.default, { key: this.state.gameId,
-                secret: this.state.secret,
-                attemptsNumber: this.state.attemptsNumber,
-                onReset: this.startNewGame });
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'main',
+                    { className: 'main' },
+                    this.state.game != null ? _react2.default.createElement(_game2.default, _extends({}, this.state.game, { onReset: this.startNewGame, toggleMenu: this.toggleMenu })) : null
+                ),
+                _react2.default.createElement(
+                    _menu.Menu,
+                    { open: this.state.menuOpen, allowClose: this.state.game != null, close: this.closeMenu },
+                    _react2.default.createElement(
+                        _menu.MenuItem,
+                        { handler: function handler() {
+                                _this2.startNewGame(4);
+                            } },
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            'New game - easy'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _menu.MenuItem,
+                        { handler: function handler() {
+                                _this2.startNewGame(5);
+                            } },
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            'New game - medium'
+                        )
+                    ),
+                    SCREEN_QUERY_LIST_360.matches ? _react2.default.createElement(
+                        _menu.MenuItem,
+                        { handler: function handler() {
+                                _this2.startNewGame(6);
+                            } },
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            'New game - hard'
+                        )
+                    ) : null
+                )
+            );
         }
     }]);
 
@@ -32709,19 +32743,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function Header(_ref) {
     var status = _ref.status,
         attemptsNumber = _ref.attemptsNumber,
-        attempt = _ref.attempt;
+        attempt = _ref.attempt,
+        toggleMenu = _ref.toggleMenu;
 
     return _react2.default.createElement(
         'header',
-        null,
+        { className: 'game-header' },
         _react2.default.createElement(
             'div',
-            { className: 'game-stats' },
+            { className: 'game-header__stats' },
             _react2.default.createElement(_status2.default, { status: status, attemptsLeft: attemptsNumber - attempt })
         ),
         _react2.default.createElement(
             'button',
-            { type: 'button', className: 'icon' },
+            { type: 'button', className: 'icon', onClick: toggleMenu },
             _react2.default.createElement(
                 'svg',
                 { xmlns: 'http://www.w3.org/2000/svg', width: '24', height: '24', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
@@ -32734,6 +32769,80 @@ function Header(_ref) {
 }
 
 exports.default = Header;
+
+/***/ }),
+
+/***/ "./js/components/menu.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MenuItem = exports.Menu = undefined;
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = __webpack_require__("../node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Menu(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: (0, _classnames2.default)('menu', { 'menu--open': props.open || !props.allowClose }) },
+        _react2.default.createElement(
+            'header',
+            { className: 'menu__header' },
+            props.allowClose ? _react2.default.createElement(
+                'button',
+                { type: 'button', className: 'icon', onClick: props.close },
+                _react2.default.createElement(
+                    'svg',
+                    { xmlns: 'http://www.w3.org/2000/svg', width: '24', height: '24', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
+                    _react2.default.createElement('line', { x1: '18', y1: '6', x2: '6', y2: '18' }),
+                    _react2.default.createElement('line', { x1: '6', y1: '6', x2: '18', y2: '18' })
+                )
+            ) : null
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'menu__body' },
+            _react2.default.createElement(
+                'ul',
+                { className: 'menu__list' },
+                _react2.default.Children.map(props.children, function (child) {
+                    return child && _react2.default.cloneElement(child, { closeMenu: props.close });
+                })
+            )
+        )
+    );
+}
+
+function MenuItem(props) {
+    return _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+            'button',
+            { className: 'menu__item', onClick: function onClick() {
+                    props.handler();
+                    props.closeMenu();
+                } },
+            props.children
+        )
+    );
+}
+
+exports.Menu = Menu;
+exports.MenuItem = MenuItem;
+exports.default = Menu;
 
 /***/ }),
 
