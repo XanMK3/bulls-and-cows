@@ -6,8 +6,8 @@ import Status from './status';
 
 function Header({ status, attemptsNumber, attempt, toggleMenu }) {
     return (
-        <header>
-            <div className='game-stats'>
+        <header className='game-header'>
+            <div className='game-header__stats'>
                 <Status status={status} attemptsLeft={attemptsNumber - attempt} />
             </div>
             <button type='button' className='icon' onClick={toggleMenu}>

@@ -5,9 +5,8 @@ import { DragDropContext } from 'react-dnd';
 import TouchBackend from 'react-dnd-touch-backend';
 import CustomDragLayer from './CustomDragLayer';
 
-import Board from './board';
 import Header from './header';
-import { Menu, MenuItem } from './menu';
+import Board from './board';
 
 import { countMatchElements } from 'js/utils';
 
@@ -16,36 +15,26 @@ import { GAME_STATUS } from 'js/const';
 class Game extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             history: [],
             currentTry: Array.apply(null, { length: props.secret.length }).map((v, i) => i),
             status: GAME_STATUS.PROGRESS,
         }
-
-        this.change = this.change.bind(this);
-        this.swap = this.swap.bind(this);
-        this.submit = this.submit.bind(this);
-        this.toggleMenu = this.toggleMenu.bind(this);
     }
 
-    toggleMenu() {
-        this.menu.toggle();
-    }
-
-    change(i) {
+    change = (i) => {
         const currentTry = this.state.currentTry.slice();
         currentTry[i] >= this.state.currentTry.length - 1 ? currentTry[i] = 0 : currentTry[i]++;
         this.setState({ currentTry });
     }
 
-    swap(i1, i2) {
+    swap = (i1, i2) => {
         const currentTry = this.state.currentTry.slice();
         [currentTry[i1], currentTry[i2]] = [currentTry[i2], currentTry[i1]];
         this.setState({ currentTry });
     }
 
-    submit() {
+    submit = () => {
         const result = countMatchElements(this.state.currentTry, this.props.secret);
 
         if (result.exactMatch == this.props.secret.length) {
@@ -72,8 +61,7 @@ class Game extends Component {
                     <hr />
                     <p className='game-result__text'>Congratulations, You win!</p>
                     <div className='btn-block'>
-                        <button type='button' className='btn-block__button' onClick={e => { onReset(4) }}>New game (easy)</button>
-                        <button type='button' className='btn-block__button' onClick={e => { onReset(5) }}>New game (hard)</button>
+                        <button type='button' className='btn-block__button' onClick={e => { onReset(secret.length) }}>Play again</button>
                     </div>
                 </div>)
             case GAME_STATUS.FAIL:
@@ -82,29 +70,21 @@ class Game extends Component {
                     <p className='game-result__text'>You lose! Secret is:</p>
                     <Board colors={secret} readOnly={true} />
                     <div className='btn-block'>
-                        <button type='button' className='btn-block__button' onClick={e => { onReset(4) }}>New game (easy)</button>
-                        <button type='button' className='btn-block__button' onClick={e => { onReset(5) }}>New game (hard)</button>
+                        <button type='button' className='btn-block__button' onClick={e => { onReset(secret.length) }}>Play again</button>
                     </div>
                 </div>)
         }
     }
 
     render() {
-        const { secret, onReset } = this.props;
+        const { secret, attemptsNumber, onReset, toggleMenu } = this.props;
         const { history, status } = this.state;
 
         return (
             <div className='game'>
-                <Header status={status} attemptsNumber={this.props.attemptsNumber} attempt={history.length} toggleMenu={this.toggleMenu} />
-                <Menu showMenu={this.state.showMenu} ref={(instance) => {this.menu = instance}}>
-                    <MenuItem title='New game (easy)' handler={() => {onReset(4)}} />
-                    <MenuItem title='New game (medium)' handler={() => {onReset(5)}} />
-                    <MenuItem title='New game (hard)' handler={() => {onReset(6)}} />
-                </Menu>
-                <main>
-                    {history.map((entry, i) => <Board key={i} colors={entry.colors} result={entry.result} readOnly={true} />)}
-                    {this.renderLastLine()}
-                </main>
+                <Header status={status} attemptsNumber={attemptsNumber} attempt={history.length} toggleMenu={toggleMenu} />
+                {history.map((entry, i) => <Board key={i} colors={entry.colors} result={entry.result} readOnly={true} />)}
+                {this.renderLastLine()}
                 <CustomDragLayer />
             </div>
         )
