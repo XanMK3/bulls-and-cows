@@ -6,6 +6,7 @@ const webpack = require('webpack'),
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const SvgStore = require('webpack-svgstore-plugin');
 
 const srcPath = path.join(__dirname, '../src/'),
       distPath = path.join(__dirname, '../dist/');
@@ -52,9 +53,15 @@ module.exports = {
             ],
             fingerprints: false,
         }),
+        new SvgStore({
+            svgoOptions: {
+                plugins: []
+            },
+            prefix: ''
+        }),
         new CopyWebpackPlugin([
             { from: 'service-worker.js', to: distPath },
-            { from: path.join(srcPath, 'assets'), to: path.join(distPath, 'assets') }
+            { from: path.join(srcPath, 'assets/icons'), to: path.join(distPath, 'assets/icons') }
         ]),
     ]
 };
