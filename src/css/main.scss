@@ -36,7 +36,6 @@ ul {
     @media only screen and (min-width: $width) {
         padding: 0 calc(50% - #{$width}/2 + #{$padding});
     }
-    margin-top: $headerHeight;
 }
 
 .menu {
@@ -96,6 +95,10 @@ ul {
     width: 100%;
     pointer-events: none;
     z-index: 1000;
+}
+
+.game {
+    padding-top: $headerHeight;
 }
 
 .game-header {
