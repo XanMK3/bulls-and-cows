@@ -13,13 +13,8 @@ ReactDOM.render(<App />, document.querySelector('.root'));
 
 (function () {
     if ('serviceWorker' in navigator) {
-        if (navigator.serviceWorker.controller) {
-            console.info('Active service worker found, no need to register')
-        }
-        else {
-            navigator.serviceWorker.register('./service-worker.js')
-                .then(() => console.info('Service Worker registered successfully.'))
-                .catch(error => console.error('Service Worker registration failed:', error));
-        }
+        navigator.serviceWorker.register('./service-worker.js')
+            .then(() => console.info('Service Worker registered successfully.'))
+            .catch(error => console.error('Service Worker registration failed:', error));
     }
 })()
