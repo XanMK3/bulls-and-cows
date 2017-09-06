@@ -158,9 +158,6 @@ ul {
 .guess-panel__btn {
     flex-shrink: 0;
     width: 40px;
-    svg {
-        width: 16px;
-    }
 }
 
 .ball {
@@ -270,7 +267,14 @@ ul {
 .icon {
     width: 40px;
     border: none;
-    svg {
-        width: 16px;
-    }
+}
+
+.svg-icon {
+    height: 16px;
+    width: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
