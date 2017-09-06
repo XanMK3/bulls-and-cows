@@ -3,6 +3,7 @@ const precacheFiles = [
     './',
     './main.css',
     './app.js',
+    './assets/sprite.svg',
 ];
 
 self.addEventListener('install', function (e) {
