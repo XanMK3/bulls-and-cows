@@ -31842,6 +31842,62 @@ module.exports = __webpack_require__("../node_modules/react/lib/React.js");
 
 /***/ }),
 
+/***/ "../node_modules/webpack-svgstore-plugin/src/helpers/svgxhr.js":
+/***/ (function(module, exports) {
+
+/**
+ * Load svg via ajax
+ * @param  {string} url path to svg sprite
+ * @generator: webpack-svgstore-plugin
+ * @see: https://www.npmjs.com/package/webpack-svgstore-plugin
+ * @return {[type]}     [description]
+ */
+var svgXHR = function(options) {
+  var url = false;
+  var baseUrl = undefined;
+
+  options && options.filename
+    ? url = options.filename
+    : null;
+
+  if (!url) return false;
+  var _ajax = new XMLHttpRequest();
+  var _fullPath;
+
+  if (typeof XDomainRequest !== 'undefined') {
+    _ajax = new XDomainRequest();
+  }
+
+  if (typeof baseUrl === 'undefined') {
+    if (typeof window.baseUrl !== 'undefined') {
+      baseUrl = window.baseUrl;
+    } else {
+      baseUrl = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+    }
+  }
+
+  _fullPath = (baseUrl + '/' + url).replace(/([^:]\/)\/+/g, '$1');
+  _ajax.open('GET', _fullPath, true);
+  _ajax.onprogress = function() {};
+  _ajax.onload = function() {
+    if(!_ajax.responseText || _ajax.responseText.substr(0, 4) !== "<svg") {
+      throw Error("Invalid SVG Response");
+    }
+    if(_ajax.status < 200 || _ajax.status >= 300) {
+      return;
+    }
+    var div = document.createElement('div');
+    div.innerHTML = _ajax.responseText;
+    document.body.insertBefore(div, document.body.childNodes[0]);
+  };
+  _ajax.send();
+};
+
+module.exports = svgXHR;
+
+
+/***/ }),
+
 /***/ "../node_modules/webpack/buildin/global.js":
 /***/ (function(module, exports) {
 
@@ -32110,21 +32166,24 @@ var _gameManager2 = _interopRequireDefault(_gameManager);
 
 __webpack_require__("./css/main.scss");
 
+var _svgxhr = __webpack_require__("../node_modules/webpack-svgstore-plugin/src/helpers/svgxhr.js");
+
+var _svgxhr2 = _interopRequireDefault(_svgxhr);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var __sprite__ = { filename: __webpack_require__.p +"assets/sprite.svg" };
+(0, _svgxhr2.default)(__sprite__);
 
 _reactDom2.default.render(_react2.default.createElement(_gameManager2.default, null), document.querySelector('.root'));
 
 (function () {
     if ('serviceWorker' in navigator) {
-        if (navigator.serviceWorker.controller) {
-            console.info('Active service worker found, no need to register');
-        } else {
-            navigator.serviceWorker.register('./service-worker.js').then(function () {
-                return console.info('Service Worker registered successfully.');
-            }).catch(function (error) {
-                return console.error('Service Worker registration failed:', error);
-            });
-        }
+        navigator.serviceWorker.register('./service-worker.js').then(function () {
+            return console.info('Service Worker registered successfully.');
+        }).catch(function (error) {
+            return console.error('Service Worker registration failed:', error);
+        });
     }
 })();
 
@@ -32318,8 +32377,8 @@ function Board(props) {
             { type: 'button', className: 'guess-panel__btn', onClick: props.onSubmit },
             _react2.default.createElement(
                 'svg',
-                { xmlns: 'http://www.w3.org/2000/svg', width: '24', height: '24', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
-                _react2.default.createElement('polyline', { points: '20 6 9 17 4 12' })
+                { className: 'svg-icon' },
+                _react2.default.createElement('use', { xlinkHref: 'assets/sprite.svg#check' })
             )
         )
     );
@@ -32759,10 +32818,8 @@ function Header(_ref) {
             { type: 'button', className: 'icon', onClick: toggleMenu },
             _react2.default.createElement(
                 'svg',
-                { xmlns: 'http://www.w3.org/2000/svg', width: '24', height: '24', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
-                _react2.default.createElement('line', { x1: '3', y1: '12', x2: '21', y2: '12' }),
-                _react2.default.createElement('line', { x1: '3', y1: '6', x2: '21', y2: '6' }),
-                _react2.default.createElement('line', { x1: '3', y1: '18', x2: '21', y2: '18' })
+                { className: 'svg-icon' },
+                _react2.default.createElement('use', { xlinkHref: 'assets/sprite.svg#menu' })
             )
         )
     );
@@ -32805,9 +32862,8 @@ function Menu(props) {
                 { type: 'button', className: 'icon', onClick: props.close },
                 _react2.default.createElement(
                     'svg',
-                    { xmlns: 'http://www.w3.org/2000/svg', width: '24', height: '24', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
-                    _react2.default.createElement('line', { x1: '18', y1: '6', x2: '6', y2: '18' }),
-                    _react2.default.createElement('line', { x1: '6', y1: '6', x2: '18', y2: '18' })
+                    { className: 'svg-icon' },
+                    _react2.default.createElement('use', { xlinkHref: 'assets/sprite.svg#x' })
                 )
             ) : null
         ),
@@ -32948,7 +33004,8 @@ var ITEM_TYPES = exports.ITEM_TYPES = {
     BALL: 'ball'
 };
 
-var COLORS = exports.COLORS = ['red', 'yellow', 'green', 'blue', 'orange', 'aqua', 'violet'];
+//export const COLORS = ['red', 'yellow', 'green', 'blue', 'orange', 'violet', 'aqua',];
+var COLORS = exports.COLORS = ['#fa453c', '#ffe454', '#7ed225', '#3d4eb8', '#ff8400', '#9727ba', 'aqua'];
 
 /***/ }),
 
