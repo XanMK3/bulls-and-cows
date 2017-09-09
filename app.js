@@ -32533,9 +32533,9 @@ var Game = function (_Component) {
         };
 
         _this.submit = function () {
-            var result = (0, _utils.countMatchElements)(_this.state.currentTry, _this.props.secret);
+            var result = (0, _utils.countMatchElements)(_this.state.currentTry, _this.state.secret);
 
-            if (result.exactMatch == _this.props.secret.length) {
+            if (result.exactMatch == _this.state.secret.length) {
                 _this.setState({ status: _const.GAME_STATUS.WIN });
             } else if (_this.state.history.length + 1 == _this.props.attemptsNumber) {
                 _this.setState({ status: _const.GAME_STATUS.FAIL });
@@ -32547,8 +32547,9 @@ var Game = function (_Component) {
         };
 
         _this.state = {
+            secret: (0, _utils.getRandomArray)(props.numberOfHoles),
             history: [],
-            currentTry: Array.apply(null, { length: props.secret.length }).map(function (v, i) {
+            currentTry: Array.apply(null, { length: props.numberOfHoles }).map(function (v, i) {
                 return i;
             }),
             status: _const.GAME_STATUS.PROGRESS
@@ -32559,10 +32560,9 @@ var Game = function (_Component) {
     _createClass(Game, [{
         key: 'renderLastLine',
         value: function renderLastLine() {
-            var _props = this.props,
-                secret = _props.secret,
-                onReset = _props.onReset;
+            var onReset = this.props.onReset;
             var _state = this.state,
+                secret = _state.secret,
                 currentTry = _state.currentTry,
                 status = _state.status;
 
@@ -32620,12 +32620,12 @@ var Game = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _props2 = this.props,
-                secret = _props2.secret,
-                attemptsNumber = _props2.attemptsNumber,
-                onReset = _props2.onReset,
-                toggleMenu = _props2.toggleMenu;
+            var _props = this.props,
+                attemptsNumber = _props.attemptsNumber,
+                onReset = _props.onReset,
+                toggleMenu = _props.toggleMenu;
             var _state2 = this.state,
+                secret = _state2.secret,
                 history = _state2.history,
                 status = _state2.status;
 
@@ -32699,7 +32699,7 @@ var GameManager = function (_Component) {
             var max = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_HOLES_NUMBER;
 
             _this.setState({
-                game: { key: (0, _utils.getId)(), secret: (0, _utils.getRandomArray)(max), attemptsNumber: (2 * max - DEFAULT_HOLES_NUMBER) * 2 }
+                game: { key: (0, _utils.getId)(), numberOfHoles: max, attemptsNumber: (2 * max - DEFAULT_HOLES_NUMBER) * 2 }
             });
         };
 
@@ -33005,7 +33005,7 @@ var ITEM_TYPES = exports.ITEM_TYPES = {
 };
 
 //export const COLORS = ['red', 'yellow', 'green', 'blue', 'orange', 'violet', 'aqua',];
-var COLORS = exports.COLORS = ['#fa453c', '#ffe454', '#7ed225', '#3d4eb8', '#ff8400', '#9727ba', 'aqua'];
+var COLORS = exports.COLORS = ['#e53935', '#ffeb3b', '#43a047', '#1e88e5', '#ff9800', '#8e24aa', '#00acc1'];
 
 /***/ }),
 

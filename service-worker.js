@@ -1,8 +1,9 @@
-const CACHE = 'bulls&cows-v1.0.0-beta3';
+const CACHE = 'bulls&cows-v1.0.0-beta4';
 const precacheFiles = [
     './',
     './main.css',
     './app.js',
+    './assets/sprite.svg',
 ];
 
 self.addEventListener('install', function (e) {
