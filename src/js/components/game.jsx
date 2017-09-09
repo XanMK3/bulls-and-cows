@@ -8,7 +8,7 @@ import CustomDragLayer from './CustomDragLayer';
 import Header from './header';
 import Board from './board';
 
-import { countMatchElements } from 'js/utils';
+import { getRandomArray, countMatchElements } from 'js/utils';
 
 import { GAME_STATUS } from 'js/const';
 
@@ -16,8 +16,9 @@ class Game extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            secret: getRandomArray(props.numberOfHoles),
             history: [],
-            currentTry: Array.apply(null, { length: props.secret.length }).map((v, i) => i),
+            currentTry: Array.apply(null, { length: props.numberOfHoles }).map((v, i) => i),
             status: GAME_STATUS.PROGRESS,
         }
     }
@@ -35,9 +36,9 @@ class Game extends Component {
     }
 
     submit = () => {
-        const result = countMatchElements(this.state.currentTry, this.props.secret);
+        const result = countMatchElements(this.state.currentTry, this.state.secret);
 
-        if (result.exactMatch == this.props.secret.length) {
+        if (result.exactMatch == this.state.secret.length) {
             this.setState({ status: GAME_STATUS.WIN });
         }
         else if (this.state.history.length + 1 == this.props.attemptsNumber) {
@@ -50,8 +51,8 @@ class Game extends Component {
     }
 
     renderLastLine() {
-        const { secret, onReset } = this.props;
-        const { currentTry, status } = this.state;
+        const { onReset } = this.props;
+        const { secret, currentTry, status } = this.state;
 
         switch (status) {
             case GAME_STATUS.PROGRESS:
@@ -77,8 +78,8 @@ class Game extends Component {
     }
 
     render() {
-        const { secret, attemptsNumber, onReset, toggleMenu } = this.props;
-        const { history, status } = this.state;
+        const { attemptsNumber, onReset, toggleMenu } = this.props;
+        const { secret, history, status } = this.state;
 
         return (
             <div className='game'>

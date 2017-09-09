@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { Menu, MenuItem } from './menu';
 import Game from './game';
 
-import { getId, getRandomArray } from 'js/utils';
+import { getId } from 'js/utils';
 
 const DEFAULT_HOLES_NUMBER = 4;
 const SCREEN_QUERY_LIST_360 = window.matchMedia('(min-width: 360px)');
@@ -21,7 +21,7 @@ class GameManager extends Component {
 
     startNewGame = (max = DEFAULT_HOLES_NUMBER) => {
         this.setState({
-            game: { key: getId(), secret: getRandomArray(max), attemptsNumber: (2 * max - DEFAULT_HOLES_NUMBER) * 2, }
+            game: { key: getId(), numberOfHoles: max, attemptsNumber: (2 * max - DEFAULT_HOLES_NUMBER) * 2, }
         });
     }
 
