@@ -21,6 +21,10 @@ export function getRandomArray(n) {
     return Array.apply(null, { length: n }).map(() => getRandomInt(n - 1));
 }
 
+export function isEqual(a1, a2) {
+    return a1.length == a2.length && a1.every((v, i) => v === a2[i]);
+}
+
 export function countMatchElements(array, target) {
     const exactMatch = target.reduce((sum, v, i) => v === array[i] ? ++sum : sum, 0);
 

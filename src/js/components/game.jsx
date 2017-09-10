@@ -8,7 +8,7 @@ import CustomDragLayer from './CustomDragLayer';
 import Header from './header';
 import Board from './board';
 
-import { getRandomArray, countMatchElements } from 'js/utils';
+import { getRandomArray, isEqual } from 'js/utils';
 
 import { GAME_STATUS } from 'js/const';
 
@@ -36,9 +36,9 @@ class Game extends Component {
     }
 
     submit = () => {
-        const result = countMatchElements(this.state.currentTry, this.state.secret);
+        const equal = isEqual(this.state.currentTry, this.state.secret);
 
-        if (result.exactMatch == this.state.secret.length) {
+        if (equal) {
             this.setState({ status: GAME_STATUS.WIN });
         }
         else if (this.state.history.length + 1 == this.props.attemptsNumber) {
@@ -46,7 +46,7 @@ class Game extends Component {
         }
 
         const history = this.state.history.slice();
-        history.push({ colors: this.state.currentTry.slice(), result: result });
+        history.push(this.state.currentTry.slice());
         this.setState({ history });
     }
 
@@ -56,7 +56,7 @@ class Game extends Component {
 
         switch (status) {
             case GAME_STATUS.PROGRESS:
-                return <Board colors={currentTry} onChange={this.change} onSwap={this.swap} onSubmit={this.submit} />
+                return <Board try={currentTry} onChange={this.change} onSwap={this.swap} onSubmit={this.submit} />
             case GAME_STATUS.WIN:
                 return (<div className='game-result'>
                     <hr />
@@ -69,7 +69,7 @@ class Game extends Component {
                 return (<div className='game-result'>
                     <hr />
                     <p className='game-result__text'>You lose! Secret is:</p>
-                    <Board colors={secret} readOnly={true} />
+                    <Board try={secret} readOnly={true} />
                     <div className='btn-block'>
                         <button type='button' className='btn-block__button' onClick={e => { onReset(secret.length) }}>Play again</button>
                     </div>
@@ -84,7 +84,7 @@ class Game extends Component {
         return (
             <div className='game'>
                 <Header status={status} attemptsNumber={attemptsNumber} attempt={history.length} toggleMenu={toggleMenu} />
-                {history.map((entry, i) => <Board key={i} colors={entry.colors} result={entry.result} readOnly={true} />)}
+                {history.map((entry, i) => <Board key={i} secret={secret} try={entry} readOnly={true} />)}
                 {this.renderLastLine()}
                 <CustomDragLayer />
             </div>
