@@ -57,7 +57,7 @@ class Game extends Component {
 
         switch (status) {
             case GAME_STATUS.PROGRESS:
-                return <Board try={currentTry} onChange={this.change} onSwap={this.swap} onSubmit={this.submit} />
+                return <Board guess={currentTry} onChange={this.change} onSwap={this.swap} onSubmit={this.submit} />
             case GAME_STATUS.WIN:
                 return (<div className='game-result'>
                     <hr />
@@ -70,7 +70,7 @@ class Game extends Component {
                 return (<div className='game-result'>
                     <hr />
                     <p className='game-result__text'>You lose! Secret is:</p>
-                    <Board try={secret} readOnly={true} />
+                    <Board guess={secret} readOnly={true} />
                     <div className='btn-block'>
                         <button type='button' className='btn-block__button' onClick={e => { onReset(secret.length) }}>Play again</button>
                     </div>
@@ -85,7 +85,7 @@ class Game extends Component {
         return (
             <div className='game'>
                 <Header status={status} attemptsNumber={attemptsNumber} attempt={history.length} toggleMenu={toggleMenu} />
-                {history.map((entry, i) => <Board key={i} secret={secret} try={entry} readOnly={true} />)}
+                {history.map((entry, i) => <Board key={i} secret={secret} guess={entry} readOnly={true} />)}
                 {this.renderLastLine()}
                 <CustomDragLayer />
             </div>
