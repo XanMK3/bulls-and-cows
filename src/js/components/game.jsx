@@ -19,6 +19,7 @@ class Game extends Component {
             secret: getRandomArray(props.numberOfHoles),
             history: [],
             currentTry: Array.apply(null, { length: props.numberOfHoles }).map((v, i) => i),
+            attemptsNumber: (2 * props.numberOfHoles - 4) * 2,
             status: GAME_STATUS.PROGRESS,
         }
     }
@@ -41,7 +42,7 @@ class Game extends Component {
         if (equal) {
             this.setState({ status: GAME_STATUS.WIN });
         }
-        else if (this.state.history.length + 1 == this.props.attemptsNumber) {
+        else if (this.state.history.length + 1 == this.state.attemptsNumber) {
             this.setState({ status: GAME_STATUS.FAIL });
         }
 
@@ -78,8 +79,8 @@ class Game extends Component {
     }
 
     render() {
-        const { attemptsNumber, onReset, toggleMenu } = this.props;
-        const { secret, history, status } = this.state;
+        const { onReset, toggleMenu } = this.props;
+        const { secret, history, attemptsNumber, status } = this.state;
 
         return (
             <div className='game'>
