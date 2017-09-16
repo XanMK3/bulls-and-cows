@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Fira Sans",
+        "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+p {
+    margin: 0;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 0.5em;
+    cursor: pointer;
+    outline: none;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}

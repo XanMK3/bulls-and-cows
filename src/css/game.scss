@@ -1,0 +1,80 @@
+.main {
+    padding: 0 $padding;
+    @media only screen and (min-width: $width) {
+        padding: 0 calc(50% - #{$width}/2 + #{$padding});
+    }
+}
+
+.custom-drag-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.game {
+    padding-top: $headerHeight;
+}
+
+.game-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    height: $headerHeight;
+    padding: 0 $padding;
+    @media only screen and (min-width: $width) {
+        padding: 0 calc(50% - #{$width}/2 + #{$padding});
+    }
+    background-color: whitesmoke;
+}
+
+.game-header__stats {
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+}
+
+.game-result {
+    text-align: center;
+}
+
+.game-result__text {
+    padding: 0.5em 0;
+    font-size: 1rem;
+}
+
+.btn-block {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5em 0;
+}
+
+.btn-block__button {
+    padding: 0.5em;
+    margin-right: 0.5em;
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+.icon {
+    width: 40px;
+    border: none;
+}
+
+.svg-icon {
+    height: 16px;
+    width: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
