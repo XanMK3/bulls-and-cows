@@ -20,15 +20,4 @@ function Menu(props) {
     </div>
 }
 
-function MenuItem(props) {
-    return <li>
-        <button className='menu__item' onClick={() => {
-            props.handler();
-            props.closeMenu();
-        }}>{props.children}</button>
-    </li>;
-}
-
-export { Menu, MenuItem };
-
 export default Menu;
