@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 
-import { Menu, MenuItem } from './menu';
+import { Menu, MenuItem, MenuSeparator } from './menu';
 import Game from './game';
 
 import { getId } from 'js/utils';
@@ -39,14 +39,18 @@ class GameManager extends Component {
                 {this.state.game != null ? <Game {...this.state.game} onReset={this.startNewGame} toggleMenu={this.toggleMenu} /> : null}
             </main>
             <Menu open={this.state.menuOpen} allowClose={this.state.game != null} close={this.closeMenu}>
+                {this.state.game != null ? <MenuItem handler={this.closeMenu}>
+                    Resume game
+                </MenuItem> : null}
+                <MenuSeparator />
                 <MenuItem handler={() => { this.startNewGame(4) }}>
-                    <div>New game - easy</div>
+                    New game - easy
                 </MenuItem>
                 <MenuItem handler={() => { this.startNewGame(5) }}>
-                    <div>New game - medium</div>
+                    New game - medium
                 </MenuItem>
                 {SCREEN_QUERY_LIST_360.matches ? <MenuItem handler={() => { this.startNewGame(6) }}>
-                    <div>New game - hard</div>
+                    New game - hard
                 </MenuItem> : null}
             </Menu>
         </div>
