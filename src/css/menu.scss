@@ -7,15 +7,12 @@
     height: 100vh;
     overflow: auto;
     padding: 0 $padding;
-
     @media only screen and (min-width: $width) {
         padding: 0 calc(50% - #{$width}/2 + #{$padding});
     }
-
     background-color: whitesmoke;
     transform: translateX(100%);
     transition: transform 0.2s ease-in-out;
-
     &.menu--open {
         transform: translateX(0);
     }
@@ -39,15 +36,24 @@
     text-align: center;
 }
 
-.menu__item {
+.menu__btn {
     width: 100%;
     border: none;
     border-radius: 0;
     font-size: 1rem;
     line-height: 4em;
     text-transform: uppercase;
-
     &:hover {
         background-color: white;
     }
+}
+
+.menu__separator {
+    &:first-child, &:last-child {
+        display: none;
+    }
+}
+
+.menu__default-separator-element {
+    width: 60%;
 }

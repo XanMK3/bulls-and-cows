@@ -3,8 +3,8 @@
 import React from 'react';
 
 function MenuItem(props) {
-    return <li>
-        <button className='menu__item' onClick={() => {
+    return <li className='menu__item'>
+        <button className='menu__btn' onClick={() => {
             props.handler();
             props.closeMenu();
         }}>{props.children}</button>
