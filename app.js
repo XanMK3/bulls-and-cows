@@ -32343,6 +32343,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__("../node_modules/react/react.js");
 
 var _react2 = _interopRequireDefault(_react);
@@ -32355,34 +32357,74 @@ var _draggableBall = __webpack_require__("./js/components/draggableBall.jsx");
 
 var _draggableBall2 = _interopRequireDefault(_draggableBall);
 
+var _utils = __webpack_require__("./js/utils/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function Board(props) {
-    return _react2.default.createElement(
-        'div',
-        { className: 'board' },
-        _react2.default.createElement(
-            'ul',
-            { className: 'guess-panel' },
-            props.colors.map(function (type, i) {
-                return _react2.default.createElement(
-                    'li',
-                    { className: 'guess-panel__item', key: i },
-                    _react2.default.createElement(_draggableBall2.default, { index: i, type: type, readOnly: props.readOnly, onChange: props.onChange, onSwap: props.onSwap })
-                );
-            })
-        ),
-        props.readOnly ? _react2.default.createElement(_result2.default, props.result) : _react2.default.createElement(
-            'button',
-            { type: 'button', className: 'guess-panel__btn', onClick: props.onSubmit },
-            _react2.default.createElement(
-                'svg',
-                { className: 'svg-icon' },
-                _react2.default.createElement('use', { xlinkHref: 'assets/sprite.svg#check' })
-            )
-        )
-    );
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Board = function (_PureComponent) {
+    _inherits(Board, _PureComponent);
+
+    function Board() {
+        _classCallCheck(this, Board);
+
+        return _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).apply(this, arguments));
+    }
+
+    _createClass(Board, [{
+        key: 'checkResult',
+        value: function checkResult() {
+            var _props = this.props,
+                guess = _props.guess,
+                secret = _props.secret;
+
+            return secret ? (0, _utils.countMatchElements)(guess, secret) : {};
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props2 = this.props,
+                guess = _props2.guess,
+                readOnly = _props2.readOnly,
+                onChange = _props2.onChange,
+                onSwap = _props2.onSwap,
+                onSubmit = _props2.onSubmit;
+
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'board' },
+                _react2.default.createElement(
+                    'ul',
+                    { className: 'guess-panel' },
+                    guess.map(function (type, i) {
+                        return _react2.default.createElement(
+                            'li',
+                            { className: 'guess-panel__item', key: i },
+                            _react2.default.createElement(_draggableBall2.default, { index: i, type: type, readOnly: readOnly, onChange: onChange, onSwap: onSwap })
+                        );
+                    })
+                ),
+                readOnly ? _react2.default.createElement(_result2.default, this.checkResult()) : _react2.default.createElement(
+                    'button',
+                    { type: 'button', className: 'guess-panel__btn', onClick: onSubmit },
+                    _react2.default.createElement(
+                        'svg',
+                        { className: 'svg-icon' },
+                        _react2.default.createElement('use', { xlinkHref: 'assets/sprite.svg#check' })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Board;
+}(_react.PureComponent);
 
 exports.default = Board;
 
@@ -32533,16 +32575,16 @@ var Game = function (_Component) {
         };
 
         _this.submit = function () {
-            var result = (0, _utils.countMatchElements)(_this.state.currentTry, _this.state.secret);
+            var equal = (0, _utils.isEqual)(_this.state.currentTry, _this.state.secret);
 
-            if (result.exactMatch == _this.state.secret.length) {
+            if (equal) {
                 _this.setState({ status: _const.GAME_STATUS.WIN });
-            } else if (_this.state.history.length + 1 == _this.props.attemptsNumber) {
+            } else if (_this.state.history.length + 1 == _this.state.attemptsNumber) {
                 _this.setState({ status: _const.GAME_STATUS.FAIL });
             }
 
             var history = _this.state.history.slice();
-            history.push({ colors: _this.state.currentTry.slice(), result: result });
+            history.push(_this.state.currentTry.slice());
             _this.setState({ history: history });
         };
 
@@ -32552,6 +32594,7 @@ var Game = function (_Component) {
             currentTry: Array.apply(null, { length: props.numberOfHoles }).map(function (v, i) {
                 return i;
             }),
+            attemptsNumber: (2 * props.numberOfHoles - 4) * 2,
             status: _const.GAME_STATUS.PROGRESS
         };
         return _this;
@@ -32569,7 +32612,7 @@ var Game = function (_Component) {
 
             switch (status) {
                 case _const.GAME_STATUS.PROGRESS:
-                    return _react2.default.createElement(_board2.default, { colors: currentTry, onChange: this.change, onSwap: this.swap, onSubmit: this.submit });
+                    return _react2.default.createElement(_board2.default, { guess: currentTry, onChange: this.change, onSwap: this.swap, onSubmit: this.submit });
                 case _const.GAME_STATUS.WIN:
                     return _react2.default.createElement(
                         'div',
@@ -32602,7 +32645,7 @@ var Game = function (_Component) {
                             { className: 'game-result__text' },
                             'You lose! Secret is:'
                         ),
-                        _react2.default.createElement(_board2.default, { colors: secret, readOnly: true }),
+                        _react2.default.createElement(_board2.default, { guess: secret, readOnly: true }),
                         _react2.default.createElement(
                             'div',
                             { className: 'btn-block' },
@@ -32621,12 +32664,12 @@ var Game = function (_Component) {
         key: 'render',
         value: function render() {
             var _props = this.props,
-                attemptsNumber = _props.attemptsNumber,
                 onReset = _props.onReset,
                 toggleMenu = _props.toggleMenu;
             var _state2 = this.state,
                 secret = _state2.secret,
                 history = _state2.history,
+                attemptsNumber = _state2.attemptsNumber,
                 status = _state2.status;
 
 
@@ -32635,7 +32678,7 @@ var Game = function (_Component) {
                 { className: 'game' },
                 _react2.default.createElement(_header2.default, { status: status, attemptsNumber: attemptsNumber, attempt: history.length, toggleMenu: toggleMenu }),
                 history.map(function (entry, i) {
-                    return _react2.default.createElement(_board2.default, { key: i, colors: entry.colors, result: entry.result, readOnly: true });
+                    return _react2.default.createElement(_board2.default, { key: i, secret: secret, guess: entry, readOnly: true });
                 }),
                 this.renderLastLine(),
                 _react2.default.createElement(_CustomDragLayer2.default, null)
@@ -32668,7 +32711,7 @@ var _react = __webpack_require__("../node_modules/react/react.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _menu = __webpack_require__("./js/components/menu.jsx");
+var _menu = __webpack_require__("./js/components/menu/index.js");
 
 var _game = __webpack_require__("./js/components/game.jsx");
 
@@ -32699,7 +32742,7 @@ var GameManager = function (_Component) {
             var max = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_HOLES_NUMBER;
 
             _this.setState({
-                game: { key: (0, _utils.getId)(), numberOfHoles: max, attemptsNumber: (2 * max - DEFAULT_HOLES_NUMBER) * 2 }
+                game: { key: (0, _utils.getId)(), numberOfHoles: max }
             });
         };
 
@@ -32734,38 +32777,32 @@ var GameManager = function (_Component) {
                 _react2.default.createElement(
                     _menu.Menu,
                     { open: this.state.menuOpen, allowClose: this.state.game != null, close: this.closeMenu },
+                    this.state.game != null ? _react2.default.createElement(
+                        _menu.MenuItem,
+                        { handler: this.closeMenu },
+                        'Resume game'
+                    ) : null,
+                    _react2.default.createElement(_menu.MenuSeparator, null),
                     _react2.default.createElement(
                         _menu.MenuItem,
                         { handler: function handler() {
                                 _this2.startNewGame(4);
                             } },
-                        _react2.default.createElement(
-                            'div',
-                            null,
-                            'New game - easy'
-                        )
+                        'New game - easy'
                     ),
                     _react2.default.createElement(
                         _menu.MenuItem,
                         { handler: function handler() {
                                 _this2.startNewGame(5);
                             } },
-                        _react2.default.createElement(
-                            'div',
-                            null,
-                            'New game - medium'
-                        )
+                        'New game - medium'
                     ),
                     SCREEN_QUERY_LIST_360.matches ? _react2.default.createElement(
                         _menu.MenuItem,
                         { handler: function handler() {
                                 _this2.startNewGame(6);
                             } },
-                        _react2.default.createElement(
-                            'div',
-                            null,
-                            'New game - hard'
-                        )
+                        'New game - hard'
                     ) : null
                 )
             );
@@ -32829,7 +32866,39 @@ exports.default = Header;
 
 /***/ }),
 
-/***/ "./js/components/menu.jsx":
+/***/ "./js/components/menu/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MenuSeparator = exports.MenuItem = exports.Menu = undefined;
+
+var _menu = __webpack_require__("./js/components/menu/menu.jsx");
+
+var _menu2 = _interopRequireDefault(_menu);
+
+var _menuItem = __webpack_require__("./js/components/menu/menuItem.jsx");
+
+var _menuItem2 = _interopRequireDefault(_menuItem);
+
+var _menuSeparator = __webpack_require__("./js/components/menu/menuSeparator.jsx");
+
+var _menuSeparator2 = _interopRequireDefault(_menuSeparator);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.Menu = _menu2.default;
+exports.MenuItem = _menuItem2.default;
+exports.MenuSeparator = _menuSeparator2.default;
+exports.default = _menu2.default;
+
+/***/ }),
+
+/***/ "./js/components/menu/menu.jsx":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32838,7 +32907,6 @@ exports.default = Header;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.MenuItem = exports.Menu = undefined;
 
 var _react = __webpack_require__("../node_modules/react/react.js");
 
@@ -32847,6 +32915,14 @@ var _react2 = _interopRequireDefault(_react);
 var _classnames = __webpack_require__("../node_modules/classnames/index.js");
 
 var _classnames2 = _interopRequireDefault(_classnames);
+
+var _menuItem = __webpack_require__("./js/components/menu/menuItem.jsx");
+
+var _menuItem2 = _interopRequireDefault(_menuItem);
+
+var _menuSeparator = __webpack_require__("./js/components/menu/menuSeparator.jsx");
+
+var _menuSeparator2 = _interopRequireDefault(_menuSeparator);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32874,20 +32950,47 @@ function Menu(props) {
                 'ul',
                 { className: 'menu__list' },
                 _react2.default.Children.map(props.children, function (child) {
-                    return child && _react2.default.cloneElement(child, { closeMenu: props.close });
+                    if (child == null) return null;
+                    if (child.type == _menuItem2.default) return _react2.default.cloneElement(child, { closeMenu: props.close });
+                    if (child.type == _menuSeparator2.default) return child;
+                    return _react2.default.createElement(
+                        _menuSeparator2.default,
+                        null,
+                        child
+                    );
                 })
             )
         )
     );
 }
 
+exports.default = Menu;
+
+/***/ }),
+
+/***/ "./js/components/menu/menuItem.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function MenuItem(props) {
     return _react2.default.createElement(
         'li',
-        null,
+        { className: 'menu__item' },
         _react2.default.createElement(
             'button',
-            { className: 'menu__item', onClick: function onClick() {
+            { className: 'menu__btn', onClick: function onClick() {
                     props.handler();
                     props.closeMenu();
                 } },
@@ -32896,9 +32999,35 @@ function MenuItem(props) {
     );
 }
 
-exports.Menu = Menu;
-exports.MenuItem = MenuItem;
-exports.default = Menu;
+exports.default = MenuItem;
+
+/***/ }),
+
+/***/ "./js/components/menu/menuSeparator.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function MenuSeparator(props) {
+    return _react2.default.createElement(
+        'li',
+        { className: 'menu__separator' },
+        props.children || _react2.default.createElement('hr', { className: 'menu__default-separator-element' })
+    );
+}
+
+exports.default = MenuSeparator;
 
 /***/ }),
 
@@ -33021,6 +33150,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.getId = getId;
 exports.getRandomInt = getRandomInt;
 exports.getRandomArray = getRandomArray;
+exports.isEqual = isEqual;
 exports.countMatchElements = countMatchElements;
 var _id = 0;
 
@@ -33042,6 +33172,12 @@ function getRandomInt() {
 function getRandomArray(n) {
     return Array.apply(null, { length: n }).map(function () {
         return getRandomInt(n - 1);
+    });
+}
+
+function isEqual(a1, a2) {
+    return a1.length == a2.length && a1.every(function (v, i) {
+        return v === a2[i];
     });
 }
 

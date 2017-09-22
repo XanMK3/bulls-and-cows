@@ -3,7 +3,7 @@
 
 body {
   margin: 0;
-  font-family: Helvetica, Arial, sans-serif; }
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif; }
 
 p {
   margin: 0; }
@@ -15,18 +15,13 @@ button {
   background-color: transparent;
   border-radius: 0.5em;
   cursor: pointer;
-  outline: none; }
+  outline: none;
+  -webkit-tap-highlight-color: transparent; }
 
 ul {
   padding: 0;
   margin: 0;
   list-style: none; }
-
-.main {
-  padding: 0 16px; }
-  @media only screen and (min-width: 412px) {
-    .main {
-      padding: 0 calc(50% - 412px/2 + 16px); } }
 
 .menu {
   position: fixed;
@@ -61,15 +56,27 @@ ul {
   margin: auto;
   text-align: center; }
 
-.menu__item {
+.menu__btn {
   width: 100%;
   border: none;
   border-radius: 0;
   font-size: 1rem;
   line-height: 4em;
   text-transform: uppercase; }
-  .menu__item:hover {
+  .menu__btn:hover {
     background-color: white; }
+
+.menu__separator:first-child, .menu__separator:last-child {
+  display: none; }
+
+.menu__default-separator-element {
+  width: 60%; }
+
+.main {
+  padding: 0 16px; }
+  @media only screen and (min-width: 412px) {
+    .main {
+      padding: 0 calc(50% - 412px/2 + 16px); } }
 
 .custom-drag-layer {
   position: fixed;
@@ -110,6 +117,30 @@ ul {
   padding: 0.5em 0;
   font-size: 1rem; }
 
+.btn-block {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5em 0; }
+
+.btn-block__button {
+  padding: 0.5em;
+  margin-right: 0.5em; }
+  .btn-block__button:last-child {
+    margin-right: 0; }
+
+.icon {
+  width: 40px;
+  border: none; }
+
+.svg-icon {
+  height: 16px;
+  width: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round; }
+
 .board {
   box-sizing: content-box;
   display: flex;
@@ -132,13 +163,39 @@ ul {
   flex-shrink: 0;
   width: 40px; }
 
+.result-panel {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  width: 40px;
+  height: 40px;
+  padding: 2px 0;
+  justify-content: space-around;
+  align-items: center; }
+
+.key {
+  margin: 2px 4px;
+  border: 1px solid;
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 50%; }
+  .key.bull {
+    background-color: black; }
+  .key.cow {
+    background-color: white; }
+  .key:nth-child(3):nth-last-child(3) {
+    margin-left: calc((100% - 8px)/2);
+    margin-right: calc((100% - 8px)/2); }
+
 .ball {
   position: relative;
   display: inline-block;
   width: 40px;
   height: 40px;
   user-select: none;
-  transition: transform 0.2s ease-out; }
+  transition: transform 0.2s ease-out;
+  -webkit-tap-highlight-color: transparent; }
   .ball:before {
     content: "";
     position: absolute;
@@ -180,52 +237,3 @@ ul {
   left: 0;
   border-radius: 50%;
   box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.2); }
-
-.result-panel {
-  display: flex;
-  flex-shrink: 0;
-  flex-wrap: wrap;
-  width: 40px;
-  height: 40px;
-  padding: 2px 0;
-  justify-content: space-around;
-  align-items: center; }
-
-.key {
-  margin: 2px 4px;
-  border: 1px solid;
-  width: 8px;
-  height: 8px;
-  display: inline-block;
-  border-radius: 50%; }
-  .key.bull {
-    background-color: black; }
-  .key.cow {
-    background-color: white; }
-  .key:nth-child(3):nth-last-child(3) {
-    margin-left: calc((100% - 8px)/2);
-    margin-right: calc((100% - 8px)/2); }
-
-.btn-block {
-  display: flex;
-  justify-content: flex-end;
-  padding: 0.5em 0; }
-
-.btn-block__button {
-  padding: 0.5em;
-  margin-right: 0.5em; }
-  .btn-block__button:last-child {
-    margin-right: 0; }
-
-.icon {
-  width: 40px;
-  border: none; }
-
-.svg-icon {
-  height: 16px;
-  width: 16px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round; }
