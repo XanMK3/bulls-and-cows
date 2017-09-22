@@ -57,7 +57,7 @@ class Game extends Component {
 
         switch (status) {
             case GAME_STATUS.PROGRESS:
-                return <Board guess={currentTry} onChange={this.change} onSwap={this.swap} onSubmit={this.submit} />
+                return <Board guess={currentTry} tryNumber={this.state.history.length} onChange={this.change} onSwap={this.swap} onSubmit={this.submit} />
             case GAME_STATUS.WIN:
                 return (<div className='game-result'>
                     <hr />

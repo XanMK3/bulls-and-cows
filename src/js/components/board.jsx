@@ -5,7 +5,10 @@ import React, { PureComponent } from 'react';
 import Result from './result';
 import Ball from './draggableBall';
 
-import { countMatchElements } from 'js/utils';
+import { countMatchElements, checkSmoothScrollSupport } from 'js/utils';
+
+const isSmoothScrollSupported = checkSmoothScrollSupport();
+const FADE_TIMEOUT = 400;
 
 class Board extends PureComponent {
     checkResult() {
@@ -13,11 +16,28 @@ class Board extends PureComponent {
         return secret ? countMatchElements(guess, secret) : {};
     }
 
+    componentDidMount() {
+        if (!isSmoothScrollSupported) return;
+
+        this.node.scrollIntoView({
+            behavior: 'smooth',
+        });
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.tryNumber != this.props.tryNumber) {
+            this.node.classList.add('fade-in');
+            setTimeout(() => {
+                this.node.classList.remove('fade-in');
+            }, FADE_TIMEOUT);
+        }
+    }
+
     render() {
         const { guess, readOnly, onChange, onSwap, onSubmit } = this.props;
 
         return (
-            <div className='board'>
+            <div className='board' ref={(node) => { this.node = node; }}>
                 <ul className='guess-panel'>{guess.map((type, i) =>
                     <li className='guess-panel__item' key={i}>
                         <Ball index={i} type={type} readOnly={readOnly} onChange={onChange} onSwap={onSwap} />

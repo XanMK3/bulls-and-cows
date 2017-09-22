@@ -1,9 +1,14 @@
+$fadeTimeout: 0.4s;
+
 .board {
     box-sizing: content-box;
     display: flex;
     justify-content: space-between;
     height: 40px;
     padding: 0.5em 0;
+    &.fade-in {
+        animation: fade-in $fadeTimeout ease-in;
+    }
 }
 
 .guess-panel {
@@ -44,17 +49,23 @@
     height: 8px;
     display: inline-block;
     border-radius: 50%;
-
     &.bull {
         background-color: black;
     }
-
     &.cow {
         background-color: white;
     }
-
     &:nth-child(3):nth-last-child(3) {
         margin-left: calc((100% - 8px)/2);
         margin-right: calc((100% - 8px)/2);
+    }
+}
+
+@-webkit-keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }
