@@ -5,7 +5,7 @@
     height: 40px;
     user-select: none;
     transition: transform 0.2s ease-out;
-
+    -webkit-tap-highlight-color: transparent;
     &:before {
         content: "";
         position: absolute;
@@ -17,7 +17,6 @@
         pointer-events: none;
         transition: transform 0.2s ease-out;
     }
-
     &:after {
         content: "";
         position: absolute;
@@ -31,24 +30,19 @@
         filter: blur(8px);
         pointer-events: none;
     }
-
     &.active {
         cursor: pointer;
     }
-
     &.preview {
         &:before {
             content: none;
         }
     }
-
     &.dradding {
         opacity: 0.6;
     }
-
     &.over:not(.dradding) {
         transform: translateY(-2px);
-
         &:before {
             transform: translateY(2px);
         }
