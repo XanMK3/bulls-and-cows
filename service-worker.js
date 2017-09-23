@@ -1,4 +1,4 @@
-const CACHE = 'bulls&cows-v1.0.0-beta5';
+const CACHE = 'bulls&cows-v1.0.0-beta6';
 const precacheFiles = [
     './',
     './main.css',
