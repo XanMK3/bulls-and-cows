@@ -34,36 +34,6 @@ $fadeTimeout: 0.4s;
     width: 40px;
 }
 
-.result-panel {
-    display: flex;
-    flex-shrink: 0;
-    flex-wrap: wrap;
-    width: 40px;
-    height: 40px;
-    padding: 2px 0;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.key {
-    margin: 2px 4px;
-    border: 1px solid;
-    width: 8px;
-    height: 8px;
-    display: inline-block;
-    border-radius: 50%;
-    &.bull {
-        background-color: black;
-    }
-    &.cow {
-        background-color: white;
-    }
-    &:nth-child(3):nth-last-child(3) {
-        margin-left: calc((100% - 8px)/2);
-        margin-right: calc((100% - 8px)/2);
-    }
-}
-
 @-webkit-keyframes fade-in {
     0% {
         opacity: 0;

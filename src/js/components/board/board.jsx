@@ -2,13 +2,13 @@
 
 import React, { PureComponent } from 'react';
 
-import Result from '../result';
+import Key from '../key';
 import { DraggableBall as Ball } from '../ball';
 
 import { countMatchElements } from 'js/utils';
 
 class Board extends PureComponent {
-    checkResult() {
+    getKey() {
         const { guess, secret } = this.props;
         return secret ? countMatchElements(guess, secret) : {};
     }
@@ -25,7 +25,7 @@ class Board extends PureComponent {
                 )}</ul>
                 {active ? <button type='button' className='guess-panel__btn' onClick={onSubmit}>
                     <svg className='svg-icon'><use xlinkHref="assets/sprite.svg#check"></use></svg>
-                </button> : <Result {...this.checkResult()} />}
+                </button> : <Key {...this.getKey()} />}
             </div>
         )
     }
