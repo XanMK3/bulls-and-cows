@@ -3,7 +3,7 @@
 import React, { PureComponent } from 'react';
 
 import Result from './result';
-import Ball from './draggableBall';
+import { DraggableBall as Ball } from './ball';
 
 import { countMatchElements, checkSmoothScrollSupport } from 'js/utils';
 
