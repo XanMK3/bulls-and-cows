@@ -32214,7 +32214,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDnd = __webpack_require__("../node_modules/react-dnd/lib/index.js");
 
-var _ball = __webpack_require__("./js/components/ball.jsx");
+var _ball = __webpack_require__("./js/components/ball/index.js");
 
 var _ball2 = _interopRequireDefault(_ball);
 
@@ -32296,7 +32296,7 @@ exports.default = (0, _reactDnd.DragLayer)(collect)(CustomDragLayer);
 
 /***/ }),
 
-/***/ "./js/components/ball.jsx":
+/***/ "./js/components/ball/ball.jsx":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32333,104 +32333,7 @@ exports.default = Ball;
 
 /***/ }),
 
-/***/ "./js/components/board.jsx":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__("../node_modules/react/react.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _result = __webpack_require__("./js/components/result.jsx");
-
-var _result2 = _interopRequireDefault(_result);
-
-var _draggableBall = __webpack_require__("./js/components/draggableBall.jsx");
-
-var _draggableBall2 = _interopRequireDefault(_draggableBall);
-
-var _utils = __webpack_require__("./js/utils/index.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Board = function (_PureComponent) {
-    _inherits(Board, _PureComponent);
-
-    function Board() {
-        _classCallCheck(this, Board);
-
-        return _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).apply(this, arguments));
-    }
-
-    _createClass(Board, [{
-        key: 'checkResult',
-        value: function checkResult() {
-            var _props = this.props,
-                guess = _props.guess,
-                secret = _props.secret;
-
-            return secret ? (0, _utils.countMatchElements)(guess, secret) : {};
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props2 = this.props,
-                guess = _props2.guess,
-                readOnly = _props2.readOnly,
-                onChange = _props2.onChange,
-                onSwap = _props2.onSwap,
-                onSubmit = _props2.onSubmit;
-
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'board' },
-                _react2.default.createElement(
-                    'ul',
-                    { className: 'guess-panel' },
-                    guess.map(function (type, i) {
-                        return _react2.default.createElement(
-                            'li',
-                            { className: 'guess-panel__item', key: i },
-                            _react2.default.createElement(_draggableBall2.default, { index: i, type: type, readOnly: readOnly, onChange: onChange, onSwap: onSwap })
-                        );
-                    })
-                ),
-                readOnly ? _react2.default.createElement(_result2.default, this.checkResult()) : _react2.default.createElement(
-                    'button',
-                    { type: 'button', className: 'guess-panel__btn', onClick: onSubmit },
-                    _react2.default.createElement(
-                        'svg',
-                        { className: 'svg-icon' },
-                        _react2.default.createElement('use', { xlinkHref: 'assets/sprite.svg#check' })
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Board;
-}(_react.PureComponent);
-
-exports.default = Board;
-
-/***/ }),
-
-/***/ "./js/components/draggableBall.jsx":
+/***/ "./js/components/ball/draggableBall.jsx":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32450,7 +32353,7 @@ var _classnames = __webpack_require__("../node_modules/classnames/index.js");
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _ball = __webpack_require__("./js/components/ball.jsx");
+var _ball = __webpack_require__("./js/components/ball/ball.jsx");
 
 var _ball2 = _interopRequireDefault(_ball);
 
@@ -32505,6 +32408,245 @@ exports.default = (0, _reactDnd.DragSource)(_const.ITEM_TYPES.BALL, dragSource, 
 
 /***/ }),
 
+/***/ "./js/components/ball/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DraggableBall = exports.Ball = undefined;
+
+var _ball = __webpack_require__("./js/components/ball/ball.jsx");
+
+var _ball2 = _interopRequireDefault(_ball);
+
+var _draggableBall = __webpack_require__("./js/components/ball/draggableBall.jsx");
+
+var _draggableBall2 = _interopRequireDefault(_draggableBall);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.Ball = _ball2.default;
+exports.DraggableBall = _draggableBall2.default;
+exports.default = _ball2.default;
+
+/***/ }),
+
+/***/ "./js/components/board/activeBoard.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _board = __webpack_require__("./js/components/board/board.jsx");
+
+var _board2 = _interopRequireDefault(_board);
+
+var _utils = __webpack_require__("./js/utils/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var isSmoothScrollSupported = (0, _utils.checkSmoothScrollSupport)();
+var FADE_TIMEOUT = 400;
+
+var ActiveBoard = function (_PureComponent) {
+    _inherits(ActiveBoard, _PureComponent);
+
+    function ActiveBoard() {
+        _classCallCheck(this, ActiveBoard);
+
+        return _possibleConstructorReturn(this, (ActiveBoard.__proto__ || Object.getPrototypeOf(ActiveBoard)).apply(this, arguments));
+    }
+
+    _createClass(ActiveBoard, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            if (prevProps.tryNumber != this.props.tryNumber) {
+                this.fadeIn();
+                this.scrollIntoView();
+            }
+        }
+    }, {
+        key: 'fadeIn',
+        value: function fadeIn() {
+            var _this2 = this;
+
+            this.node.classList.add('fade-in');
+            setTimeout(function () {
+                _this2.node.classList.remove('fade-in');
+            }, FADE_TIMEOUT);
+        }
+    }, {
+        key: 'scrollIntoView',
+        value: function scrollIntoView() {
+            if (!isSmoothScrollSupported) return;
+            this.node.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'active-board', ref: function ref(node) {
+                        _this3.node = node;
+                    } },
+                _react2.default.createElement(_board2.default, _extends({}, this.props, { active: true }))
+            );
+        }
+    }]);
+
+    return ActiveBoard;
+}(_react.PureComponent);
+
+exports.default = ActiveBoard;
+
+/***/ }),
+
+/***/ "./js/components/board/board.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _key = __webpack_require__("./js/components/key.jsx");
+
+var _key2 = _interopRequireDefault(_key);
+
+var _ball = __webpack_require__("./js/components/ball/index.js");
+
+var _utils = __webpack_require__("./js/utils/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Board = function (_PureComponent) {
+    _inherits(Board, _PureComponent);
+
+    function Board() {
+        _classCallCheck(this, Board);
+
+        return _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).apply(this, arguments));
+    }
+
+    _createClass(Board, [{
+        key: 'getKey',
+        value: function getKey() {
+            var _props = this.props,
+                guess = _props.guess,
+                secret = _props.secret;
+
+            return secret ? (0, _utils.countMatchElements)(guess, secret) : {};
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props2 = this.props,
+                guess = _props2.guess,
+                active = _props2.active,
+                onChange = _props2.onChange,
+                onSwap = _props2.onSwap,
+                onSubmit = _props2.onSubmit;
+
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'board' },
+                _react2.default.createElement(
+                    'ul',
+                    { className: 'guess-panel' },
+                    guess.map(function (type, i) {
+                        return _react2.default.createElement(
+                            'li',
+                            { className: 'guess-panel__item', key: i },
+                            _react2.default.createElement(_ball.DraggableBall, { index: i, type: type, readOnly: !active, onChange: onChange, onSwap: onSwap })
+                        );
+                    })
+                ),
+                active ? _react2.default.createElement(
+                    'button',
+                    { type: 'button', className: 'guess-panel__btn', onClick: onSubmit },
+                    _react2.default.createElement(
+                        'svg',
+                        { className: 'svg-icon' },
+                        _react2.default.createElement('use', { xlinkHref: 'assets/sprite.svg#check' })
+                    )
+                ) : _react2.default.createElement(_key2.default, this.getKey())
+            );
+        }
+    }]);
+
+    return Board;
+}(_react.PureComponent);
+
+exports.default = Board;
+
+/***/ }),
+
+/***/ "./js/components/board/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ActiveBoard = exports.Board = undefined;
+
+var _board = __webpack_require__("./js/components/board/board.jsx");
+
+var _board2 = _interopRequireDefault(_board);
+
+var _activeBoard = __webpack_require__("./js/components/board/activeBoard.jsx");
+
+var _activeBoard2 = _interopRequireDefault(_activeBoard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.Board = _board2.default;
+exports.ActiveBoard = _activeBoard2.default;
+exports.default = _board2.default;
+
+/***/ }),
+
 /***/ "./js/components/game.jsx":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -32535,9 +32677,9 @@ var _header = __webpack_require__("./js/components/header.jsx");
 
 var _header2 = _interopRequireDefault(_header);
 
-var _board = __webpack_require__("./js/components/board.jsx");
+var _board = __webpack_require__("./js/components/board/index.js");
 
-var _board2 = _interopRequireDefault(_board);
+var _gameEndScreen = __webpack_require__("./js/components/gameEndScreen/index.js");
 
 var _utils = __webpack_require__("./js/utils/index.js");
 
@@ -32612,52 +32754,12 @@ var Game = function (_Component) {
 
             switch (status) {
                 case _const.GAME_STATUS.PROGRESS:
-                    return _react2.default.createElement(_board2.default, { guess: currentTry, onChange: this.change, onSwap: this.swap, onSubmit: this.submit });
+                    return _react2.default.createElement(_board.ActiveBoard, { guess: currentTry, tryNumber: this.state.history.length,
+                        onChange: this.change, onSwap: this.swap, onSubmit: this.submit });
                 case _const.GAME_STATUS.WIN:
-                    return _react2.default.createElement(
-                        'div',
-                        { className: 'game-result' },
-                        _react2.default.createElement('hr', null),
-                        _react2.default.createElement(
-                            'p',
-                            { className: 'game-result__text' },
-                            'Congratulations, You win!'
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'btn-block' },
-                            _react2.default.createElement(
-                                'button',
-                                { type: 'button', className: 'btn-block__button', onClick: function onClick(e) {
-                                        onReset(secret.length);
-                                    } },
-                                'Play again'
-                            )
-                        )
-                    );
+                    return _react2.default.createElement(_gameEndScreen.Win, { secret: secret, restart: onReset });
                 case _const.GAME_STATUS.FAIL:
-                    return _react2.default.createElement(
-                        'div',
-                        { className: 'game-result' },
-                        _react2.default.createElement('hr', null),
-                        _react2.default.createElement(
-                            'p',
-                            { className: 'game-result__text' },
-                            'You lose! Secret is:'
-                        ),
-                        _react2.default.createElement(_board2.default, { guess: secret, readOnly: true }),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'btn-block' },
-                            _react2.default.createElement(
-                                'button',
-                                { type: 'button', className: 'btn-block__button', onClick: function onClick(e) {
-                                        onReset(secret.length);
-                                    } },
-                                'Play again'
-                            )
-                        )
-                    );
+                    return _react2.default.createElement(_gameEndScreen.Fail, { secret: secret, restart: onReset });
             }
         }
     }, {
@@ -32678,7 +32780,7 @@ var Game = function (_Component) {
                 { className: 'game' },
                 _react2.default.createElement(_header2.default, { status: status, attemptsNumber: attemptsNumber, attempt: history.length, toggleMenu: toggleMenu }),
                 history.map(function (entry, i) {
-                    return _react2.default.createElement(_board2.default, { key: i, secret: secret, guess: entry, readOnly: true });
+                    return _react2.default.createElement(_board.Board, { key: i, secret: secret, guess: entry });
                 }),
                 this.renderLastLine(),
                 _react2.default.createElement(_CustomDragLayer2.default, null)
@@ -32690,6 +32792,125 @@ var Game = function (_Component) {
 }(_react.Component);
 
 exports.default = (0, _reactDnd.DragDropContext)((0, _reactDndTouchBackend2.default)({ enableMouseEvents: true }))(Game);
+
+/***/ }),
+
+/***/ "./js/components/gameEndScreen/fail.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _board = __webpack_require__("./js/components/board/index.js");
+
+var _board2 = _interopRequireDefault(_board);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Fail(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: 'game-result' },
+        _react2.default.createElement('hr', null),
+        _react2.default.createElement(
+            'p',
+            { className: 'game-result__text' },
+            'You lose! Secret is:'
+        ),
+        _react2.default.createElement(_board2.default, { guess: props.secret }),
+        _react2.default.createElement(
+            'div',
+            { className: 'btn-block' },
+            _react2.default.createElement(
+                'button',
+                { type: 'button', className: 'btn-block__button', onClick: function onClick(e) {
+                        props.restart(props.secret.length);
+                    } },
+                'Play again'
+            )
+        )
+    );
+}
+
+exports.default = Fail;
+
+/***/ }),
+
+/***/ "./js/components/gameEndScreen/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Fail = exports.Win = undefined;
+
+var _win = __webpack_require__("./js/components/gameEndScreen/win.jsx");
+
+var _win2 = _interopRequireDefault(_win);
+
+var _fail = __webpack_require__("./js/components/gameEndScreen/fail.jsx");
+
+var _fail2 = _interopRequireDefault(_fail);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.Win = _win2.default;
+exports.Fail = _fail2.default;
+
+/***/ }),
+
+/***/ "./js/components/gameEndScreen/win.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Win(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: 'game-result' },
+        _react2.default.createElement('hr', null),
+        _react2.default.createElement(
+            'p',
+            { className: 'game-result__text' },
+            'Congratulations, You win!'
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'btn-block' },
+            _react2.default.createElement(
+                'button',
+                { type: 'button', className: 'btn-block__button', onClick: function onClick(e) {
+                        props.restart(props.secret.length);
+                    } },
+                'Play again'
+            )
+        )
+    );
+}
+
+exports.default = Win;
 
 /***/ }),
 
@@ -32866,6 +33087,40 @@ exports.default = Header;
 
 /***/ }),
 
+/***/ "./js/components/key.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function Key(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: 'key-panel' },
+        [].concat(_toConsumableArray(Array.apply(null, { length: props.exactMatch }).map(function (v, i) {
+            return _react2.default.createElement('span', { key: 'b' + i, className: 'key bull' });
+        })), _toConsumableArray(Array.apply(null, { length: props.looseMatch }).map(function (v, i) {
+            return _react2.default.createElement('span', { key: 'c' + i, className: 'key cow' });
+        })))
+    );
+}
+
+exports.default = Key;
+
+/***/ }),
+
 /***/ "./js/components/menu/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -32930,19 +33185,6 @@ function Menu(props) {
     return _react2.default.createElement(
         'div',
         { className: (0, _classnames2.default)('menu', { 'menu--open': props.open || !props.allowClose }) },
-        _react2.default.createElement(
-            'header',
-            { className: 'menu__header' },
-            props.allowClose ? _react2.default.createElement(
-                'button',
-                { type: 'button', className: 'icon', onClick: props.close },
-                _react2.default.createElement(
-                    'svg',
-                    { className: 'svg-icon' },
-                    _react2.default.createElement('use', { xlinkHref: 'assets/sprite.svg#x' })
-                )
-            ) : null
-        ),
         _react2.default.createElement(
             'div',
             { className: 'menu__body' },
@@ -33028,40 +33270,6 @@ function MenuSeparator(props) {
 }
 
 exports.default = MenuSeparator;
-
-/***/ }),
-
-/***/ "./js/components/result.jsx":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__("../node_modules/react/react.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function Result(props) {
-    return _react2.default.createElement(
-        'div',
-        { className: 'result-panel' },
-        [].concat(_toConsumableArray(Array.apply(null, { length: props.exactMatch }).map(function (v, i) {
-            return _react2.default.createElement('span', { key: 'b' + i, className: 'key bull' });
-        })), _toConsumableArray(Array.apply(null, { length: props.looseMatch }).map(function (v, i) {
-            return _react2.default.createElement('span', { key: 'c' + i, className: 'key cow' });
-        })))
-    );
-}
-
-exports.default = Result;
 
 /***/ }),
 
@@ -33152,6 +33360,7 @@ exports.getRandomInt = getRandomInt;
 exports.getRandomArray = getRandomArray;
 exports.isEqual = isEqual;
 exports.countMatchElements = countMatchElements;
+exports.checkSmoothScrollSupport = checkSmoothScrollSupport;
 var _id = 0;
 
 function getId() {
@@ -33203,6 +33412,10 @@ function countMatchElements(array, target) {
     }, 0) - exactMatch;
 
     return { exactMatch: exactMatch, looseMatch: looseMatch };
+}
+
+function checkSmoothScrollSupport() {
+    return 'scrollBehavior' in document.documentElement.style;
 }
 
 /***/ })
