@@ -8,11 +8,6 @@ import MenuSeparator from './menuSeparator';
 
 function Menu(props) {
     return <div className={cn('menu', { 'menu--open': props.open || !props.allowClose })}>
-        <header className='menu__header'>
-            {props.allowClose ? <button type='button' className='icon' onClick={props.close}>
-                <svg className='svg-icon'><use xlinkHref="assets/sprite.svg#x"></use></svg>
-            </button> : null}
-        </header>
         <div className='menu__body'>
             <ul className='menu__list'>
                 {React.Children.map(props.children, child => {

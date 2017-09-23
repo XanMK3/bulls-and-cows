@@ -19,16 +19,9 @@
     }
 }
 
-.menu__header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: stretch;
-    height: $headerHeight;
-}
-
 .menu__body {
     display: flex;
-    height: calc(100vh - #{$headerHeight});
+    height: 100vh;
 }
 
 .menu__list {
