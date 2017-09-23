@@ -6,6 +6,9 @@ $fadeTimeout: 0.4s;
     justify-content: space-between;
     height: 40px;
     padding: 0.5em 0;
+}
+
+.active-board {
     &.fade-in {
         animation: fade-in $fadeTimeout ease-in;
     }

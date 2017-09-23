@@ -6,7 +6,7 @@ import TouchBackend from 'react-dnd-touch-backend';
 import CustomDragLayer from './CustomDragLayer';
 
 import Header from './header';
-import Board from './board';
+import { Board, ActiveBoard } from './board';
 
 import { getRandomArray, isEqual } from 'js/utils';
 
@@ -57,7 +57,7 @@ class Game extends Component {
 
         switch (status) {
             case GAME_STATUS.PROGRESS:
-                return <Board guess={currentTry} tryNumber={this.state.history.length} onChange={this.change} onSwap={this.swap} onSubmit={this.submit} />
+                return <ActiveBoard guess={currentTry} tryNumber={this.state.history.length} onChange={this.change} onSwap={this.swap} onSubmit={this.submit} />
             case GAME_STATUS.WIN:
                 return (<div className='game-result'>
                     <hr />
@@ -70,7 +70,7 @@ class Game extends Component {
                 return (<div className='game-result'>
                     <hr />
                     <p className='game-result__text'>You lose! Secret is:</p>
-                    <Board guess={secret} readOnly={true} />
+                    <Board guess={secret} />
                     <div className='btn-block'>
                         <button type='button' className='btn-block__button' onClick={e => { onReset(secret.length) }}>Play again</button>
                     </div>
@@ -85,7 +85,7 @@ class Game extends Component {
         return (
             <div className='game'>
                 <Header status={status} attemptsNumber={attemptsNumber} attempt={history.length} toggleMenu={toggleMenu} />
-                {history.map((entry, i) => <Board key={i} secret={secret} guess={entry} readOnly={true} />)}
+                {history.map((entry, i) => <Board key={i} secret={secret} guess={entry} />)}
                 {this.renderLastLine()}
                 <CustomDragLayer />
             </div>
