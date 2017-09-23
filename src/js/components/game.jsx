@@ -7,6 +7,7 @@ import CustomDragLayer from './CustomDragLayer';
 
 import Header from './header';
 import { Board, ActiveBoard } from './board';
+import { Win as WinScreen, Fail as FailScreen } from './gameEndScreen';
 
 import { getRandomArray, isEqual } from 'js/utils';
 
@@ -57,24 +58,12 @@ class Game extends Component {
 
         switch (status) {
             case GAME_STATUS.PROGRESS:
-                return <ActiveBoard guess={currentTry} tryNumber={this.state.history.length} onChange={this.change} onSwap={this.swap} onSubmit={this.submit} />
+                return <ActiveBoard guess={currentTry} tryNumber={this.state.history.length}
+                    onChange={this.change} onSwap={this.swap} onSubmit={this.submit} />
             case GAME_STATUS.WIN:
-                return (<div className='game-result'>
-                    <hr />
-                    <p className='game-result__text'>Congratulations, You win!</p>
-                    <div className='btn-block'>
-                        <button type='button' className='btn-block__button' onClick={e => { onReset(secret.length) }}>Play again</button>
-                    </div>
-                </div>)
+                return <WinScreen secret={secret} restart={onReset} />;
             case GAME_STATUS.FAIL:
-                return (<div className='game-result'>
-                    <hr />
-                    <p className='game-result__text'>You lose! Secret is:</p>
-                    <Board guess={secret} />
-                    <div className='btn-block'>
-                        <button type='button' className='btn-block__button' onClick={e => { onReset(secret.length) }}>Play again</button>
-                    </div>
-                </div>)
+                return <FailScreen secret={secret} restart={onReset} />;
         }
     }
 
