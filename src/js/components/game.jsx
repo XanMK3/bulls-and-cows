@@ -5,7 +5,7 @@ import { DragDropContext } from 'react-dnd';
 import TouchBackend from 'react-dnd-touch-backend';
 import CustomDragLayer from './CustomDragLayer';
 
-import Header from './header';
+import Header from './gameHeader';
 import { Board, ActiveBoard } from './board';
 import { Win as WinScreen, Fail as FailScreen } from './gameEndScreen';
 
@@ -53,7 +53,7 @@ class Game extends Component {
     }
 
     renderLastLine() {
-        const { onReset } = this.props;
+        const { restart } = this.props;
         const { secret, currentTry, status } = this.state;
 
         switch (status) {
@@ -61,14 +61,14 @@ class Game extends Component {
                 return <ActiveBoard guess={currentTry} tryNumber={this.state.history.length}
                     onChange={this.change} onSwap={this.swap} onSubmit={this.submit} />
             case GAME_STATUS.WIN:
-                return <WinScreen secret={secret} restart={onReset} />;
+                return <WinScreen secret={secret} restart={restart} />;
             case GAME_STATUS.FAIL:
-                return <FailScreen secret={secret} restart={onReset} />;
+                return <FailScreen secret={secret} restart={restart} />;
         }
     }
 
     render() {
-        const { onReset, toggleMenu } = this.props;
+        const { restart, toggleMenu } = this.props;
         const { secret, history, attemptsNumber, status } = this.state;
 
         return (

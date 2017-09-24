@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './js/components/gameManager';
+import App from './js/components/sceneManager';
 
 import './css/main.scss';
 import svgxhr from 'webpack-svgstore-plugin/src/helpers/svgxhr';
