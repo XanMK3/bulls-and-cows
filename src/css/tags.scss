@@ -11,7 +11,21 @@ body {
 }
 
 p {
-    margin: 0;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+ul {
+    padding: 0;
+    margin: 0.5em 0;
+    list-style: none;
+}
+
+ol {
+    margin: 0.5em 0;
 }
 
 button {
@@ -23,10 +37,4 @@ button {
     cursor: pointer;
     outline: none;
     -webkit-tap-highlight-color: transparent;
-}
-
-ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
 }
