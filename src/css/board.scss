@@ -10,12 +10,11 @@
     display: flex;
     flex: auto;
     justify-content: center;
-    margin: 0 1em 0 0;
+    margin: 0 8px 0 0;
 }
 
 .guess-panel__item {
     margin-right: 0.5em;
-
     &:last-child {
         margin-right: 0;
     }
