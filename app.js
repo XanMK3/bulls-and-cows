@@ -32160,9 +32160,9 @@ var _reactDom = __webpack_require__("../node_modules/react-dom/index.js");
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _gameManager = __webpack_require__("./js/components/gameManager.jsx");
+var _sceneManager = __webpack_require__("./js/components/sceneManager.jsx");
 
-var _gameManager2 = _interopRequireDefault(_gameManager);
+var _sceneManager2 = _interopRequireDefault(_sceneManager);
 
 __webpack_require__("./css/main.scss");
 
@@ -32175,7 +32175,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var __sprite__ = { filename: __webpack_require__.p +"assets/sprite.svg" };
 (0, _svgxhr2.default)(__sprite__);
 
-_reactDom2.default.render(_react2.default.createElement(_gameManager2.default, null), document.querySelector('.root'));
+_reactDom2.default.render(_react2.default.createElement(_sceneManager2.default, null), document.querySelector('.root'));
 
 (function () {
     if ('serviceWorker' in navigator) {
@@ -32457,7 +32457,9 @@ var _board = __webpack_require__("./js/components/board/board.jsx");
 
 var _board2 = _interopRequireDefault(_board);
 
-var _utils = __webpack_require__("./js/utils/index.js");
+var _fadeInHOC = __webpack_require__("./js/components/fadeInHOC.jsx");
+
+var _fadeInHOC2 = _interopRequireDefault(_fadeInHOC);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32466,9 +32468,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var isSmoothScrollSupported = (0, _utils.checkSmoothScrollSupport)();
-var FADE_TIMEOUT = 400;
 
 var ActiveBoard = function (_PureComponent) {
     _inherits(ActiveBoard, _PureComponent);
@@ -32480,48 +32479,18 @@ var ActiveBoard = function (_PureComponent) {
     }
 
     _createClass(ActiveBoard, [{
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps) {
-            if (prevProps.tryNumber != this.props.tryNumber) {
-                this.fadeIn();
-                this.scrollIntoView();
-            }
-        }
-    }, {
-        key: 'fadeIn',
-        value: function fadeIn() {
-            var _this2 = this;
-
-            this.node.classList.add('fade-in');
-            setTimeout(function () {
-                _this2.node.classList.remove('fade-in');
-            }, FADE_TIMEOUT);
-        }
-    }, {
-        key: 'scrollIntoView',
-        value: function scrollIntoView() {
-            if (!isSmoothScrollSupported) return;
-            this.node.scrollIntoView({ behavior: 'smooth' });
-        }
-    }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'active-board', ref: function ref(node) {
-                        _this3.node = node;
-                    } },
-                _react2.default.createElement(_board2.default, _extends({}, this.props, { active: true }))
-            );
+            return _react2.default.createElement(_board2.default, _extends({}, this.props, { active: true }));
         }
     }]);
 
     return ActiveBoard;
 }(_react.PureComponent);
 
-exports.default = ActiveBoard;
+exports.default = (0, _fadeInHOC2.default)(ActiveBoard, function (prevProps, prevState, nextProps, nextState) {
+    return prevProps.tryNumber != nextProps.tryNumber;
+});
 
 /***/ }),
 
@@ -32647,6 +32616,104 @@ exports.default = _board2.default;
 
 /***/ }),
 
+/***/ "./js/components/fadeInHOC.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utils = __webpack_require__("./js/utils/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var isSmoothScrollSupported = (0, _utils.checkSmoothScrollSupport)();
+var FADE_TIMEOUT = 400;
+
+function fadeIn(WrappedComponent, shouldAnimateOnUpdate) {
+    return function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+            _classCallCheck(this, _class);
+
+            return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+            key: 'componentDidMount',
+            value: function componentDidMount() {
+                this.fadeIn();
+                this.scrollIntoView();
+            }
+        }, {
+            key: 'componentDidUpdate',
+            value: function componentDidUpdate(prevProps, prevState) {
+                if (shouldAnimateOnUpdate && shouldAnimateOnUpdate(prevProps, prevState, this.props, this.state)) {
+                    this.fadeIn();
+                    this.scrollIntoView();
+                }
+            }
+        }, {
+            key: 'componentWillUnmount',
+            value: function componentWillUnmount() {
+                clearTimeout(this.timeoutId);
+            }
+        }, {
+            key: 'fadeIn',
+            value: function fadeIn() {
+                var _this2 = this;
+
+                this.node.classList.add('fade-in');
+                clearTimeout(this.timeoutId);
+                this.timeoutId = setTimeout(function () {
+                    _this2.node.classList.remove('fade-in');
+                }, FADE_TIMEOUT);
+            }
+        }, {
+            key: 'scrollIntoView',
+            value: function scrollIntoView() {
+                if (!isSmoothScrollSupported) return;
+                this.node.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, {
+            key: 'render',
+            value: function render() {
+                var _this3 = this;
+
+                return _react2.default.createElement(
+                    'div',
+                    { className: 'animation-container', ref: function ref(node) {
+                            _this3.node = node;
+                        } },
+                    _react2.default.createElement(WrappedComponent, this.props)
+                );
+            }
+        }]);
+
+        return _class;
+    }(_react2.default.Component);
+}
+
+exports.default = fadeIn;
+
+/***/ }),
+
 /***/ "./js/components/game.jsx":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -32673,9 +32740,9 @@ var _CustomDragLayer = __webpack_require__("./js/components/CustomDragLayer.jsx"
 
 var _CustomDragLayer2 = _interopRequireDefault(_CustomDragLayer);
 
-var _header = __webpack_require__("./js/components/header.jsx");
+var _gameHeader = __webpack_require__("./js/components/gameHeader.jsx");
 
-var _header2 = _interopRequireDefault(_header);
+var _gameHeader2 = _interopRequireDefault(_gameHeader);
 
 var _board = __webpack_require__("./js/components/board/index.js");
 
@@ -32745,7 +32812,7 @@ var Game = function (_Component) {
     _createClass(Game, [{
         key: 'renderLastLine',
         value: function renderLastLine() {
-            var onReset = this.props.onReset;
+            var restart = this.props.restart;
             var _state = this.state,
                 secret = _state.secret,
                 currentTry = _state.currentTry,
@@ -32757,16 +32824,16 @@ var Game = function (_Component) {
                     return _react2.default.createElement(_board.ActiveBoard, { guess: currentTry, tryNumber: this.state.history.length,
                         onChange: this.change, onSwap: this.swap, onSubmit: this.submit });
                 case _const.GAME_STATUS.WIN:
-                    return _react2.default.createElement(_gameEndScreen.Win, { secret: secret, restart: onReset });
+                    return _react2.default.createElement(_gameEndScreen.Win, { secret: secret, restart: restart });
                 case _const.GAME_STATUS.FAIL:
-                    return _react2.default.createElement(_gameEndScreen.Fail, { secret: secret, restart: onReset });
+                    return _react2.default.createElement(_gameEndScreen.Fail, { secret: secret, restart: restart });
             }
         }
     }, {
         key: 'render',
         value: function render() {
             var _props = this.props,
-                onReset = _props.onReset,
+                restart = _props.restart,
                 toggleMenu = _props.toggleMenu;
             var _state2 = this.state,
                 secret = _state2.secret,
@@ -32778,7 +32845,7 @@ var Game = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'game' },
-                _react2.default.createElement(_header2.default, { status: status, attemptsNumber: attemptsNumber, attempt: history.length, toggleMenu: toggleMenu }),
+                _react2.default.createElement(_gameHeader2.default, { status: status, attemptsNumber: attemptsNumber, attempt: history.length, toggleMenu: toggleMenu }),
                 history.map(function (entry, i) {
                     return _react2.default.createElement(_board.Board, { key: i, secret: secret, guess: entry });
                 }),
@@ -32808,6 +32875,10 @@ Object.defineProperty(exports, "__esModule", {
 var _react = __webpack_require__("../node_modules/react/react.js");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _fadeInHOC = __webpack_require__("./js/components/fadeInHOC.jsx");
+
+var _fadeInHOC2 = _interopRequireDefault(_fadeInHOC);
 
 var _board = __webpack_require__("./js/components/board/index.js");
 
@@ -32840,7 +32911,7 @@ function Fail(props) {
     );
 }
 
-exports.default = Fail;
+exports.default = (0, _fadeInHOC2.default)(Fail);
 
 /***/ }),
 
@@ -32884,6 +32955,10 @@ var _react = __webpack_require__("../node_modules/react/react.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _fadeInHOC = __webpack_require__("./js/components/fadeInHOC.jsx");
+
+var _fadeInHOC2 = _interopRequireDefault(_fadeInHOC);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Win(props) {
@@ -32910,134 +32985,11 @@ function Win(props) {
     );
 }
 
-exports.default = Win;
+exports.default = (0, _fadeInHOC2.default)(Win);
 
 /***/ }),
 
-/***/ "./js/components/gameManager.jsx":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__("../node_modules/react/react.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _menu = __webpack_require__("./js/components/menu/index.js");
-
-var _game = __webpack_require__("./js/components/game.jsx");
-
-var _game2 = _interopRequireDefault(_game);
-
-var _utils = __webpack_require__("./js/utils/index.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var DEFAULT_HOLES_NUMBER = 4;
-var SCREEN_QUERY_LIST_360 = window.matchMedia('(min-width: 360px)');
-
-var GameManager = function (_Component) {
-    _inherits(GameManager, _Component);
-
-    function GameManager(props) {
-        _classCallCheck(this, GameManager);
-
-        var _this = _possibleConstructorReturn(this, (GameManager.__proto__ || Object.getPrototypeOf(GameManager)).call(this, props));
-
-        _this.startNewGame = function () {
-            var max = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_HOLES_NUMBER;
-
-            _this.setState({
-                game: { key: (0, _utils.getId)(), numberOfHoles: max }
-            });
-        };
-
-        _this.toggleMenu = function () {
-            _this.setState({ menuOpen: !_this.state.menuOpen });
-        };
-
-        _this.closeMenu = function () {
-            _this.setState({ menuOpen: false });
-        };
-
-        _this.state = {
-            game: null,
-            menuOpen: true
-        };
-        return _this;
-    }
-
-    _createClass(GameManager, [{
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    'main',
-                    { className: 'main' },
-                    this.state.game != null ? _react2.default.createElement(_game2.default, _extends({}, this.state.game, { onReset: this.startNewGame, toggleMenu: this.toggleMenu })) : null
-                ),
-                _react2.default.createElement(
-                    _menu.Menu,
-                    { open: this.state.menuOpen, allowClose: this.state.game != null, close: this.closeMenu },
-                    this.state.game != null ? _react2.default.createElement(
-                        _menu.MenuItem,
-                        { handler: this.closeMenu },
-                        'Resume game'
-                    ) : null,
-                    _react2.default.createElement(_menu.MenuSeparator, null),
-                    _react2.default.createElement(
-                        _menu.MenuItem,
-                        { handler: function handler() {
-                                _this2.startNewGame(4);
-                            } },
-                        'New game - easy'
-                    ),
-                    _react2.default.createElement(
-                        _menu.MenuItem,
-                        { handler: function handler() {
-                                _this2.startNewGame(5);
-                            } },
-                        'New game - medium'
-                    ),
-                    SCREEN_QUERY_LIST_360.matches ? _react2.default.createElement(
-                        _menu.MenuItem,
-                        { handler: function handler() {
-                                _this2.startNewGame(6);
-                            } },
-                        'New game - hard'
-                    ) : null
-                )
-            );
-        }
-    }]);
-
-    return GameManager;
-}(_react.Component);
-
-exports.default = GameManager;
-
-/***/ }),
-
-/***/ "./js/components/header.jsx":
+/***/ "./js/components/gameHeader.jsx":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33087,6 +33039,124 @@ exports.default = Header;
 
 /***/ }),
 
+/***/ "./js/components/gameMenu.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _menu = __webpack_require__("./js/components/menu/index.js");
+
+var _tutorial = __webpack_require__("./js/components/tutorial.jsx");
+
+var _tutorial2 = _interopRequireDefault(_tutorial);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SCREEN_QUERY_LIST_360 = window.matchMedia('(min-width: 360px)');
+
+var GameMenu = function (_PureComponent) {
+    _inherits(GameMenu, _PureComponent);
+
+    function GameMenu(props) {
+        _classCallCheck(this, GameMenu);
+
+        var _this = _possibleConstructorReturn(this, (GameMenu.__proto__ || Object.getPrototypeOf(GameMenu)).call(this, props));
+
+        _this.toggleTutorial = function () {
+            _this.setState({ isTutorialOpen: !_this.state.isTutorialOpen });
+        };
+
+        _this.state = { isTutorialOpen: false };
+        return _this;
+    }
+
+    _createClass(GameMenu, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                isOpen = _props.isOpen,
+                isGameStarted = _props.isGameStarted,
+                close = _props.close,
+                startNewGame = _props.startNewGame;
+
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    _menu.Menu,
+                    { isOpen: isOpen, close: close },
+                    isGameStarted ? _react2.default.createElement(
+                        _menu.MenuItem,
+                        { handler: close },
+                        'Resume game'
+                    ) : null,
+                    _react2.default.createElement(_menu.MenuSeparator, null),
+                    _react2.default.createElement(
+                        _menu.MenuItem,
+                        { handler: function handler() {
+                                startNewGame(4);close();
+                            } },
+                        'New game - easy'
+                    ),
+                    _react2.default.createElement(
+                        _menu.MenuItem,
+                        { handler: function handler() {
+                                startNewGame(5);close();
+                            } },
+                        'New game - medium'
+                    ),
+                    SCREEN_QUERY_LIST_360.matches ? _react2.default.createElement(
+                        _menu.MenuItem,
+                        { handler: function handler() {
+                                startNewGame(6);close();
+                            } },
+                        'New game - hard'
+                    ) : null,
+                    _react2.default.createElement(_menu.MenuSeparator, null),
+                    _react2.default.createElement(
+                        _menu.MenuItem,
+                        { handler: function handler() {
+                                _this2.toggleTutorial();
+                            } },
+                        'How to play'
+                    )
+                ),
+                _react2.default.createElement(
+                    _menu.SubMenu,
+                    { isOpen: this.state.isTutorialOpen, back: this.toggleTutorial },
+                    _react2.default.createElement(_tutorial2.default, null)
+                )
+            );
+        }
+    }]);
+
+    return GameMenu;
+}(_react.PureComponent);
+
+exports.default = GameMenu;
+
+/***/ }),
+
 /***/ "./js/components/key.jsx":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -33130,7 +33200,7 @@ exports.default = Key;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MenuSeparator = exports.MenuItem = exports.Menu = undefined;
+exports.SubMenu = exports.MenuSeparator = exports.MenuItem = exports.Menu = undefined;
 
 var _menu = __webpack_require__("./js/components/menu/menu.jsx");
 
@@ -33144,11 +33214,16 @@ var _menuSeparator = __webpack_require__("./js/components/menu/menuSeparator.jsx
 
 var _menuSeparator2 = _interopRequireDefault(_menuSeparator);
 
+var _subMenu = __webpack_require__("./js/components/menu/subMenu.jsx");
+
+var _subMenu2 = _interopRequireDefault(_subMenu);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.Menu = _menu2.default;
 exports.MenuItem = _menuItem2.default;
 exports.MenuSeparator = _menuSeparator2.default;
+exports.SubMenu = _subMenu2.default;
 exports.default = _menu2.default;
 
 /***/ }),
@@ -33184,7 +33259,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function Menu(props) {
     return _react2.default.createElement(
         'div',
-        { className: (0, _classnames2.default)('menu', { 'menu--open': props.open || !props.allowClose }) },
+        { className: (0, _classnames2.default)('menu', { 'menu--open': props.isOpen }) },
         _react2.default.createElement(
             'div',
             { className: 'menu__body' },
@@ -33193,7 +33268,7 @@ function Menu(props) {
                 { className: 'menu__list' },
                 _react2.default.Children.map(props.children, function (child) {
                     if (child == null) return null;
-                    if (child.type == _menuItem2.default) return _react2.default.cloneElement(child, { closeMenu: props.close });
+                    if (child.type == _menuItem2.default) return child;
                     if (child.type == _menuSeparator2.default) return child;
                     return _react2.default.createElement(
                         _menuSeparator2.default,
@@ -33234,7 +33309,6 @@ function MenuItem(props) {
             'button',
             { className: 'menu__btn', onClick: function onClick() {
                     props.handler();
-                    props.closeMenu();
                 } },
             props.children
         )
@@ -33270,6 +33344,144 @@ function MenuSeparator(props) {
 }
 
 exports.default = MenuSeparator;
+
+/***/ }),
+
+/***/ "./js/components/menu/subMenu.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = __webpack_require__("../node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function SubMenu(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: (0, _classnames2.default)('submenu', { 'submenu--open': props.isOpen }) },
+        _react2.default.createElement(
+            'header',
+            { className: 'menu__header' },
+            _react2.default.createElement(
+                'button',
+                { type: 'button', className: 'icon', onClick: props.back },
+                'back'
+            )
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'menu__body menu__body--with-header' },
+            props.children
+        )
+    );
+}
+
+exports.default = SubMenu;
+
+/***/ }),
+
+/***/ "./js/components/sceneManager.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _game = __webpack_require__("./js/components/game.jsx");
+
+var _game2 = _interopRequireDefault(_game);
+
+var _gameMenu = __webpack_require__("./js/components/gameMenu.jsx");
+
+var _gameMenu2 = _interopRequireDefault(_gameMenu);
+
+var _utils = __webpack_require__("./js/utils/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DEFAULT_HOLES_NUMBER = 4;
+var SCREEN_QUERY_LIST_360 = window.matchMedia('(min-width: 360px)');
+
+var SceneManager = function (_Component) {
+    _inherits(SceneManager, _Component);
+
+    function SceneManager(props) {
+        _classCallCheck(this, SceneManager);
+
+        var _this = _possibleConstructorReturn(this, (SceneManager.__proto__ || Object.getPrototypeOf(SceneManager)).call(this, props));
+
+        _this.startNewGame = function () {
+            var max = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_HOLES_NUMBER;
+
+            _this.setState({
+                game: { key: (0, _utils.getId)(), numberOfHoles: max }
+            });
+        };
+
+        _this.toggleMenu = function () {
+            _this.setState({ menuOpen: !_this.state.menuOpen });
+        };
+
+        _this.closeMenu = function () {
+            _this.setState({ menuOpen: false });
+        };
+
+        _this.state = {
+            game: null,
+            menuOpen: true
+        };
+        return _this;
+    }
+
+    _createClass(SceneManager, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'main',
+                    { className: 'main' },
+                    this.state.game != null ? _react2.default.createElement(_game2.default, _extends({}, this.state.game, { restart: this.startNewGame, toggleMenu: this.toggleMenu })) : null
+                ),
+                _react2.default.createElement(_gameMenu2.default, { isOpen: this.state.menuOpen, isGameStarted: this.state.game != null, close: this.closeMenu, startNewGame: this.startNewGame })
+            );
+        }
+    }]);
+
+    return SceneManager;
+}(_react.Component);
+
+exports.default = SceneManager;
 
 /***/ }),
 
@@ -33319,6 +33531,77 @@ function Status(_ref) {
 }
 
 exports.default = Status;
+
+/***/ }),
+
+/***/ "./js/components/tutorial.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Tutorial(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: 'tutorial' },
+        _react2.default.createElement(
+            'p',
+            null,
+            'Your goal is to guess a secret combination of colored balls, in both order and color, in minimum turns.'
+        ),
+        _react2.default.createElement(
+            'ol',
+            null,
+            _react2.default.createElement(
+                'li',
+                null,
+                'Click the ball to change its color.'
+            ),
+            _react2.default.createElement(
+                'li',
+                null,
+                'Use drag-n-drop to swap two balls.'
+            )
+        ),
+        _react2.default.createElement(
+            'p',
+            null,
+            'After each guess you get a feedback: black or white key marks.'
+        ),
+        _react2.default.createElement(
+            'p',
+            null,
+            'A black key mark is placed for each ball from the guess which is correct in both color and position.'
+        ),
+        _react2.default.createElement(
+            'p',
+            null,
+            'A white key mark indicates the existence of a correct color ball placed in the wrong position.'
+        ),
+        _react2.default.createElement(
+            'p',
+            null,
+            'Once feedback is provided, another guess is made.'
+        ),
+        _react2.default.createElement(
+            'p',
+            null,
+            'Guesses and feedback continue to alternate until you guess correctly or reach the limit of attempts.'
+        )
+    );
+}
+
+exports.default = Tutorial;
 
 /***/ }),
 
