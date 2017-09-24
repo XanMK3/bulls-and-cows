@@ -7,12 +7,12 @@ import MenuItem from './menuItem';
 import MenuSeparator from './menuSeparator';
 
 function Menu(props) {
-    return <div className={cn('menu', { 'menu--open': props.open || !props.allowClose })}>
+    return <div className={cn('menu', { 'menu--open': props.isOpen })}>
         <div className='menu__body'>
             <ul className='menu__list'>
                 {React.Children.map(props.children, child => {
                     if (child == null) return null;
-                    if (child.type == MenuItem) return React.cloneElement(child, { closeMenu: props.close });
+                    if (child.type == MenuItem) return child;
                     if (child.type == MenuSeparator) return child;
                     return <MenuSeparator>{child}</MenuSeparator>;
                 })}

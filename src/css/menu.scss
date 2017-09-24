@@ -1,4 +1,4 @@
-.menu {
+.menu, .submenu {
     position: fixed;
     top: 0;
     left: 0;
@@ -11,6 +11,9 @@
         padding: 0 calc(50% - #{$width}/2 + #{$padding});
     }
     background-color: whitesmoke;
+}
+
+.menu {
     transform: translateX(100%);
     transition: transform 0.2s ease-in-out;
     will-change: transform;
@@ -19,9 +22,26 @@
     }
 }
 
+.submenu {
+    display: none;
+    &.submenu--open {
+        display: block;
+    }
+}
+
+.menu__header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: stretch;
+    height: $headerHeight;
+}
+
 .menu__body {
     display: flex;
     height: 100vh;
+    &.menu__body--with-header {
+        height: calc(100vh - #{$headerHeight});
+    }
 }
 
 .menu__list {
