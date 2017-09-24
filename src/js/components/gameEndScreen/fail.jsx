@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import fadeIn from '../fadeInHOC';
+
 import Board from '../board';
 
 function Fail(props) {
@@ -15,4 +17,4 @@ function Fail(props) {
     </div>
 }
 
-export default Fail;
+export default fadeIn(Fail);

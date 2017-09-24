@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import fadeIn from '../fadeInHOC';
+
 function Win(props) {
     return <div className='game-result'>
         <hr />
@@ -12,4 +14,4 @@ function Win(props) {
     </div>
 }
 
-export default Win;
+export default fadeIn(Win);

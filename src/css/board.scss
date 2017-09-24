@@ -1,17 +1,9 @@
-$fadeTimeout: 0.4s;
-
 .board {
     box-sizing: content-box;
     display: flex;
     justify-content: space-between;
     height: 40px;
     padding: 0.5em 0;
-}
-
-.active-board {
-    &.fade-in {
-        animation: fade-in $fadeTimeout ease-in;
-    }
 }
 
 .guess-panel {
@@ -32,13 +24,4 @@ $fadeTimeout: 0.4s;
 .guess-panel__btn {
     flex-shrink: 0;
     width: 40px;
-}
-
-@-webkit-keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
 }
