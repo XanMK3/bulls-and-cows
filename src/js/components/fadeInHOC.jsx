@@ -21,9 +21,14 @@ function fadeIn(WrappedComponent, shouldAnimateOnUpdate) {
             }
         }
 
+        componentWillUnmount() {
+            clearTimeout(this.timeoutId);
+        }
+
         fadeIn() {
             this.node.classList.add('fade-in');
-            setTimeout(() => { this.node.classList.remove('fade-in') }, FADE_TIMEOUT);
+            clearTimeout(this.timeoutId);
+            this.timeoutId = setTimeout(() => { this.node.classList.remove('fade-in') }, FADE_TIMEOUT);
         }
 
         scrollIntoView() {
