@@ -23,4 +23,7 @@
 .guess-panel__btn {
     flex-shrink: 0;
     width: 40px;
+    background-color: $menuBgColor;
+    color: $menuColor;
+    border: none;
 }

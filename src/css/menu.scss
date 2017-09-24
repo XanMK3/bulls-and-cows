@@ -10,7 +10,8 @@
     @media only screen and (min-width: $width) {
         padding: 0 calc(50% - #{$width}/2 + #{$padding});
     }
-    background-color: whitesmoke;
+    background-color: $menuBgColor;
+    color: $menuColor;
 }
 
 .menu {
@@ -55,10 +56,11 @@
     border: none;
     border-radius: 0;
     font-size: 1rem;
-    line-height: 4em;
+    line-height: 3em;
     text-transform: uppercase;
+    transition: opacity 0.2s ease-in; 
     &:hover {
-        background-color: white;
+        opacity: 0.75;
     }
 }
 

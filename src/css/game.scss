@@ -32,13 +32,14 @@
     @media only screen and (min-width: $width) {
         padding: 0 calc(50% - #{$width}/2 + #{$padding});
     }
-    background-color: whitesmoke;
+    background-color: $menuBgColor;
+    color: $menuColor;
 }
 
 .game-header__stats {
     display: flex;
     align-items: center;
-    font-size: 0.75rem;
+    font-size: 1rem;
 }
 
 .game-result {
@@ -60,6 +61,9 @@
 .btn-block__button {
     padding: 0.5em;
     margin-right: 0.5em;
+    background-color: $menuBgColor;
+    color: $menuColor;
+    border: none;
     &:last-child {
         margin-right: 0;
     }
@@ -68,11 +72,15 @@
 .icon {
     width: 40px;
     border: none;
+    transition: opacity 0.2s ease-in;
+    &:hover {
+        opacity: 0.75;
+    }
 }
 
 .svg-icon {
-    height: 16px;
-    width: 16px;
+    height: 20px;
+    width: 20px;
     fill: none;
     stroke: currentColor;
     stroke-width: 2;
