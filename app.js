@@ -32164,7 +32164,7 @@ var _sceneManager = __webpack_require__("./js/components/sceneManager.jsx");
 
 var _sceneManager2 = _interopRequireDefault(_sceneManager);
 
-__webpack_require__("./css/main.scss");
+__webpack_require__("./styles/main.scss");
 
 var _svgxhr = __webpack_require__("../node_modules/webpack-svgstore-plugin/src/helpers/svgxhr.js");
 
@@ -32186,13 +32186,6 @@ _reactDom2.default.render(_react2.default.createElement(_sceneManager2.default, 
         });
     }
 })();
-
-/***/ }),
-
-/***/ "./css/main.scss":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -33555,9 +33548,19 @@ function Tutorial(props) {
         'div',
         { className: 'tutorial' },
         _react2.default.createElement(
+            'h2',
+            null,
+            'About game'
+        ),
+        _react2.default.createElement(
             'p',
             null,
-            'Your goal is to guess a secret combination of colored balls, in both order and color, in minimum turns.'
+            'Your goal is to guess a secret combination of balls, in both order and color, in minimum attempts.'
+        ),
+        _react2.default.createElement(
+            'p',
+            null,
+            'Choose your guess combination by using one of two options:'
         ),
         _react2.default.createElement(
             'ol',
@@ -33565,23 +33568,23 @@ function Tutorial(props) {
             _react2.default.createElement(
                 'li',
                 null,
-                'Click the ball to change its color.'
+                'click the ball to change its color'
             ),
             _react2.default.createElement(
                 'li',
                 null,
-                'Use drag-n-drop to swap two balls.'
+                'use drag-n-drop to swap balls'
             )
         ),
         _react2.default.createElement(
             'p',
             null,
-            'After each guess you get a feedback: black or white key marks.'
+            'After each guess you get a feedback - black and white key marks.'
         ),
         _react2.default.createElement(
             'p',
             null,
-            'A black key mark is placed for each ball from the guess which is correct in both color and position.'
+            'A black key mark is placed for each ball which is correct in both color and position.'
         ),
         _react2.default.createElement(
             'p',
@@ -33591,12 +33594,7 @@ function Tutorial(props) {
         _react2.default.createElement(
             'p',
             null,
-            'Once feedback is provided, another guess is made.'
-        ),
-        _react2.default.createElement(
-            'p',
-            null,
-            'Guesses and feedback continue to alternate until you guess correctly or reach the limit of attempts.'
+            'Repeat until you guess correctly or reach the limit of attempts.'
         )
     );
 }
@@ -33624,8 +33622,8 @@ var ITEM_TYPES = exports.ITEM_TYPES = {
     BALL: 'ball'
 };
 
-//export const COLORS = ['red', 'yellow', 'green', 'blue', 'orange', 'violet', 'aqua',];
-var COLORS = exports.COLORS = ['#e53935', '#ffeb3b', '#43a047', '#1e88e5', '#ff9800', '#8e24aa', '#00acc1'];
+//export const COLORS = ['red', 'yellow', 'green', 'blue', 'aqua', 'violet', 'orange',];
+var COLORS = exports.COLORS = ['#f44336', '#ffeb3b', '#66bb6a', '#3d4eb8', '#26c6da', '#9c27b0', '#ffa726'];
 
 /***/ }),
 
@@ -33700,6 +33698,13 @@ function countMatchElements(array, target) {
 function checkSmoothScrollSupport() {
     return 'scrollBehavior' in document.documentElement.style;
 }
+
+/***/ }),
+
+/***/ "./styles/main.scss":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 
