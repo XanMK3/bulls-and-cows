@@ -10,5 +10,5 @@ export const ITEM_TYPES = {
     BALL: 'ball'
 };
 
-//export const COLORS = ['red', 'yellow', 'green', 'blue', 'orange', 'violet', 'aqua',];
-export const COLORS = ['#e53935', '#ffeb3b', '#43a047', '#1e88e5', '#ff9800', '#8e24aa', '#00acc1',];
+//export const COLORS = ['red', 'yellow', 'green', 'blue', 'aqua', 'violet', 'orange',];
+export const COLORS = ['#f44336', '#ffeb3b', '#66bb6a', '#3d4eb8', '#26c6da', '#9c27b0', '#ffa726',];
