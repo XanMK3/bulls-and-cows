@@ -70,6 +70,9 @@
 }
 
 .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 40px;
     border: none;
     font-size: 1rem;
