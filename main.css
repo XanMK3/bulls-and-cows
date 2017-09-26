@@ -171,7 +171,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
+  padding: 0 10px;
   border: none;
   font-size: 1rem;
   transition: opacity 0.2s ease-in; }
