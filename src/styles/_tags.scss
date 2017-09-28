@@ -43,5 +43,6 @@ button {
     color: currentColor;
     cursor: pointer;
     outline: none;
+    user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
