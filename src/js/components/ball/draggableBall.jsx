@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
 import cn from 'classnames';
 
@@ -39,9 +39,11 @@ function collectTarget(connect, monitor) {
     }
 };
 
-function render(props) {
-    const { connectDragSource, connectDropTarget } = props;
-    return props.readOnly ? <Ball {...props} /> : connectDragSource(connectDropTarget(<div><Ball {...props} /></div>));
+class DraggableBall extends PureComponent {
+    render() {
+        const props = this.props, { connectDragSource, connectDropTarget } = props;
+        return props.readOnly ? <Ball {...props} /> : connectDragSource(connectDropTarget(<div><Ball {...props} /></div>));
+    }
 }
 
-export default DragSource(ITEM_TYPES.BALL, dragSource, collectSource)(DropTarget(ITEM_TYPES.BALL, dropTarget, collectTarget)(render));
+export default DragSource(ITEM_TYPES.BALL, dragSource, collectSource)(DropTarget(ITEM_TYPES.BALL, dropTarget, collectTarget)(DraggableBall));

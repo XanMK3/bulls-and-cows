@@ -12,8 +12,8 @@ function Menu(props) {
             <ul className='menu__list'>
                 {React.Children.map(props.children, child => {
                     if (child == null) return null;
-                    if (child.type == MenuItem) return child;
-                    if (child.type == MenuSeparator) return child;
+                    if (child.type.name == MenuItem.name) return child;
+                    if (child.type.name == MenuSeparator.name) return child;
                     return <MenuSeparator>{child}</MenuSeparator>;
                 })}
             </ul>

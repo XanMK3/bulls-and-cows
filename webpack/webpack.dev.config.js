@@ -3,7 +3,7 @@
 const baseConfig = require('./webpack.config.js');
 
 const devConfig = Object.assign({}, baseConfig, {
-    devtool: '#cheap-module-eval-source-map',
+    devtool: 'eval',
     devServer: {
         contentBase: baseConfig.output.path,
         compress: true,
@@ -18,11 +18,6 @@ const devConfig = Object.assign({}, baseConfig, {
     },
     module: {
         rules: [
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                use: ['react-hot-loader']
-            },
             {
                 test: /\.js$|\.jsx$/,
                 exclude: /(node_modules)/,

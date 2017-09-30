@@ -14,7 +14,7 @@ const srcPath = path.join(__dirname, '../src/'),
 module.exports = {
     context: srcPath,
     entry: {
-        app: './app.jsx',
+        app: ['react-hot-loader/patch', './app.jsx'],
     },
     output: {
         path: distPath,
