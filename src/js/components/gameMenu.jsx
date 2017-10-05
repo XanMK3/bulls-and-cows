@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react';
 
-import { Menu, MenuItem, MenuSeparator, SubMenu } from './menu';
+import { Menu, MenuGroup, MenuItem, SubMenu } from './menu';
 import Tutorial from './tutorial';
 
 const SCREEN_QUERY_LIST_360 = window.matchMedia('(min-width: 360px)');
@@ -22,23 +22,27 @@ class GameMenu extends PureComponent {
 
         return <div>
             <Menu isOpen={isOpen} close={close}>
-                {isGameStarted ? <MenuItem handler={close}>
-                    Resume game
-                </MenuItem> : null}
-                <MenuSeparator />
-                <MenuItem handler={() => { startNewGame(4); close(); }}>
-                    New game - easy
-                </MenuItem>
-                <MenuItem handler={() => { startNewGame(5); close(); }}>
-                    New game - medium
-                </MenuItem>
-                {SCREEN_QUERY_LIST_360.matches ? <MenuItem handler={() => { startNewGame(6); close(); }}>
-                    New game - hard
-                </MenuItem> : null}
-                <MenuSeparator />
-                <MenuItem handler={() => { this.toggleTutorial(); }}>
-                    How to play
-                </MenuItem>
+                <MenuGroup>
+                    {isGameStarted ? <MenuItem handler={close}>
+                        Resume game
+                    </MenuItem> : null}
+                </MenuGroup>
+                <MenuGroup>
+                    <MenuItem handler={() => { startNewGame(4); close(); }}>
+                        New game - easy
+                    </MenuItem>
+                    <MenuItem handler={() => { startNewGame(5); close(); }}>
+                        New game - medium
+                    </MenuItem>
+                    {SCREEN_QUERY_LIST_360.matches ? <MenuItem handler={() => { startNewGame(6); close(); }}>
+                        New game - hard
+                    </MenuItem> : null}
+                </MenuGroup>
+                <MenuGroup>
+                    <MenuItem handler={() => { this.toggleTutorial(); }}>
+                        How to play
+                    </MenuItem>
+                </MenuGroup>
             </Menu>
             <SubMenu isOpen={this.state.isTutorialOpen} back={this.toggleTutorial}>
                 <Tutorial />

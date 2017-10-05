@@ -1,8 +1,8 @@
 ﻿import Menu from './menu';
+import MenuGroup from './menuGroup';
 import MenuItem from './menuItem';
-import MenuSeparator from './menuSeparator';
 import SubMenu from './subMenu';
 
-export { Menu, MenuItem, MenuSeparator, SubMenu };
+export { Menu, MenuGroup, MenuItem, SubMenu };
 
 export default Menu;

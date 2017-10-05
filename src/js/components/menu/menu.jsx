@@ -3,20 +3,12 @@
 import React from 'react';
 import cn from 'classnames';
 
-import MenuItem from './menuItem';
-import MenuSeparator from './menuSeparator';
-
 function Menu(props) {
     return <div className={cn('menu', { 'menu--open': props.isOpen })}>
         <div className='menu__body'>
-            <ul className='menu__list'>
-                {React.Children.map(props.children, child => {
-                    if (child == null) return null;
-                    if (child.type.name == MenuItem.name) return child;
-                    if (child.type.name == MenuSeparator.name) return child;
-                    return <MenuSeparator>{child}</MenuSeparator>;
-                })}
-            </ul>
+            <div className='menu__list'>
+                {props.children}
+            </div>
         </div>
     </div>
 }
