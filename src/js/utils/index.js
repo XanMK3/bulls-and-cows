@@ -40,6 +40,8 @@ export function countMatchElements(array, target) {
     return { exactMatch, looseMatch };
 }
 
+const isSmoothScrollSupported = 'scrollBehavior' in document.documentElement.style;
+
 export function checkSmoothScrollSupport() {
-    return 'scrollBehavior' in document.documentElement.style;
+    return isSmoothScrollSupported;
 }
