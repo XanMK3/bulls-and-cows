@@ -76,14 +76,15 @@
       "type": "image/png"
     }
   ],
-  "orientation": "portrait",
-  "short_name": "b&c",
+  "publicPath": null,
   "description": "Bulls & Cows game",
   "name": "Bulls & Cows",
   "lang": "en-US",
-  "background_color": "#606060",
   "display": "fullscreen",
-  "start_url": "./",
+  "orientation": "portrait",
+  "short_name": "b&c",
+  "background_color": "#606060",
   "theme-color": "#606060",
+  "start_url": "./",
   "theme_color": "#606060"
 }

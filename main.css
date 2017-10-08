@@ -90,6 +90,16 @@ button {
   margin: auto;
   text-align: center; }
 
+.menu__group {
+  margin: 0; }
+  .menu__group:not(:last-child):after {
+    content: '';
+    display: block;
+    width: 48%;
+    height: 1px;
+    margin: 8px auto;
+    background-color: currentColor; }
+
 .menu__btn {
   width: 100%;
   border: none;
@@ -100,12 +110,6 @@ button {
   transition: opacity 0.2s ease-in; }
   .menu__btn:hover {
     opacity: 0.75; }
-
-.menu__separator:first-child, .menu__separator:last-child {
-  display: none; }
-
-.menu__default-separator-element {
-  width: 60%; }
 
 .main {
   padding: 0 16px; }
