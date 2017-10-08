@@ -5,6 +5,9 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import App from './js/components/sceneManager';
 
+import { preventPullDownToRefresh } from 'js/utils';
+preventPullDownToRefresh();
+
 import './styles/main.scss';
 import svgxhr from 'webpack-svgstore-plugin/src/helpers/svgxhr';
 const __sprite__ = { path: './assets/svg/*.svg', name: 'assets/sprite.svg' };
