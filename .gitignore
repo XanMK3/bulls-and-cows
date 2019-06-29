@@ -4,6 +4,7 @@ bower_components
 *~
 dist/
 build/
+.env
 .idea
 .vscode
 *.lock
