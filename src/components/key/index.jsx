@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import './style';
 
 const Key = ({ exactMatch, looseMatch }) => (
     <div className='key-panel'>

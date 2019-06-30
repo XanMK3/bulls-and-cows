@@ -3,10 +3,12 @@ import { DragDropContext } from 'react-dnd';
 import TouchBackend from 'react-dnd-touch-backend';
 import CustomDragLayer from 'components/customDragLayer';
 import Header from 'components/gameHeader';
-import { Board, ActiveBoard } from 'components/board';
 import { Win as WinScreen, Fail as FailScreen } from 'components/gameEndScreen';
+import Board from 'components/board';
+import ActiveBoard from 'components/boardActive';
 import { getRandomArray, isEqual } from 'utils';
 import { GAME_STATUS } from 'const';
+import './style';
 
 class Game extends Component {
     constructor(props) {
@@ -22,7 +24,9 @@ class Game extends Component {
 
     change = (i) => {
         const currentTry = this.state.currentTry.slice();
-        currentTry[i] >= this.state.currentTry.length - 1 ? currentTry[i] = 0 : currentTry[i]++;
+        currentTry[i] >= this.state.currentTry.length - 1
+            ? currentTry[i] = 0
+            : currentTry[i]++;
         this.setState({ currentTry });
     }
 
@@ -33,28 +37,38 @@ class Game extends Component {
     }
 
     submit = () => {
-        const equal = isEqual(this.state.currentTry, this.state.secret);
+        const {
+            currentTry, secret, history, attemptsNumber,
+        } = this.state;
 
-        if (equal) {
+        if (isEqual(currentTry, secret)) {
             this.setState({ status: GAME_STATUS.WIN });
         }
-        else if (this.state.history.length + 1 == this.state.attemptsNumber) {
+        else if (history.length + 1 === attemptsNumber) {
             this.setState({ status: GAME_STATUS.FAIL });
         }
 
-        const history = this.state.history.slice();
-        history.push(this.state.currentTry.slice());
-        this.setState({ history });
+        const newHistory = [...history, currentTry];
+        this.setState({ history: newHistory });
     }
 
     renderLastLine() {
         const { restart } = this.props;
-        const { secret, currentTry, status } = this.state;
+        const {
+            secret, history, currentTry, status,
+        } = this.state;
 
         switch (status) {
             case GAME_STATUS.PROGRESS:
-                return <ActiveBoard guess={currentTry} tryNumber={this.state.history.length}
-                    onChange={this.change} onSwap={this.swap} onSubmit={this.submit} />
+                return (
+                    <ActiveBoard
+                        guess={currentTry}
+                        tryNumber={history.length}
+                        onChange={this.change}
+                        onSwap={this.swap}
+                        onSubmit={this.submit}
+                    />
+                );
             case GAME_STATUS.WIN:
                 return <WinScreen secret={secret} restart={restart} />;
             case GAME_STATUS.FAIL:
@@ -76,6 +90,7 @@ class Game extends Component {
                     attempt={history.length}
                     toggleMenu={toggleMenu}
                 />
+                {/* eslint-disable-next-line react/no-array-index-key */}
                 {history.map((entry, i) => <Board key={i} secret={secret} guess={entry} />)}
                 {this.renderLastLine()}
                 <CustomDragLayer />

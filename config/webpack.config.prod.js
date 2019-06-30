@@ -1,3 +1,4 @@
+const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const baseConfig = require('./webpack.config.js');
@@ -19,6 +20,14 @@ const prodConfig = Object.assign({}, baseConfig, {
                     },
                     'css-loader',
                     'sass-loader',
+                    {
+                        loader: 'sass-resources-loader',
+                        options: {
+                            resources: [
+                                path.resolve(__dirname, '../src/styles/variables.scss'),
+                            ],
+                        },
+                    },
                 ],
             },
             {

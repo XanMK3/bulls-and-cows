@@ -1,3 +1,4 @@
+const path = require('path');
 const baseConfig = require('./webpack.config.js');
 
 const devConfig = Object.assign({}, baseConfig, {
@@ -25,7 +26,19 @@ const devConfig = Object.assign({}, baseConfig, {
             },
             {
                 test: /\.css$|\.scss$/,
-                use: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap'],
+                use: [
+                    'style-loader',
+                    'css-loader?sourceMap',
+                    'sass-loader?sourceMap',
+                    {
+                        loader: 'sass-resources-loader',
+                        options: {
+                            resources: [
+                                path.resolve(__dirname, '../src/styles/variables.scss'),
+                            ],
+                        },
+                    },
+                ],
             },
             {
                 test: /\.(jpg|png|svg|woff|woff2|eot|ttf)$/,

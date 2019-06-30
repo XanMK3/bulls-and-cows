@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import fadeIn from 'components/fadeInHOC';
+import fadeIn from 'components/fadeInHoc';
 import Board from 'components/board';
 
 const Fail = ({ restart, secret }) => (

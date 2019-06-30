@@ -4,13 +4,13 @@ export function getId() {
     return id++;
 }
 
-export function getRandomInt() {
+export function getRandomInt(...args) {
     if (arguments.length === 1) {
-        const max = arguments[0];
+        const max = args[0];
         return Math.floor(max * Math.random());
     }
-    const min = arguments[0];
-    const max = arguments[1];
+    const min = args[0];
+    const max = args[1];
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
@@ -19,7 +19,7 @@ export function getRandomArray(n) {
 }
 
 export function isEqual(a1, a2) {
-    return a1.length == a2.length && a1.every((v, i) => v === a2[i]);
+    return a1.length === a2.length && a1.every((v, i) => v === a2[i]);
 }
 
 export function countMatchElements(array, target) {
@@ -48,11 +48,11 @@ export function preventPullDownToRefresh() {
     let lastTouchY = 0;
 
     const touchstartHandler = function (e) {
-        if (e.touches.length != 1) return;
+        if (e.touches.length !== 1) return;
         lastTouchY = e.touches[0].clientY;
         // Pull-to-refresh will only trigger if the scroll begins when the
         // document's Y offset is zero.
-        maybePreventPullToRefresh = window.pageYOffset == 0;
+        maybePreventPullToRefresh = window.pageYOffset === 0;
     };
 
     const touchmoveHandler = function (e) {

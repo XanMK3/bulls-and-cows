@@ -37,8 +37,8 @@ function collectTarget(connect, monitor) {
 const DraggableBall = ({
     connectDragSource, connectDropTarget, readOnly, ...otherProps
 }) => (readOnly
-    ? <Ball {...otherProps} />
-    : connectDragSource(connectDropTarget(<div><Ball {...otherProps} /></div>))
+    ? <Ball readOnly={readOnly} {...otherProps} />
+    : connectDragSource(connectDropTarget(<div><Ball readOnly={readOnly} {...otherProps} /></div>))
 );
 
 const dndSource = DragSource(ITEM_TYPES.BALL, dragSource, collectSource);

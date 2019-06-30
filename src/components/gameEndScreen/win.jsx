@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import fadeIn from 'components/fadeInHOC';
+import fadeIn from 'components/fadeInHoc';
 
 const Win = ({ restart, secret }) => (
     <div className='game-result'>

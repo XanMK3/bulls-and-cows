@@ -1,8 +1,9 @@
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const SvgStore = require('webpack-svgstore-plugin');
 
 const srcPath = path.join(__dirname, '../src/');
@@ -19,7 +20,7 @@ module.exports = {
     },
     output: {
         path: distPath,
-        filename: 'app.js',
+        filename: '[name].js',
         publicPath: '',
     },
     resolve: {
@@ -29,10 +30,12 @@ module.exports = {
     plugins: [
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.NamedModulesPlugin(),
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'index.html',
             inject: true,
+            excludeChunks: ['service-worker'],
         }),
         new WebpackPwaManifest({
             name: 'Bulls & Cows',
@@ -54,15 +57,12 @@ module.exports = {
             ],
             fingerprints: false,
         }),
-        new SvgStore({
-            svgoOptions: {
-                plugins: [],
-            },
-            prefix: '',
-        }),
         new CopyWebpackPlugin([
             { from: 'service-worker.js', to: distPath },
             { from: path.join(srcPath, 'assets/icons'), to: path.join(distPath, 'assets/icons') },
         ]),
+        new SvgStore({
+            prefix: '',
+        }),
     ],
 };

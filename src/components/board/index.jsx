@@ -1,12 +1,15 @@
 ﻿import React, { PureComponent } from 'react';
 import Key from 'components/key';
-import { DraggableBall as Ball } from 'components/ball';
+import Ball from 'components/ballDraggable';
 import { countMatchElements } from 'utils';
+import './style';
 
 class Board extends PureComponent {
     getKey() {
         const { guess, secret } = this.props;
-        return secret ? countMatchElements(guess, secret) : {};
+        return secret
+            ? countMatchElements(guess, secret)
+            : {};
     }
 
     render() {

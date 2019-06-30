@@ -22,6 +22,7 @@
 		"@babel/register": "^7.0.0",
 		"babel-eslint": "^10.0.1",
 		"babel-loader": "^8.0.4",
+		"clean-webpack-plugin": "^3.0.0",
 		"copy-webpack-plugin": "^4.0.1",
 		"css-loader": "^0.28.4",
 		"eslint": "^5.9.0",
@@ -37,8 +38,8 @@
 		"mini-css-extract-plugin": "^0.6.0",
 		"node-sass": "^4.11.0",
 		"react-hot-loader": "^4.11.1",
-		"rimraf": "^2.6.3",
 		"sass-loader": "^6.0.6",
+		"sass-resources-loader": "^2.0.1",
 		"style-loader": "^0.18.2",
 		"webpack": "^4.25.1",
 		"webpack-cli": "^3.1.2",
@@ -47,15 +48,11 @@
 		"webpack-svgstore-plugin": "^4.1.0"
 	},
 	"scripts": {
-		"clean": "rimraf dist/*",
 		"start": "webpack-dev-server --open --inline --hot --config ./config/webpack.config.dev.js",
-		"prebuild": "npm run clean",
 		"build": "webpack --config ./config/webpack.config.prod.js",
 		"eslint": "node_modules/.bin/eslint.cmd --ext .js --ext .jsx ./src",
 		"eslint:fix": "node_modules/.bin/eslint.cmd --ext .js --ext .jsx ./src --fix",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"prebundleAnalyzer": "npm run clean && webpack --config ./config/webpack.config.prod.js --profile --json > dist/stats.json",
-		"bundleAnalyzer": "webpack-bundle-analyzer dist/stats.json",
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d dist"
 	}

@@ -1,0 +1,15 @@
+$fadeTimeout: 0.4s;
+
+.fade-in-animation {
+    animation: fade-in-animation $fadeTimeout ease-in;
+}
+
+@keyframes fade-in-animation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
