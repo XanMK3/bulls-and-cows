@@ -1,5 +1,5 @@
 /* eslint-disable */
-const CACHE = 'bulls&cows-v1.0.0-beta';
+const CACHE = 'bulls&cows-v1.0.0';
 const precacheFiles = [
     './',
     './main.css',
