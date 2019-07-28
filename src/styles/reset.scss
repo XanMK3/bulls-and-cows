@@ -10,6 +10,8 @@ body {
         "Droid Sans", "Helvetica Neue", sans-serif;
     background-color: $mainBgColor;
     color: $mainColor;
+    /* Disables pull-to-refresh but allows overscroll glow effects. */
+    overscroll-behavior-y: contain;
 }
 
 h1, h2 {

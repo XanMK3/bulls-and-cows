@@ -66,34 +66,3 @@ const isSmoothScrollSupported = 'scrollBehavior' in document.documentElement.sty
 export function checkSmoothScrollSupport() {
     return isSmoothScrollSupported;
 }
-
-export function preventPullDownToRefresh() {
-    let maybePreventPullToRefresh = false;
-    let lastTouchY = 0;
-
-    const touchstartHandler = function touchstart(e) {
-        if (e.touches.length !== 1) return;
-        lastTouchY = e.touches[0].clientY;
-        // Pull-to-refresh will only trigger if the scroll begins when the
-        // document's Y offset is zero.
-        maybePreventPullToRefresh = window.pageYOffset === 0;
-    };
-
-    const touchmoveHandler = function touchmove(e) {
-        const touchY = e.touches[0].clientY;
-        const touchYDelta = touchY - lastTouchY;
-        lastTouchY = touchY;
-
-        if (maybePreventPullToRefresh) {
-            // To suppress pull-to-refresh it is sufficient to preventDefault the
-            // first overscrolling touchmove.
-            maybePreventPullToRefresh = false;
-            if (touchYDelta > 0) {
-                e.preventDefault();
-            }
-        }
-    };
-
-    document.addEventListener('touchstart', touchstartHandler, { passive: false });
-    document.addEventListener('touchmove', touchmoveHandler, { passive: false });
-}
