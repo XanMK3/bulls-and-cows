@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
 import Ball from 'components/ball';
 import { ITEM_TYPES } from 'const';

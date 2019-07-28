@@ -1,4 +1,4 @@
-﻿export const GAME_STATUS = {
+export const GAME_STATUS = {
     PROGRESS: 'progress',
     WIN: 'win',
     FAIL: 'fail',

@@ -1,4 +1,4 @@
-﻿import React, { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import {
     Menu, MenuGroup, MenuItem, SubMenu,
 } from 'components/menu';

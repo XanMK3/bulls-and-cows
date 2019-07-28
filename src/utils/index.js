@@ -14,8 +14,8 @@ export function getRandomInt(...args) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export function getRandomArray(n) {
-    return Array.apply(null, { length: n }).map(() => getRandomInt(n - 1));
+export function getRandomArray(length) {
+    return Array.from({ length }).map(() => getRandomInt(length - 1));
 }
 
 export function isEqual(a1, a2) {
@@ -23,16 +23,40 @@ export function isEqual(a1, a2) {
 }
 
 export function countMatchElements(array, target) {
-    const exactMatch = target.reduce((sum, v, i) => v === array[i] ? ++sum : sum, 0);
+    const exactMatch = target.reduce((sum, v, i) => (v === array[i] ? ++sum : sum), 0);
 
-    const sortedTarget = target.slice().sort((a, b) => a > b).reduce((obj, v) =>
-        (obj[v] > 0 ? obj[v]++ : obj[v] = 1, obj), {});
+    const sortedTarget = [...target]
+        .sort((a, b) => a > b)
+        .reduce((obj, v) => {
+            if (obj[v] > 0) {
+                obj[v]++;
+            }
+            else {
+                obj[v] = 1;
+            }
 
-    const sortedArray = array.slice().sort((a, b) => a > b).reduce((obj, v) =>
-        (obj[v] > 0 ? obj[v]++ : obj[v] = 1, obj), {});
+            return obj;
+        }, {});
 
-    const looseMatch = Object.keys(sortedTarget).reduce((matchNumber, key) =>
-        matchNumber += Math.min(sortedTarget[key], sortedArray[key] || 0), 0) - exactMatch;
+    const sortedArray = [...array]
+        .sort((a, b) => a > b)
+        .reduce((obj, v) => {
+            if (obj[v] > 0) {
+                obj[v]++;
+            }
+            else {
+                obj[v] = 1;
+            }
+
+            return obj;
+        }, {});
+
+    const looseMatch = Object
+        .keys(sortedTarget)
+        .reduce(
+            (matchNumber, key) => matchNumber + Math.min(sortedTarget[key], sortedArray[key] || 0),
+            0,
+        ) - exactMatch;
 
     return { exactMatch, looseMatch };
 }
@@ -47,7 +71,7 @@ export function preventPullDownToRefresh() {
     let maybePreventPullToRefresh = false;
     let lastTouchY = 0;
 
-    const touchstartHandler = function (e) {
+    const touchstartHandler = function touchstart(e) {
         if (e.touches.length !== 1) return;
         lastTouchY = e.touches[0].clientY;
         // Pull-to-refresh will only trigger if the scroll begins when the
@@ -55,7 +79,7 @@ export function preventPullDownToRefresh() {
         maybePreventPullToRefresh = window.pageYOffset === 0;
     };
 
-    const touchmoveHandler = function (e) {
+    const touchmoveHandler = function touchmove(e) {
         const touchY = e.touches[0].clientY;
         const touchYDelta = touchY - lastTouchY;
         lastTouchY = touchY;
@@ -66,7 +90,6 @@ export function preventPullDownToRefresh() {
             maybePreventPullToRefresh = false;
             if (touchYDelta > 0) {
                 e.preventDefault();
-                return;
             }
         }
     };

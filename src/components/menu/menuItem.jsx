@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 
 const MenuItem = ({ handler, children }) => (
     <li className='menu__item'>

@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
 import TouchBackend from 'react-dnd-touch-backend';
 import CustomDragLayer from 'components/customDragLayer';
@@ -16,24 +16,34 @@ class Game extends Component {
         this.state = {
             secret: getRandomArray(props.numberOfHoles),
             history: [],
-            currentTry: Array.apply(null, { length: props.numberOfHoles }).map((v, i) => i),
+            currentTry: Array.from({ length: props.numberOfHoles }).map((v, i) => i),
             attemptsNumber: (2 * props.numberOfHoles - 4) * 2,
             status: GAME_STATUS.PROGRESS,
         };
     }
 
     change = (i) => {
-        const currentTry = this.state.currentTry.slice();
-        currentTry[i] >= this.state.currentTry.length - 1
-            ? currentTry[i] = 0
-            : currentTry[i]++;
-        this.setState({ currentTry });
+        const { numberOfHoles } = this.props;
+        const { currentTry } = this.state;
+        const newTry = [...currentTry];
+
+        if (newTry[i] >= numberOfHoles - 1) {
+            newTry[i] = 0;
+        }
+        else {
+            newTry[i]++;
+        }
+
+        this.setState({ currentTry: newTry });
     }
 
     swap = (i1, i2) => {
-        const currentTry = this.state.currentTry.slice();
-        [currentTry[i1], currentTry[i2]] = [currentTry[i2], currentTry[i1]];
-        this.setState({ currentTry });
+        const { currentTry } = this.state;
+        const newTry = [...currentTry];
+
+        [newTry[i1], newTry[i2]] = [newTry[i2], newTry[i1]];
+
+        this.setState({ currentTry: newTry });
     }
 
     submit = () => {
@@ -59,7 +69,11 @@ class Game extends Component {
         } = this.state;
 
         switch (status) {
-            case GAME_STATUS.PROGRESS:
+            case GAME_STATUS.WIN:
+                return <WinScreen secret={secret} restart={restart} />;
+            case GAME_STATUS.FAIL:
+                return <FailScreen secret={secret} restart={restart} />;
+            default:
                 return (
                     <ActiveBoard
                         guess={currentTry}
@@ -69,10 +83,6 @@ class Game extends Component {
                         onSubmit={this.submit}
                     />
                 );
-            case GAME_STATUS.WIN:
-                return <WinScreen secret={secret} restart={restart} />;
-            case GAME_STATUS.FAIL:
-                return <FailScreen secret={secret} restart={restart} />;
         }
     }
 

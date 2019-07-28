@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { DragLayer } from 'react-dnd';
 import Ball from 'components/ball';
 import { ITEM_TYPES } from 'const';

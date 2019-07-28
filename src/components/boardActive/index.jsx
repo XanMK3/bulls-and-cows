@@ -1,4 +1,4 @@
-﻿import React, { memo } from 'react';
+import React, { memo } from 'react';
 import fadeIn from 'components/fadeInHoc';
 import Board from 'components/board';
 

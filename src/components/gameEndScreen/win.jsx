@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import fadeIn from 'components/fadeInHoc';
 
 const Win = ({ restart, secret }) => (

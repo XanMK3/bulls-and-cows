@@ -1,3 +1,4 @@
+/* eslint-disable */
 const CACHE = 'bulls&cows-v1.0.0-beta';
 const precacheFiles = [
     './',
@@ -6,30 +7,24 @@ const precacheFiles = [
     './assets/sprite.svg',
 ];
 
-self.addEventListener('install', function (e) {
+self.addEventListener('install', (e) => {
     e.waitUntil(
-        caches.open(CACHE).then(function (cache) {
-            return cache.addAll(precacheFiles);
-        })
+        caches.open(CACHE).then(cache => cache.addAll(precacheFiles)),
     );
 });
 
-self.addEventListener('activate', function (e) {
+self.addEventListener('activate', (e) => {
     e.waitUntil(
-        caches.keys().then(function (keyList) {
-            return Promise.all(keyList.map(function (key) {
-                if (key !== CACHE) {
-                    return caches.delete(key);
-                }
-            }));
-        })
+        caches.keys().then(keyList => Promise.all(keyList.map((key) => {
+            if (key !== CACHE) {
+                return caches.delete(key);
+            }
+        }))),
     );
 });
 
-self.addEventListener('fetch', function (e) {
+self.addEventListener('fetch', (e) => {
     e.respondWith(
-        caches.match(e.request).then(function (response) {
-            return response || fetch(e.request);
-        })
+        caches.match(e.request).then(response => response || fetch(e.request)),
     );
 });

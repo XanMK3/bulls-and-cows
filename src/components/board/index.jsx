@@ -1,4 +1,4 @@
-﻿import React, { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import Key from 'components/key';
 import Ball from 'components/ballDraggable';
 import { countMatchElements } from 'utils';

@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+import React, { Component } from 'react';
 import Game from 'components/game';
 import GameMenu from 'components/gameMenu';
 import { getId } from 'utils';
