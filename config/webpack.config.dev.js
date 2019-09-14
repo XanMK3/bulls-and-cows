@@ -56,4 +56,8 @@ const devConfig = Object.assign({}, baseConfig, {
     },
 });
 
+devConfig.resolve.alias = {
+    'react-dom': '@hot-loader/react-dom',
+};
+
 module.exports = devConfig;

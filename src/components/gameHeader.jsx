@@ -2,7 +2,10 @@ import React from 'react';
 import Status from 'components/status';
 
 const Header = ({
-    status, attemptsNumber, attempt, toggleMenu,
+    status,
+    attemptsNumber,
+    attempt,
+    toggleMenu,
 }) => (
     <header className='game-header'>
         <div className='game-header__stats'>

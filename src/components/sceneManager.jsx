@@ -35,16 +35,13 @@ class SceneManager extends Component {
         return (
             <div>
                 <main className='main'>
-                    {game != null
-                        ? (
-                            <Game
-                                {...game}
-                                restart={this.startNewGame}
-                                toggleMenu={this.toggleMenu}
-                            />
-                        )
-                        : null
-                    }
+                    {game && (
+                        <Game
+                            {...game}
+                            restart={this.startNewGame}
+                            toggleMenu={this.toggleMenu}
+                        />
+                    )}
                 </main>
                 <GameMenu
                     isOpen={isMenuOpen}
