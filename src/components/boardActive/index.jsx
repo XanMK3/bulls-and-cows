@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import fadeIn from 'components/fadeInHoc';
 import Board from 'components/board';
 
-const ActiveBoard = memo(props => (
+const ActiveBoard = memo((props) => (
     <Board {...props} active />
 ));
 

@@ -20,6 +20,6 @@ ReactDOM.render(
             // eslint-disable-next-line no-console
             .then(() => console.info('Service Worker registered successfully.'))
             // eslint-disable-next-line no-console
-            .catch(error => console.error('Service Worker registration failed:', error));
+            .catch((error) => console.error('Service Worker registration failed:', error));
     }
 }());

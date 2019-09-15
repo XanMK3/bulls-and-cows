@@ -4,7 +4,13 @@ import { COLORS } from 'const';
 import './style';
 
 const Ball = ({
-    index, type, readOnly, isDragging, isOver, preview, onChange,
+    index,
+    kind,
+    readOnly,
+    isDragging,
+    isOver,
+    preview,
+    onChange,
 }) => (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
@@ -23,7 +29,7 @@ const Ball = ({
                 onChange(index);
             }}
     >
-        <span className='ball__content' style={{ backgroundColor: COLORS[type] }} />
+        <span className='ball__content' style={{ backgroundColor: COLORS[kind] }} />
     </div>
 );
 

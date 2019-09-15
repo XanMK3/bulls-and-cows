@@ -1,46 +1,70 @@
 import React from 'react';
-import { DragSource, DropTarget } from 'react-dnd';
+import {
+    useDrag,
+    useDrop,
+} from 'react-dnd';
 import Ball from 'components/ball';
 import { ITEM_TYPES } from 'const';
 
-const dragSource = {
-    beginDrag(props) {
-        return {
-            index: props.index,
-            type: props.type,
-        };
-    },
-};
-
-const dropTarget = {
-    drop(props, monitor) {
-        const dragIndex = monitor.getItem().index;
-        const dropIndex = props.index;
-        if (dragIndex !== dropIndex) props.onSwap(dragIndex, dropIndex);
-    },
-};
-
-function collectSource(connect, monitor) {
+function collectSource(monitor) {
     return {
-        connectDragSource: connect.dragSource(),
         isDragging: monitor.isDragging(),
     };
 }
 
-function collectTarget(connect, monitor) {
+function collectTarget(monitor) {
     return {
-        connectDropTarget: connect.dropTarget(),
         isOver: monitor.isOver(),
     };
 }
 
 const DraggableBall = ({
-    connectDragSource, connectDropTarget, readOnly, ...otherProps
-}) => (readOnly
-    ? <Ball readOnly={readOnly} {...otherProps} />
-    : connectDragSource(connectDropTarget(<div><Ball readOnly={readOnly} {...otherProps} /></div>))
-);
+    index,
+    kind,
+    readOnly,
+    onSwap,
+    onChange,
+}) => {
+    const [{ isDragging }, dragSource] = useDrag({
+        item: { type: ITEM_TYPES.BALL, kind, index },
+        collect: collectSource,
+    });
 
-const dndSource = DragSource(ITEM_TYPES.BALL, dragSource, collectSource);
-const dndTarget = DropTarget(ITEM_TYPES.BALL, dropTarget, collectTarget);
-export default dndSource(dndTarget(DraggableBall));
+    const [{ isOver }, dropTarget] = useDrop({
+        accept: ITEM_TYPES.BALL,
+        drop: (props) => {
+            const sourceIndex = props.index;
+            const targetIndex = index;
+            if (sourceIndex !== targetIndex) onSwap(sourceIndex, targetIndex);
+        },
+        collect: collectTarget,
+    });
+
+    if (readOnly) {
+        return (
+            <Ball
+                index={index}
+                kind={kind}
+                readOnly={readOnly}
+                isDragging={isDragging}
+                isOver={isOver}
+                onChange={onChange}
+            />
+        );
+    }
+
+    return (
+        <div ref={(node) => dragSource(dropTarget(node))}>
+            <Ball
+                index={index}
+                kind={kind}
+                readOnly={readOnly}
+                isDragging={isDragging}
+                isOver={isOver}
+                onChange={onChange}
+            />
+        </div>
+    );
+};
+
+export default DraggableBall;

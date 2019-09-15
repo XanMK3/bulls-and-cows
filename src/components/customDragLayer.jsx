@@ -1,49 +1,46 @@
-import React, { Component } from 'react';
-import { DragLayer } from 'react-dnd';
+import React from 'react';
+import { useDragLayer } from 'react-dnd';
 import Ball from 'components/ball';
 import { ITEM_TYPES } from 'const';
 
-function getItemStyles(props) {
-    const { currentOffset } = props;
-    return { transform: `translate(${currentOffset.x}px,${currentOffset.y}px)` };
-}
+const collect = (monitor) => ({
+    item: monitor.getItem(),
+    itemType: monitor.getItemType(),
+    currentOffset: monitor.getSourceClientOffset(),
+    initialOffset: monitor.getInitialSourceClientOffset(),
+    isDragging: monitor.isDragging(),
+    didDrop: monitor.didDrop(),
+});
 
-function collect(monitor) {
-    return {
-        item: monitor.getItem(),
-        itemType: monitor.getItemType(),
-        currentOffset: monitor.getSourceClientOffset(),
-        initialOffset: monitor.getInitialSourceClientOffset(),
-        isDragging: monitor.isDragging(),
-        didDrop: monitor.didDrop(),
-    };
-}
+const getItemStyles = ({ x, y }) => ({ transform: `translate(${x}px,${y}px)` });
 
-class CustomDragLayer extends Component {
-    static renderItem(type, item) {
-        switch (type) {
-            case ITEM_TYPES.BALL:
-                return <Ball type={item.type} readOnly preview />;
-            default:
-                return null;
-        }
+const renderItem = (type, item) => {
+    switch (type) {
+        case ITEM_TYPES.BALL:
+            return <Ball kind={item.kind} readOnly preview />;
+        default:
+            return null;
     }
+};
 
-    render() {
-        const {
-            item, itemType, isDragging, didDrop,
-        } = this.props;
+const CustomDragLayer = () => {
+    const {
+        item,
+        itemType,
+        currentOffset,
+        isDragging,
+        didDrop,
+    } = useDragLayer(collect);
 
-        if (!isDragging || didDrop) return null;
+    if (!isDragging || didDrop) return null;
 
-        return (
-            <div className='custom-drag-layer'>
-                <div style={getItemStyles(this.props)}>
-                    {this.constructor.renderItem(itemType, item)}
-                </div>
+    return (
+        <div className='custom-drag-layer'>
+            <div style={getItemStyles(currentOffset)}>
+                {renderItem(itemType, item)}
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
-export default DragLayer(collect)(CustomDragLayer);
+export default CustomDragLayer;

@@ -25,12 +25,12 @@ const Board = memo(({
     return (
         <div className='board'>
             <ul className='guess-panel'>
-                {guess.map((type, i) => (
+                {guess.map((kind, i) => (
                     // eslint-disable-next-line react/no-array-index-key
                     <li className='guess-panel__item' key={i}>
                         <Ball
                             index={i}
-                            type={type}
+                            kind={kind}
                             readOnly={!active}
                             onChange={onChange}
                             onSwap={onSwap}
@@ -44,8 +44,7 @@ const Board = memo(({
                         <svg className='svg-icon'><use xlinkHref='assets/sprite.svg#check' /></svg>
                     </button>
                 )
-                : <Key {...getKey()} />
-            }
+                : <Key {...getKey()} />}
         </div>
     );
 });

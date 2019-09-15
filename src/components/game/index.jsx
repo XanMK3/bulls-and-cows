@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DragDropContext } from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import TouchBackend from 'react-dnd-touch-backend';
 import CustomDragLayer from 'components/customDragLayer';
 import Header from 'components/gameHeader';
@@ -93,20 +93,22 @@ class Game extends Component {
         } = this.state;
 
         return (
-            <div className='game'>
-                <Header
-                    status={status}
-                    attemptsNumber={attemptsNumber}
-                    attempt={history.length}
-                    toggleMenu={toggleMenu}
-                />
-                {/* eslint-disable-next-line react/no-array-index-key */}
-                {history.map((entry, i) => <Board key={i} secret={secret} guess={entry} />)}
-                {this.renderLastLine()}
-                <CustomDragLayer />
-            </div>
+            <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
+                <div className='game'>
+                    <Header
+                        status={status}
+                        attemptsNumber={attemptsNumber}
+                        attempt={history.length}
+                        toggleMenu={toggleMenu}
+                    />
+                    {/* eslint-disable-next-line react/no-array-index-key */}
+                    {history.map((entry, i) => <Board key={i} secret={secret} guess={entry} />)}
+                    {this.renderLastLine()}
+                    <CustomDragLayer />
+                </div>
+            </DndProvider>
         );
     }
 }
 
-export default DragDropContext(TouchBackend({ enableMouseEvents: true }))(Game);
+export default Game;
