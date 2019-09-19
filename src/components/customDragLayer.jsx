@@ -19,7 +19,7 @@ const renderItem = (type, item) => {
         case ITEM_TYPES.BALL:
             return <Ball kind={item.kind} readOnly preview />;
         default:
-            return null;
+            return <p>{type}</p>;
     }
 };
 

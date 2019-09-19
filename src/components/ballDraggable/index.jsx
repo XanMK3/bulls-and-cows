@@ -40,28 +40,22 @@ const DraggableBall = ({
         collect: collectTarget,
     });
 
-    if (readOnly) {
-        return (
-            <Ball
-                index={index}
-                kind={kind}
-                readOnly={readOnly}
-                isDragging={isDragging}
-                isOver={isOver}
-                onChange={onChange}
-            />
-        );
-    }
-
     return (
-        <div ref={(node) => dragSource(dropTarget(node))}>
+        <div
+            ref={(node) => {
+                if (!readOnly) {
+                    return dragSource(dropTarget(node));
+                }
+                return null;
+            }}
+        >
             <Ball
                 index={index}
                 kind={kind}
-                readOnly={readOnly}
+                active={!readOnly}
                 isDragging={isDragging}
                 isOver={isOver}
-                onChange={onChange}
+                onChange={!readOnly && onChange}
             />
         </div>
     );

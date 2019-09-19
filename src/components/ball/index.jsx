@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import cn from 'classnames';
 import { COLORS } from 'const';
@@ -6,28 +8,26 @@ import './style';
 const Ball = ({
     index,
     kind,
-    readOnly,
+    active,
     isDragging,
     isOver,
     preview,
     onChange,
 }) => (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
         className={cn(
-            'ball',
-            {
-                active: !readOnly,
+            'ball', {
+                active,
+                preview,
                 dradding: isDragging,
                 over: isOver,
-                preview,
             },
         )}
-        onClick={readOnly
-            ? null
-            : () => {
+        onClick={() => {
+            if (onChange) {
                 onChange(index);
-            }}
+            }
+        }}
     >
         <span className='ball__content' style={{ backgroundColor: COLORS[kind] }} />
     </div>
