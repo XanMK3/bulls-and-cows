@@ -1,57 +1,43 @@
-import React, { Component } from 'react';
+import React, {
+    useState,
+    useCallback,
+} from 'react';
 import Game from 'components/game';
 import GameMenu from 'components/gameMenu';
+import { useToggle } from 'hooks';
 import { getId } from 'utils';
 
 const DEFAULT_HOLES_NUMBER = 4;
 
-class SceneManager extends Component {
-    state = {
-        game: null,
-        isMenuOpen: true,
-    }
-
-    startNewGame = (max = DEFAULT_HOLES_NUMBER) => {
-        this.setState({
-            game: {
-                key: getId(),
-                numberOfHoles: max,
-            },
+const SceneManager = () => {
+    const [isMenuOpen, toggleMenu] = useToggle(true);
+    const [game, setGame] = useState(null);
+    const startNewGame = useCallback((max = DEFAULT_HOLES_NUMBER) => {
+        setGame({
+            key: getId(),
+            numberOfHoles: max,
         });
-    }
+    }, []);
 
-    toggleMenu = () => {
-        const { isMenuOpen } = this.state;
-        this.setState({ isMenuOpen: !isMenuOpen });
-    }
-
-    closeMenu = () => {
-        this.setState({ isMenuOpen: false });
-    }
-
-    render() {
-        const { game, isMenuOpen } = this.state;
-
-        return (
-            <div>
-                <main className='main'>
-                    {game && (
-                        <Game
-                            {...game}
-                            restart={this.startNewGame}
-                            toggleMenu={this.toggleMenu}
-                        />
-                    )}
-                </main>
-                <GameMenu
-                    isOpen={isMenuOpen}
-                    isGameStarted={game != null}
-                    close={this.closeMenu}
-                    startNewGame={this.startNewGame}
-                />
-            </div>
-        );
-    }
-}
+    return (
+        <div>
+            <main className='main'>
+                {game && (
+                    <Game
+                        {...game}
+                        restart={startNewGame}
+                        toggleMenu={toggleMenu}
+                    />
+                )}
+            </main>
+            <GameMenu
+                isOpen={isMenuOpen}
+                isGameStarted={game != null}
+                close={toggleMenu}
+                startNewGame={startNewGame}
+            />
+        </div>
+    );
+};
 
 export default SceneManager;
