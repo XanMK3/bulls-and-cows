@@ -12,4 +12,6 @@ const ActiveBoard = memo((props) => {
     );
 });
 
+ActiveBoard.displayName = 'ActiveBoard';
+
 export default ActiveBoard;

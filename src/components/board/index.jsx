@@ -49,4 +49,6 @@ const Board = memo(({
     );
 });
 
+Board.displayName = 'Board';
+
 export default Board;

@@ -70,4 +70,6 @@ const GameMenu = memo(({
     );
 });
 
+GameMenu.displayName = 'GameMenu';
+
 export default GameMenu;
