@@ -7,15 +7,13 @@ import GameMenu from 'components/gameMenu';
 import { useToggle } from 'hooks';
 import { getId } from 'utils';
 
-const DEFAULT_HOLES_NUMBER = 4;
-
 const SceneManager = () => {
     const [isMenuOpen, toggleMenu] = useToggle(true);
     const [game, setGame] = useState(null);
-    const startNewGame = useCallback((max = DEFAULT_HOLES_NUMBER) => {
+    const startNewGame = useCallback((max) => {
         setGame({
             key: getId(),
-            numberOfHoles: max,
+            secretLength: max,
         });
     }, []);
 

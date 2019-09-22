@@ -9,7 +9,7 @@ const Fail = ({ restart, secret }) => {
         <div ref={ref} className='game-result'>
             <hr />
             <p className='game-result__text'>You lose! Secret is:</p>
-            <Board guess={secret} />
+            <Board data={secret} />
             <div className='btn-block'>
                 <button type='button' className='btn-block__button' onClick={() => restart(secret.length)}>
                     {'Play again'}

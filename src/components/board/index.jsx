@@ -8,7 +8,7 @@ import { countMatchElements } from 'utils';
 import './style';
 
 const Board = memo(({
-    guess,
+    data,
     secret,
     active,
     onChange,
@@ -17,15 +17,15 @@ const Board = memo(({
 }) => {
     const getKey = useCallback(() => (
         secret
-            ? countMatchElements(guess, secret)
+            ? countMatchElements(data, secret)
             : {}
-    ), [guess, secret]);
+    ), [data, secret]);
 
 
     return (
         <div className='board'>
             <ul className='guess-panel'>
-                {guess.map((kind, i) => (
+                {data.map((kind, i) => (
                     // eslint-disable-next-line react/no-array-index-key
                     <li className='guess-panel__item' key={i}>
                         <Ball
