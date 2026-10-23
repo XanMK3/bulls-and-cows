@@ -1,7 +1,4 @@
-import React, {
-    memo,
-    useCallback,
-} from 'react';
+import React, { memo, useMemo } from 'react';
 import cn from 'classnames';
 import Key from 'components/key';
 import Ball from 'components/ballDraggable';
@@ -16,11 +13,7 @@ const Board = memo(({
     onSwap,
     onSubmit,
 }) => {
-    const getKey = useCallback(() => (
-        secret
-            ? countMatchElements(data, secret)
-            : {}
-    ), [data, secret]);
+    const keyData = useMemo(() => (secret ? countMatchElements(data, secret) : {}), [data, secret]);
 
     return (
         <div
@@ -53,7 +46,9 @@ const Board = memo(({
                         <svg className='svg-icon'><use xlinkHref='assets/sprite.svg#check' /></svg>
                     </button>
                 )
-                : <Key {...getKey()} />}
+                : secret
+                    ? <Key {...keyData} />
+                    : <div className='key-panel' style={{ visibility: 'hidden' }} />}
         </div>
     );
 });
