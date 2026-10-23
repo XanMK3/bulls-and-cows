@@ -1,7 +1,7 @@
 import React from 'react';
 import Status from 'components/status';
 
-const Header = ({
+const GameHeader = ({
     status,
     attemptsNumber,
     attempt,
@@ -46,4 +46,4 @@ const Header = ({
     </header>
 );
 
-export default Header;
+export default GameHeader;
