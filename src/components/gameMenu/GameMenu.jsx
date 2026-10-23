@@ -8,9 +8,7 @@ import {
     SubMenu,
 } from 'components/menu';
 import Tutorial from 'components/tutorial';
-import { useToggle } from 'hooks';
-
-const SCREEN_QUERY_LIST_360 = window.matchMedia('(min-width: 360px)');
+import { useToggle, useMediaQuery } from 'hooks';
 
 const GameMenu = memo(({
     isOpen,
@@ -21,6 +19,7 @@ const GameMenu = memo(({
     toggleTheme,
 }) => {
     const [isTutorialOpen, toggleTutorial] = useToggle(false);
+    const isWideScreen = useMediaQuery('(min-width: 360px)');
 
     return (
         <div>
@@ -47,7 +46,7 @@ const GameMenu = memo(({
                     >
                         New game - medium
                     </MenuItem>
-                    {SCREEN_QUERY_LIST_360.matches && (
+                    {isWideScreen && (
                         <MenuItem handler={() => {
                             startNewGame(6);
                             close();
