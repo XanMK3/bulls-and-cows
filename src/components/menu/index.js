@@ -1,7 +1,7 @@
-import Menu from './menu';
-import MenuGroup from './menuGroup';
-import MenuItem from './menuItem';
-import SubMenu from './subMenu';
+import Menu from './Menu';
+import MenuGroup from './MenuGroup';
+import MenuItem from './MenuItem';
+import SubMenu from './SubMenu';
 import './style';
 
 export {
