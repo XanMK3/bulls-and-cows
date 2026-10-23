@@ -5,5 +5,5 @@ self.addEventListener('activate', async () => {
   await Promise.all((await caches.keys()).map(k => caches.delete(k)));
   await self.registration.unregister();
   const clients = await self.clients.matchAll({ type: 'window' });
-  clients.forEach(c => c.navigate(c.url));
+  clients.forEach(c => { try { c.navigate(c.url); } catch (_) {} });
 });
