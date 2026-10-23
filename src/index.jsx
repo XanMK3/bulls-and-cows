@@ -4,6 +4,6 @@ import App from 'components/app';
 import 'styles/reset';
 
 ReactDOM.render(
-    <App />,
-    document.querySelector('.root'),
+  <App />,
+  document.querySelector('.root'),
 );

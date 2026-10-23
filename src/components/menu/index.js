@@ -5,10 +5,10 @@ import SubMenu from './SubMenu';
 import './style';
 
 export {
-    Menu,
-    MenuGroup,
-    MenuItem,
-    SubMenu,
+  Menu,
+  MenuGroup,
+  MenuItem,
+  SubMenu,
 };
 
 export default Menu;
