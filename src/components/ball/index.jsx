@@ -16,22 +16,31 @@ const Ball = ({
 }) => (
     <div
         className={cn(
-            'ball', {
+            'ball',
+            typeof kind === 'number' && `ball--color-${kind}`,
+            {
                 active,
                 preview,
                 dradding: isDragging,
                 over: isOver,
             },
         )}
+        style={{
+            '--ball-color': typeof kind === 'number' ? `var(--ball-${kind})` : undefined,
+        }}
         onClick={() => {
             if (onChange) {
                 onChange(index);
             }
         }}
     >
-        <span className='ball__content' style={{ backgroundColor: COLORS[kind] }} />
+        <span
+            className='ball__content'
+            style={{
+                backgroundColor: typeof kind === 'number' ? `var(--ball-${kind}, ${COLORS[kind]})` : undefined,
+            }}
+        />
     </div>
 );
-
 
 export default Ball;

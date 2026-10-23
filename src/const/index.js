@@ -9,11 +9,11 @@ export const ITEM_TYPES = {
 };
 
 export const COLORS = [
-    '#f44336',
-    '#ffeb3b',
-    '#66bb6a',
-    '#3d4eb8',
-    '#26c6da',
-    '#9c27b0',
-    '#ffa726',
+    '#f43f5e', // 0: Rose
+    '#fbbf24', // 1: Amber
+    '#22c55e', // 2: Leaf Green
+    '#2563eb', // 3: Royal Blue
+    '#38bdf8', // 4: Luminous Sky
+    '#d946ef', // 5: Fuchsia / Magenta
+    '#f97316', // 6: Coral Orange
 ];

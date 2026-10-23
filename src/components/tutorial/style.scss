@@ -1,5 +1,27 @@
 .tutorial {
-    padding: 8px 0;
+    padding: 16px 0 32px 0;
     margin-bottom: auto;
-    text-align: justify;
+    color: var(--text-main);
+    line-height: 1.6;
+
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--text-main);
+    }
+
+    p {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+    }
+
+    ol {
+        padding-left: 20px;
+        margin-bottom: 1.25rem;
+        color: var(--text-secondary);
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+    }
 }

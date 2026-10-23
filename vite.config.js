@@ -48,9 +48,60 @@ function svgSpritePlugin() {
     };
 }
 
+function directoryIndexPlugin() {
+    const extensions = ['.jsx', '.js', '.scss', '.css', '.json'];
+    const aliases = {
+        components: path.resolve(__dirname, 'src/components'),
+        const: path.resolve(__dirname, 'src/const'),
+        hooks: path.resolve(__dirname, 'src/hooks'),
+        styles: path.resolve(__dirname, 'src/styles'),
+        utils: path.resolve(__dirname, 'src/utils'),
+        assets: path.resolve(__dirname, 'src/assets'),
+    };
+
+    function tryResolve(target) {
+        if (fs.existsSync(target)) {
+            if (fs.statSync(target).isDirectory()) {
+                for (const ext of ['.jsx', '.js']) {
+                    const indexFile = path.join(target, `index${ext}`);
+                    if (fs.existsSync(indexFile)) return indexFile;
+                }
+            } else {
+                return target;
+            }
+        }
+        for (const ext of extensions) {
+            const file = `${target}${ext}`;
+            if (fs.existsSync(file)) return file;
+        }
+        return null;
+    }
+
+    return {
+        name: 'directory-index-resolver',
+        resolveId(source, importer) {
+            for (const [alias, dir] of Object.entries(aliases)) {
+                if (source === alias || source.startsWith(`${alias}/`)) {
+                    const subPath = source.slice(alias.length).replace(/^\//, '');
+                    const fullTarget = subPath ? path.join(dir, subPath) : dir;
+                    const resolved = tryResolve(fullTarget);
+                    if (resolved) return resolved;
+                }
+            }
+            if (importer && (source.startsWith('./') || source.startsWith('../'))) {
+                const target = path.resolve(path.dirname(importer), source);
+                const resolved = tryResolve(target);
+                if (resolved) return resolved;
+            }
+            return null;
+        },
+    };
+}
+
 export default defineConfig({
     base: './',
     plugins: [
+        directoryIndexPlugin(),
         react(),
         svgSpritePlugin(),
         VitePWA({

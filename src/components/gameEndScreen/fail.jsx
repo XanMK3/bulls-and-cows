@@ -12,7 +12,7 @@ const Fail = ({ restart, secret }) => {
             <Board data={secret} />
             <div className='btn-block'>
                 <button type='button' className='btn-block__button' onClick={() => restart(secret.length)}>
-                    {'Play again'}
+                    Play again
                 </button>
             </div>
         </div>

@@ -2,28 +2,42 @@
     display: flex;
     flex-shrink: 0;
     flex-wrap: wrap;
-    width: 40px;
-    height: 40px;
-    padding: 2px 0;
-    justify-content: space-around;
+    width: var(--action-size, 42px);
+    height: var(--action-size, 42px);
+    padding: 3px;
+    box-sizing: border-box;
+    justify-content: center;
     align-items: center;
+    align-content: center;
+    gap: 3px;
+    background: var(--key-panel-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .key {
-    margin: 2px 4px;
-    border: 1px solid;
-    width: 8px;
-    height: 8px;
+    width: var(--key-size, 10px);
+    height: var(--key-size, 10px);
+    flex-shrink: 0;
     display: inline-block;
     border-radius: 50%;
+    box-sizing: border-box;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+
     &.bull {
-        background-color: black;
+        background: var(--key-bull-bg);
+        border: 1px solid var(--key-bull-border);
+        box-shadow: var(--key-bull-shadow);
     }
+
     &.cow {
-        background-color: white;
+        background: var(--key-cow-bg);
+        border: 1px solid var(--key-cow-border);
+        box-shadow: var(--key-cow-shadow);
     }
-    &:nth-child(3):nth-last-child(3) {
-        margin-left: calc((100% - 8px)/2);
-        margin-right: calc((100% - 8px)/2);
-    }
+}
+
+[data-length="6"] .key {
+    --key-size: 8px;
 }

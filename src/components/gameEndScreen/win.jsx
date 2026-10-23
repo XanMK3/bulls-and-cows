@@ -10,7 +10,7 @@ const Win = ({ restart, secret }) => {
             <p className='game-result__text'>Congratulations, You win!</p>
             <div className='btn-block'>
                 <button type='button' className='btn-block__button' onClick={() => restart(secret.length)}>
-                    {'Play again'}
+                    Play again
                 </button>
             </div>
         </div>
