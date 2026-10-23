@@ -1,4 +1,4 @@
-import Win from './win';
-import Fail from './fail';
+import Win from './Win';
+import Fail from './Fail';
 
 export { Win, Fail };

@@ -24,7 +24,7 @@
     }
 
     &[data-length="5"] {
-        --ball-size: 38px;
+        --ball-size: 40px;
         --ball-gap: 6px;
         --action-size: 40px;
         --panel-margin-right: 6px;
@@ -32,19 +32,11 @@
     }
 
     &[data-length="6"] {
-        --ball-size: 34px;
-        --ball-gap: 4px;
+        --ball-size: 36px;
+        --ball-gap: 6px;
         --action-size: 36px;
         --panel-margin-right: 6px;
-        padding: 5px 6px;
-
-        @media only screen and (max-width: 360px) {
-            --ball-size: 32px;
-            --ball-gap: 4px;
-            --action-size: 34px;
-            --panel-margin-right: 4px;
-            padding: 4px 4px;
-        }
+        padding: 4px 6px;
     }
 }
 
