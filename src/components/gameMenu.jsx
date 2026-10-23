@@ -17,6 +17,8 @@ const GameMenu = memo(({
     isGameStarted,
     close,
     startNewGame,
+    theme,
+    toggleTheme,
 }) => {
     const [isTutorialOpen, toggleTutorial] = useToggle(false);
 
@@ -55,6 +57,13 @@ const GameMenu = memo(({
                         </MenuItem>
                     )}
                 </MenuGroup>
+                {toggleTheme && (
+                    <MenuGroup>
+                        <MenuItem handler={toggleTheme}>
+                            {theme === 'dark' ? 'Theme: 🌙 Dark' : 'Theme: ☀️ Light'}
+                        </MenuItem>
+                    </MenuGroup>
+                )}
                 <MenuGroup>
                     <MenuItem
                         handler={toggleTutorial}

@@ -2,6 +2,7 @@ import React, {
     memo,
     useCallback,
 } from 'react';
+import cn from 'classnames';
 import Key from 'components/key';
 import Ball from 'components/ballDraggable';
 import { countMatchElements } from 'utils';
@@ -21,9 +22,11 @@ const Board = memo(({
             : {}
     ), [data, secret]);
 
-
     return (
-        <div className='board'>
+        <div
+            className={cn('board', { 'board--active': active })}
+            data-length={data.length}
+        >
             <ul className='guess-panel'>
                 {data.map((kind, i) => (
                     // eslint-disable-next-line react/no-array-index-key
@@ -40,7 +43,13 @@ const Board = memo(({
             </ul>
             {active
                 ? (
-                    <button type='button' className='guess-panel__btn' onClick={onSubmit}>
+                    <button
+                        type='button'
+                        className='guess-panel__btn'
+                        onClick={onSubmit}
+                        aria-label='Submit guess'
+                        title='Submit guess'
+                    >
                         <svg className='svg-icon'><use xlinkHref='assets/sprite.svg#check' /></svg>
                     </button>
                 )

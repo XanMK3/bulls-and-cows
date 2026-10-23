@@ -1,8 +1,8 @@
-$width: 412px;
+$width: 440px;
 $padding: 16px;
-$headerHeight: 40px;
+$headerHeight: 52px;
 
-$mainBgColor: #f5f5f6;
-$mainColor: black;
-$menuBgColor: #606060;
-$menuColor: #fbfbfb;
+$mainBgColor: var(--bg-page);
+$mainColor: var(--text-main);
+$menuBgColor: var(--menu-bg);
+$menuColor: var(--menu-text);

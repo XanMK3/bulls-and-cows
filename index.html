@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Bulls and Cows</title>
@@ -19,9 +20,22 @@
 
     <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('ui-theme');
+                var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+                document.documentElement.setAttribute('data-theme', theme);
+                var meta = document.querySelector('meta[name="theme-color"]');
+                if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b0f19' : '#f8f7f4');
+            } catch (e) { }
+        })();
+    </script>
 </head>
+
 <body>
     <div class="root"></div>
     <script type="module" src="/src/index.jsx"></script>
 </body>
+
 </html>
