@@ -131,8 +131,8 @@ export default defineConfig({
                 ],
             },
             workbox: {
-                globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-                globIgnores: ['service-worker.js'],
+                globPatterns: ['**/*.{js,css,html,ico,svg}'],
+                globIgnores: ['service-worker.js', '**/icons/*.png'],
             },
         }),
     ],
