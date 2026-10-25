@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import cn from 'classnames';
-import { COLORS } from 'const';
 import './style';
 
 const Ball = ({
@@ -17,6 +16,7 @@ const Ball = ({
   <div
     className={cn(
       'ball',
+      `ball-${kind}`,
       typeof kind === 'number' && `ball--color-${kind}`,
       {
         active,
@@ -33,14 +33,7 @@ const Ball = ({
         onChange(index);
       }
     }}
-  >
-    <span
-      className='ball__content'
-      style={{
-        backgroundColor: typeof kind === 'number' ? `var(--ball-${kind}, ${COLORS[kind]})` : undefined,
-      }}
-    />
-  </div>
+  />
 );
 
 export default Ball;

@@ -1,7 +1,6 @@
 import React, {
   useReducer,
 } from 'react';
-import CustomDragLayer from 'components/customDragLayer';
 import Header from 'components/gameHeader';
 import { Win as WinScreen, Fail as FailScreen } from 'components/gameEndScreen';
 import Board from 'components/board';
@@ -36,7 +35,7 @@ const Game = ({
   } = state;
 
   return (
-    <div className='game'>
+    <main className='game'>
       <Header
         status={status}
         attemptsNumber={attemptsNumber}
@@ -45,21 +44,22 @@ const Game = ({
         theme={theme}
         toggleTheme={toggleTheme}
       />
-      {/* eslint-disable-next-line react/no-array-index-key */}
-      {history.map((data, i) => <Board key={i} secret={secret} data={data} />)}
-      {status === GAME_STATUS.PROGRESS && (
-        <ActiveBoard
-          data={activeBoard}
-          tryNumber={history.length}
-          onChange={(index) => dispatch({ type: 'ball:change', payload: { index } })}
-          onSwap={(index1, index2) => dispatch({ type: 'ball:swap', payload: { index1, index2 } })}
-          onSubmit={() => dispatch({ type: 'board:submit' })}
-        />
-      )}
-      {status === GAME_STATUS.WIN && <WinScreen secret={secret} restart={restart} />}
-      {status === GAME_STATUS.FAIL && <FailScreen secret={secret} restart={restart} />}
-      <CustomDragLayer />
-    </div>
+      <div>
+        {/* eslint-disable-next-line react/no-array-index-key */}
+        {history.map((data, i) => <Board key={i} secret={secret} data={data} />)}
+        {status === GAME_STATUS.PROGRESS && (
+          <ActiveBoard
+            data={activeBoard}
+            tryNumber={history.length}
+            onChange={(index) => dispatch({ type: 'ball:change', payload: { index } })}
+            onSwap={(index1, index2) => dispatch({ type: 'ball:swap', payload: { index1, index2 } })}
+            onSubmit={() => dispatch({ type: 'board:submit' })}
+          />
+        )}
+        {status === GAME_STATUS.WIN && <WinScreen secret={secret} restart={restart} />}
+        {status === GAME_STATUS.FAIL && <FailScreen secret={secret} restart={restart} />}
+      </div>
+    </main>
   );
 };
 

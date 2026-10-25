@@ -36,6 +36,11 @@
         border: 1px solid var(--key-cow-border);
         box-shadow: var(--key-cow-shadow);
     }
+
+    &:nth-child(3):nth-last-child(3) {
+        margin-left: calc((100% - 8px)/2);
+        margin-right: calc((100% - 8px)/2);
+    }
 }
 
 [data-length="6"] .key {

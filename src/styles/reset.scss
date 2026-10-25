@@ -7,7 +7,7 @@
 
 html,
 body {
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 body {
@@ -15,6 +15,7 @@ body {
     font-family: system-ui, sans-serif;
     background-color: $mainBgColor;
     color: $mainColor;
+    transition: background-color 0.25s ease;
     /* Disables pull-to-refresh but allows overscroll glow effects. */
     overscroll-behavior-y: contain;
     -webkit-font-smoothing: antialiased;
