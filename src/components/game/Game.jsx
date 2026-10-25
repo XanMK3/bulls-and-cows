@@ -7,6 +7,7 @@ import Board from 'components/board';
 import ActiveBoard from 'components/boardActive';
 import { getRandomArray } from 'utils';
 import { GAME_STATUS } from 'const';
+import { useWakeLock } from 'hooks';
 import reducer from './reducer';
 import './style';
 
@@ -25,6 +26,8 @@ const Game = ({
   theme,
   toggleTheme,
 }) => {
+  useWakeLock();
+
   const [state, dispatch] = useReducer(reducer, secretLength, getInitialState);
   const {
     status,
