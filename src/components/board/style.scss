@@ -75,7 +75,7 @@
 
     &:hover {
         transform: translateY(-2px) scale(1.05);
-        box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45);
+        box-shadow: var(--btn-primary-shadow-hover);
     }
 
     &:active {

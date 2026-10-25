@@ -4,10 +4,12 @@ import React, {
 } from 'react';
 import { DndProvider } from 'react-dnd';
 import TouchBackend from 'react-dnd-touch-backend';
+import CustomDragLayer from 'components/customDragLayer';
 import Game from 'components/game';
 import GameMenu from 'components/gameMenu';
 import { useToggle, useTheme } from 'hooks';
 import { getId } from 'utils';
+import './style';
 
 const dndOptions = { enableMouseEvents: true };
 
@@ -23,29 +25,28 @@ const SceneManager = () => {
   }, []);
 
   return (
-    <DndProvider backend={TouchBackend} options={dndOptions}>
-      <div>
-        <main className='main'>
-          {game && (
-            <Game
-              {...game}
-              restart={startNewGame}
-              toggleMenu={toggleMenu}
-              theme={theme}
-              toggleTheme={toggleTheme}
-            />
-          )}
-        </main>
-        <GameMenu
-          isOpen={isMenuOpen}
-          isGameStarted={game != null}
-          close={toggleMenu}
-          startNewGame={startNewGame}
-          theme={theme}
-          toggleTheme={toggleTheme}
-        />
-      </div>
-    </DndProvider>
+    <div>
+      <DndProvider backend={TouchBackend} options={dndOptions}>
+        {game && (
+          <Game
+            {...game}
+            restart={startNewGame}
+            toggleMenu={toggleMenu}
+            theme={theme}
+            toggleTheme={toggleTheme}
+          />
+        )}
+        <CustomDragLayer />
+      </DndProvider>
+      <GameMenu
+        isOpen={isMenuOpen}
+        isGameStarted={game != null}
+        close={toggleMenu}
+        startNewGame={startNewGame}
+        theme={theme}
+        toggleTheme={toggleTheme}
+      />
+    </div>
   );
 };
 

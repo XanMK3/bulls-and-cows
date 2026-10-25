@@ -1,4 +1,5 @@
-:root, [data-theme="dark"] {
+:root,
+[data-theme="dark"] {
     --bg-page: #0b0f19;
     --bg-gradient: radial-gradient(120% 100% at 50% 0%, #151d30 0%, #0b0f19 80%);
     --bg-surface: rgba(255, 255, 255, 0.04);
@@ -23,6 +24,7 @@
     --btn-primary-hover: linear-gradient(135deg, #7c7ff6 0%, #5e54f0 100%);
     --btn-primary-text: #ffffff;
     --btn-primary-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+    --btn-primary-shadow-hover: 0 6px 18px rgba(79, 70, 229, 0.6);
     --icon-btn-hover-bg: rgba(255, 255, 255, 0.08);
 
     /* Bulls & Cows Pegs */
@@ -34,45 +36,44 @@
     --key-cow-shadow: 0 0 6px rgba(255, 255, 255, 0.25);
     --key-panel-bg: rgba(0, 0, 0, 0.25);
 
-    /* Jewel Neo-Dark Ball Palette (high hue separation) */
-    --ball-0: #f43f5e; /* Rose / Ruby (Hue 348°) */
-    --ball-1: #fbbf24; /* Amber / Gold (Hue 45°) */
-    --ball-2: #22c55e; /* Leaf / Spring Green (Hue 142°, warm green) */
-    --ball-3: #2563eb; /* True Royal Blue (Hue 217°, pure blue, 0 purple tint) */
-    --ball-4: #38bdf8; /* Luminous Sky / Cyan (Hue 199°, high luminance) */
-    --ball-5: #d946ef; /* Vivid Fuchsia / Magenta (Hue 292°, warm magenta-pink) */
-    --ball-6: #f97316; /* Coral / Orange (Hue 25°) */
+    --ball-0: #ff0033;
+    --ball-1: #00e676;
+    --ball-2: #ffe600;
+    --ball-3: #2563eb;
+    --ball-4: #ff6d00;
+    --ball-5: #f032e6;
 
     /* Ball glow intensities */
     --ball-ambient-shadow: rgba(0, 0, 0, 0.4);
 }
 
 [data-theme="light"] {
-    --bg-page: #f8f7f4;
+    --bg-page: #f3f0eb;
     --bg-gradient: linear-gradient(180deg, #ffffff 0%, #f4f2eb 100%);
     --bg-surface: #ffffff;
     --bg-surface-hover: #f1f5f9;
     --bg-surface-active: rgba(99, 102, 241, 0.08);
     --border-subtle: #e2e8f0;
-    --border-active: #6366f1;
+    --border-active: #665d55;
     --border-dashed: rgba(0, 0, 0, 0.15);
     --text-main: #0f172a;
     --text-secondary: #475569;
     --text-muted: #94a3b8;
-    --header-bg: rgba(248, 247, 244, 0.88);
+    --header-bg: #f3f0ebe0;
     --header-border: rgba(0, 0, 0, 0.06);
     --menu-bg: rgba(255, 255, 255, 0.98);
     --menu-text: #0f172a;
     --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
-    --row-bg: #ffffff;
+    --row-bg: #fffdfa;
     --row-border: #e2e8f0;
-    --active-row-bg: #ffffff;
-    --active-row-border: #6366f1;
-    --btn-primary-bg: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
-    --btn-primary-hover: linear-gradient(135deg, #4338ca 0%, #3730a3 100%);
+    --active-row-bg: #fffdfa;
+    --active-row-border: #665d55;
+    --btn-primary-bg: linear-gradient(135deg, #665d55 0%, #524b44 100%);
+    --btn-primary-hover: linear-gradient(135deg, #665d55 0%, #534c45 100%);
     --btn-primary-text: #ffffff;
-    --btn-primary-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
-    --icon-btn-hover-bg: rgba(0, 0, 0, 0.05);
+    --btn-primary-shadow: 0 4px 14px rgba(102, 93, 85, 0.25);
+    --btn-primary-shadow-hover: 0 6px 18px rgba(102, 93, 85, 0.45);
+    --icon-btn-hover-bg: rgba(102, 93, 85, 0.05);
 
     /* Bulls & Cows Pegs */
     --key-bull-bg: radial-gradient(circle at 35% 35%, #334155 0%, #0f172a 75%, #020617 100%);
@@ -83,14 +84,12 @@
     --key-cow-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
     --key-panel-bg: rgba(0, 0, 0, 0.04);
 
-    /* Warm Editorial / Candy Ball Palette (high hue separation) */
-    --ball-0: #e11d48; /* Crimson (Hue 348°) */
-    --ball-1: #d97706; /* Rich Amber (Hue 38°) */
-    --ball-2: #16a34a; /* Leaf Green (Hue 142°, warm green) */
-    --ball-3: #1d4ed8; /* Pure Royal Blue (Hue 217°, cold blue, 0 purple tint) */
-    --ball-4: #0284c7; /* Sky / Cyan (Hue 201°) */
-    --ball-5: #c026d3; /* Rich Fuchsia / Magenta (Hue 295°, warm magenta-pink) */
-    --ball-6: #ea580c; /* Tangerine (Hue 22°) */
+    --ball-0: #c9634e;
+    --ball-1: #d9aa36;
+    --ball-2: #57946b;
+    --ball-3: #3e6ebc;
+    --ball-4: #a14e80;
+    --ball-5: #eae4db;
 
     --ball-ambient-shadow: rgba(0, 0, 0, 0.18);
 }

@@ -1,26 +1,18 @@
-.main {
-    padding: 0 $padding;
-    min-height: 100vh;
-    @media only screen and (max-width: 375px) {
-        padding: 0 10px;
-    }
-    @media only screen and (min-width: $width) {
-        padding: 0 calc(50% - #{$width}/2 + #{$padding});
-    }
-}
-
-.custom-drag-layer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    pointer-events: none;
-    z-index: 1000;
-}
-
 .game {
     padding-top: calc(#{$headerHeight} + 16px);
     padding-bottom: 32px;
+    padding-left: $padding;
+    padding-right: $padding;
+
+    @media only screen and (max-width: 375px) {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    @media only screen and (min-width: $width) {
+        padding-left: calc(50% - #{$width}/2 + #{$padding});
+        padding-right: calc(50% - #{$width}/2 + #{$padding});
+    }
 }
 
 .game-header {
@@ -191,7 +183,7 @@
 
     &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45);
+        box-shadow: var(--btn-primary-shadow-hover);
     }
 
     &:active {

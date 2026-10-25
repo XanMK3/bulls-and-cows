@@ -4,41 +4,117 @@
     width: var(--ball-size, 42px);
     height: var(--ball-size, 42px);
     flex-shrink: 0;
+    border-radius: 50%;
+    vertical-align: top;
+    user-select: none;
+    overflow: hidden;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+[data-theme="light"] {
+
+    // Lighting from above
+    .ball {
+        background:
+            radial-gradient(ellipse 62% 34% at 48% 12%,
+                rgb(255 255 255 / 28%),
+                transparent 85%),
+            radial-gradient(circle at 46% 22%,
+                color-mix(in srgb, var(--ball-color), white 43%) 0%,
+                color-mix(in srgb, var(--ball-color), white 17%) 24%,
+                var(--ball-color) 54%,
+                color-mix(in srgb, var(--ball-color), #1e1b29 29%) 82%,
+                color-mix(in srgb, var(--ball-color), #121622 58%) 100%);
+        box-shadow:
+            inset 2px 4px 8px rgb(255 255 255 / 20%),
+            inset -8px -13px 18px rgb(25 15 13 / 12%),
+            0 1px 1px rgb(0 0 0 / 13%),
+            0 7px 12px -6px rgb(35 25 20 / 28%);
+
+        // Diagonal wood grain
+        &::before {
+            content: "";
+            position: absolute;
+            inset: -10%;
+            border-radius: inherit;
+            pointer-events: none;
+            opacity: .82;
+            mix-blend-mode: multiply;
+
+            background:
+                repeating-radial-gradient(ellipse 78% 58% at 24% 24%,
+                    transparent 0 5px,
+                    rgb(55 30 18 / 15%) 5px 7px,
+                    transparent 7px 14px,
+                    rgb(55 30 18 / 20%) 14px 16px,
+                    transparent 16px 25px),
+                repeating-radial-gradient(ellipse 84% 64% at 24% 24%,
+                    transparent 0 10px,
+                    rgb(255 255 255 / 10%) 10px 11px,
+                    transparent 11px 21px);
+
+            transform: rotate(34deg) scale(1.08);
+        }
+
+        // Surface highlight and shadow
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+
+            background:
+                radial-gradient(ellipse 50% 24% at 48% 12%,
+                    rgb(255 255 255 / 35%),
+                    rgb(255 255 255 / 6%) 60%,
+                    transparent),
+                radial-gradient(ellipse 95% 72% at 50% 118%,
+                    rgb(15 12 10 / 18%),
+                    transparent 67%);
+        }
+    }
+}
+
+[data-theme="dark"] {
+
+    /* High-Fidelity 3D Glossy Sphere Styling */
+    .ball {
+        background: radial-gradient(circle at 35% 30%, var(--ball-color), color-mix(in srgb, var(--ball-color) 65%, black 35%));
+        box-shadow: inset -4px -6px 12px rgba(0, 0, 0, 0.55), inset 2px 2px 5px rgba(255, 255, 255, 0.45), 0 8px 16px rgba(0, 0, 0, 0.25);
+
+        /* Specular Light Reflection */
+        &::before {
+            content: '';
+            position: absolute;
+            top: 5%;
+            left: 15%;
+            width: 70%;
+            height: 40%;
+            border-radius: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 100%);
+            pointer-events: none;
+        }
+    }
+}
+
+.ball {
+    position: relative;
+    display: inline-block;
+    width: var(--ball-size, 42px);
+    height: var(--ball-size, 42px);
+    flex-shrink: 0;
     vertical-align: top;
     user-select: none;
     transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
     -webkit-tap-highlight-color: transparent;
-
-    /* Specular highlight & gloss */
-    &:after {
-        content: "";
-        position: absolute;
-        width: 45%;
-        height: 45%;
-        top: 10%;
-        left: 18%;
-        border-radius: 50%;
-        background: radial-gradient(circle at 50% 50%,
-                rgba(255, 255, 255, 0.85) 0%,
-                rgba(255, 255, 255, 0.35) 40%,
-                rgba(255, 255, 255, 0) 80%);
-        transform: rotate(-25deg);
-        pointer-events: none;
-        z-index: 2;
-    }
 
     &.active {
         cursor: pointer;
 
         &:hover {
             transform: translateY(-2px) scale(1.05);
-
-            .ball__content {
-                box-shadow:
-                    inset 0 2px 4px rgba(255, 255, 255, 0.45),
-                    inset 0 -4px 8px rgba(0, 0, 0, 0.35),
-                    0 6px 14px var(--ball-ambient-shadow);
-            }
         }
 
         &:active {
@@ -58,29 +134,5 @@
 
     &.over:not(.dradding) {
         transform: translateY(-3px) scale(1.1);
-
-        .ball__content {
-            box-shadow:
-                0 0 0 3px var(--border-active),
-                inset 0 2px 4px rgba(255, 255, 255, 0.5),
-                inset 0 -4px 8px rgba(0, 0, 0, 0.35),
-                0 8px 18px var(--ball-ambient-shadow);
-        }
     }
-}
-
-.ball__content {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    border-radius: 50%;
-    background-color: var(--ball-color, #94a3b8);
-    transition: background-color 0.25s ease, box-shadow 0.2s ease;
-    box-shadow:
-        inset 0 2px 4px rgba(255, 255, 255, 0.35),
-        inset 0 -4px 8px rgba(0, 0, 0, 0.35),
-        inset -2px -2px 6px rgba(0, 0, 0, 0.2),
-        0 4px 10px var(--ball-ambient-shadow);
 }
