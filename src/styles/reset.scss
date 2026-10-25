@@ -5,9 +5,9 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-html,
-body {
-    min-height: 100dvh;
+html {
+    /* Disables pull-to-refresh but allows overscroll glow effects. */
+    overscroll-behavior-y: contain;
 }
 
 body {
@@ -16,8 +16,6 @@ body {
     background-color: $mainBgColor;
     color: $mainColor;
     transition: background-color 0.25s ease;
-    /* Disables pull-to-refresh but allows overscroll glow effects. */
-    overscroll-behavior-y: contain;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
