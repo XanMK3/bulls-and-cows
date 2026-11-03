@@ -6,7 +6,7 @@ import fs from 'fs';
 
 function svgSpritePlugin() {
     function getSprite() {
-        const svgDir = path.resolve(__dirname, 'src/assets/svg');
+        const svgDir = path.resolve(import.meta.dirname, 'src/assets/svg');
         if (!fs.existsSync(svgDir)) return '';
 
         const files = fs.readdirSync(svgDir).filter((file) => file.endsWith('.svg'));
@@ -51,12 +51,12 @@ function svgSpritePlugin() {
 function directoryIndexPlugin() {
     const extensions = ['.jsx', '.js', '.scss', '.css', '.json'];
     const aliases = {
-        components: path.resolve(__dirname, 'src/components'),
-        const: path.resolve(__dirname, 'src/const'),
-        hooks: path.resolve(__dirname, 'src/hooks'),
-        styles: path.resolve(__dirname, 'src/styles'),
-        utils: path.resolve(__dirname, 'src/utils'),
-        assets: path.resolve(__dirname, 'src/assets'),
+        components: path.resolve(import.meta.dirname, 'src/components'),
+        const: path.resolve(import.meta.dirname, 'src/const'),
+        hooks: path.resolve(import.meta.dirname, 'src/hooks'),
+        styles: path.resolve(import.meta.dirname, 'src/styles'),
+        utils: path.resolve(import.meta.dirname, 'src/utils'),
+        assets: path.resolve(import.meta.dirname, 'src/assets'),
     };
 
     function tryResolve(target) {
@@ -138,25 +138,27 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            components: path.resolve(__dirname, 'src/components'),
-            const: path.resolve(__dirname, 'src/const'),
-            hooks: path.resolve(__dirname, 'src/hooks'),
-            styles: path.resolve(__dirname, 'src/styles'),
-            utils: path.resolve(__dirname, 'src/utils'),
-            assets: path.resolve(__dirname, 'src/assets'),
+            components: path.resolve(import.meta.dirname, 'src/components'),
+            const: path.resolve(import.meta.dirname, 'src/const'),
+            hooks: path.resolve(import.meta.dirname, 'src/hooks'),
+            styles: path.resolve(import.meta.dirname, 'src/styles'),
+            utils: path.resolve(import.meta.dirname, 'src/utils'),
+            assets: path.resolve(import.meta.dirname, 'src/assets'),
         },
         extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.scss', '.css'],
     },
     css: {
         preprocessorOptions: {
             scss: {
-                api: 'modern-compiler',
-                silenceDeprecations: ['legacy-js-api', 'import'],
                 additionalData: (content, filepath) => {
-                    if (filepath.replace(/\\/g, '/').endsWith('src/styles/variables.scss')) {
+                    const norm = filepath.replace(/\\/g, '/');
+                    if (norm.endsWith('src/styles/variables.scss') || norm.endsWith('src/styles/themes.scss')) {
                         return content;
                     }
-                    return `@import "${path.resolve(__dirname, 'src/styles/variables.scss').replace(/\\/g, '/')}";\n${content}`;
+                    const vars = import.meta.dirname
+                        ? `${import.meta.dirname}/src/styles/variables.scss`.replace(/\\/g, '/')
+                        : path.resolve(import.meta.dirname, 'src/styles/variables.scss').replace(/\\/g, '/');
+                    return `@use "${vars}" as *;\n${content}`;
                 },
             },
         },
