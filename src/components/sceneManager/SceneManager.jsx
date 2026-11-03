@@ -3,7 +3,7 @@ import React, {
   useCallback,
 } from 'react';
 import { DndProvider } from 'react-dnd';
-import TouchBackend from 'react-dnd-touch-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
 import CustomDragLayer from 'components/customDragLayer';
 import Game from 'components/game';
 import GameMenu from 'components/gameMenu';
@@ -17,6 +17,8 @@ const SceneManager = () => {
   const { theme, toggleTheme } = useTheme();
   const [isMenuOpen, toggleMenu] = useToggle(true);
   const [game, setGame] = useState(null);
+  const { key, secretLength } = game ?? {};
+
   const startNewGame = useCallback((max) => {
     setGame({
       key: getId(),
@@ -29,7 +31,8 @@ const SceneManager = () => {
       <DndProvider backend={TouchBackend} options={dndOptions}>
         {game && (
           <Game
-            {...game}
+            key={key}
+            secretLength={secretLength}
             restart={startNewGame}
             toggleMenu={toggleMenu}
             theme={theme}

@@ -3,12 +3,10 @@ import Board from 'components/board';
 import { useFadeIn } from 'hooks';
 
 const ActiveBoard = memo((props) => {
-  const ref = useFadeIn([props.tryNumber]);
+  const ref = useFadeIn(props.tryNumber);
 
   return (
-    <div ref={ref}>
-      <Board {...props} active />
-    </div>
+    <Board ref={ref} {...props} active />
   );
 });
 

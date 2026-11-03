@@ -6,6 +6,7 @@ import { countMatchElements } from 'utils';
 import './style';
 
 const Board = memo(({
+  ref,
   data,
   secret,
   active,
@@ -17,6 +18,7 @@ const Board = memo(({
 
   return (
     <div
+      ref={ref}
       className={cn('board', { 'board--active': active })}
       data-length={data.length}
     >

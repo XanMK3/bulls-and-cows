@@ -1,39 +1,37 @@
 import { useRef, useLayoutEffect } from 'react';
-import { checkSmoothScrollSupport } from 'utils';
 import './fadeIn.scss';
 
-const isSmoothScrollSupported = checkSmoothScrollSupport();
-const FADE_TIMEOUT = 400;
+const ANIMATION_CLASS_NAME = 'fade-in-animation';
 
-const fadeIn = (element) => {
-  element.classList.add('fade-in-animation');
-  return setTimeout(() => {
-    element.classList.remove('fade-in-animation');
-  }, FADE_TIMEOUT);
-};
-
-const scrollIntoView = (element) => {
-  if (!isSmoothScrollSupported) return;
-  element.scrollIntoView({ behavior: 'smooth' });
-};
-
-const useFadeIn = (deps = []) => {
-  const elementRef = useRef();
-  const timeoutRef = useRef();
+const useFadeIn = (trigger) => {
+  const ref = useRef(null);
 
   useLayoutEffect(() => {
-    if (elementRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = fadeIn(elementRef.current);
-      scrollIntoView(elementRef.current);
-    }
+    const element = ref.current;
+    if (!element) return;
+
+    const handleAnimationEnd = (event) => {
+      if (event.target === element) {
+        element.classList.remove(ANIMATION_CLASS_NAME);
+      }
+    };
+
+    // Restart the animation when the trigger changes
+    element.classList.remove(ANIMATION_CLASS_NAME);
+    void element.offsetWidth;
+    element.classList.add(ANIMATION_CLASS_NAME);
+
+    element.addEventListener('animationend', handleAnimationEnd);
+
+    element.scrollIntoView({ behavior: 'smooth' });
 
     return () => {
-      clearTimeout(timeoutRef.current);
+      element.removeEventListener('animationend', handleAnimationEnd);
+      element.classList.remove(ANIMATION_CLASS_NAME);
     };
-  }, deps);
+  }, [trigger]);
 
-  return elementRef;
+  return ref;
 };
 
 export default useFadeIn;

@@ -26,7 +26,8 @@ const DraggableBall = ({
   onChange,
 }) => {
   const [{ isDragging }, dragSource] = useDrag({
-    item: { type: ITEM_TYPES.BALL, kind, index },
+    type: ITEM_TYPES.BALL,
+    item: { kind, index },
     collect: collectSource,
   });
 
