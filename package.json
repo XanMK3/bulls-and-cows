@@ -16,7 +16,7 @@
 	},
 	"devDependencies": {
 		"@vitejs/plugin-react": "^6.2.1",
-		"eslint": "^10.14.0",
+		"eslint": "^6.4.0",
 		"eslint-config-airbnb": "^18.0.1",
 		"eslint-import-resolver-alias": "^1.1.2",
 		"eslint-plugin-import": "^2.18.2",
