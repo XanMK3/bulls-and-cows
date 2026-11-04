@@ -27,7 +27,7 @@ const GameHeader = ({
           aria-label='Toggle theme'
         >
           <svg className='svg-icon'>
-            <use xlinkHref={theme === 'dark' ? 'assets/sprite.svg#sun' : 'assets/sprite.svg#moon'} />
+            <use href={theme === 'dark' ? './assets/sprite.svg#sun' : './assets/sprite.svg#moon'} />
           </svg>
         </button>
       )}
@@ -39,7 +39,7 @@ const GameHeader = ({
         aria-label='Open menu'
       >
         <svg className='svg-icon'>
-          <use xlinkHref='assets/sprite.svg#menu' />
+          <use href='./assets/sprite.svg#menu' />
         </svg>
       </button>
     </div>

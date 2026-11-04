@@ -45,7 +45,7 @@ const Board = memo(({
             aria-label='Submit guess'
             title='Submit guess'
           >
-            <svg className='svg-icon'><use xlinkHref='assets/sprite.svg#check' /></svg>
+            <svg className='svg-icon'><use href='./assets/sprite.svg#check' /></svg>
           </button>
         )
         : secret
