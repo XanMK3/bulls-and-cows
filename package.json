@@ -24,7 +24,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "gh-pages": "^2.0.1",
+    "gh-pages": "^5.0.0",
     "sass": "^1.107.1",
     "vite": "^8.3.5",
     "vite-plugin-pwa": "^2.0.0"
