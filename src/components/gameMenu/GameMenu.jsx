@@ -23,7 +23,10 @@ const GameMenu = memo(({
 
   return (
     <div>
-      <Menu isOpen={isOpen} close={close}>
+      <Menu
+        isOpen={isOpen}
+        close={isGameStarted ? close : undefined}
+      >
         {isGameStarted && (
           <MenuGroup>
             <MenuItem handler={close}>

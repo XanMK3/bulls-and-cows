@@ -4,6 +4,17 @@ import { GAME_STATUS } from 'const';
 
 const reducer = (state, { type, payload }) => {
   switch (type) {
+    case 'game:start': {
+      const { id, secret } = payload;
+      return {
+        id,
+        status: GAME_STATUS.PROGRESS,
+        secret: [...secret],
+        history: [],
+        activeBoard: Array.from({ length: secret.length }, (v, i) => i),
+        attemptsNumber: (2 * secret.length - 4) * 2,
+      };
+    }
     case 'ball:change': {
       const { index } = payload;
 
@@ -39,7 +50,7 @@ const reducer = (state, { type, payload }) => {
         if (isEqual(activeBoard, secret)) {
           draft.status = GAME_STATUS.WIN;
         }
-        else if (history.length + 1 === attemptsNumber) {
+        else if (history.length >= attemptsNumber) {
           draft.status = GAME_STATUS.FAIL;
         }
       });

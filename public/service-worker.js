@@ -1,9 +1,26 @@
-// Kill-switch: unregisters the old CRA service worker and clears all caches.
-// Safe to remove once all existing users have migrated.
-self.addEventListener('install', () => self.skipWaiting());
-self.addEventListener('activate', async () => {
-  await Promise.all((await caches.keys()).map(k => caches.delete(k)));
-  await self.registration.unregister();
-  const clients = await self.clients.matchAll({ type: 'window' });
-  clients.forEach(c => { try { c.navigate(c.url); } catch (_) {} });
+// Kill-switch for the old CRA worker. Preserve caches belonging to other apps.
+self.addEventListener('install', (event) => {
+  event.waitUntil(self.skipWaiting());
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil((async () => {
+    const cacheNames = await caches.keys();
+    const scope = self.registration.scope;
+    await Promise.all(cacheNames
+      .filter((name) => name.startsWith('workbox-') && name.endsWith(scope))
+      .map((name) => caches.delete(name)));
+    await self.registration.unregister();
+    const clients = await self.clients.matchAll({ type: 'window' });
+    await Promise.all(clients.map(async (client) => {
+      try {
+        await client.navigate(client.url);
+      }
+      catch (error) {
+        console.warn('Could not reload a migrated client:', error);
+      }
+    }));
+  })().catch((error) => {
+    console.error('Service worker migration failed:', error);
+  }));
 });

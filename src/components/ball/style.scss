@@ -1,4 +1,6 @@
 .ball {
+    padding: 0;
+    border: 0;
     position: relative;
     display: inline-block;
     width: var(--ball-size, 42px);
@@ -10,6 +12,32 @@
     overflow: hidden;
     transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
     -webkit-tap-highlight-color: transparent;
+
+    &.active {
+        cursor: pointer;
+
+        &:hover {
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        &:active {
+            transform: translateY(1px) scale(0.97);
+        }
+    }
+
+    &.preview {
+        opacity: 0.9;
+        transform: scale(1.1);
+    }
+
+    &.dradding {
+        opacity: 0.35;
+        transform: scale(0.92);
+    }
+
+    &.over:not(.dradding) {
+        transform: translateY(-3px) scale(1.1);
+    }
 }
 
 [data-theme="light"] {
@@ -96,43 +124,5 @@
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 100%);
             pointer-events: none;
         }
-    }
-}
-
-.ball {
-    position: relative;
-    display: inline-block;
-    width: var(--ball-size, 42px);
-    height: var(--ball-size, 42px);
-    flex-shrink: 0;
-    vertical-align: top;
-    user-select: none;
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
-    -webkit-tap-highlight-color: transparent;
-
-    &.active {
-        cursor: pointer;
-
-        &:hover {
-            transform: translateY(-2px) scale(1.05);
-        }
-
-        &:active {
-            transform: translateY(1px) scale(0.97);
-        }
-    }
-
-    &.preview {
-        opacity: 0.9;
-        transform: scale(1.1);
-    }
-
-    &.dradding {
-        opacity: 0.35;
-        transform: scale(0.92);
-    }
-
-    &.over:not(.dradding) {
-        transform: translateY(-3px) scale(1.1);
     }
 }

@@ -54,7 +54,20 @@ button {
     background-color: transparent;
     color: currentColor;
     cursor: pointer;
-    outline: none;
+
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible {
+    outline: 2px solid var(--text-secondary);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
 }
