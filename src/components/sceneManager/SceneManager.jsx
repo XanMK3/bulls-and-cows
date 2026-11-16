@@ -1,5 +1,5 @@
 import React, {
-  useState,
+  useReducer,
   useCallback,
 } from 'react';
 import { DndProvider } from 'react-dnd';
@@ -8,7 +8,8 @@ import CustomDragLayer from 'components/customDragLayer';
 import Game from 'components/game';
 import GameMenu from 'components/gameMenu';
 import { useToggle, useTheme } from 'hooks';
-import { getId } from 'utils';
+import { getId, getRandomArray } from 'utils';
+import reducer from 'components/game/reducer';
 import './style';
 
 const dndOptions = { enableMouseEvents: true };
@@ -16,13 +17,12 @@ const dndOptions = { enableMouseEvents: true };
 const SceneManager = () => {
   const { theme, toggleTheme } = useTheme();
   const [isMenuOpen, toggleMenu] = useToggle(true);
-  const [game, setGame] = useState(null);
-  const { key, secretLength } = game ?? {};
+  const [game, dispatch] = useReducer(reducer, null);
 
   const startNewGame = useCallback((max) => {
-    setGame({
-      key: getId(),
-      secretLength: max,
+    dispatch({
+      type: 'game:start',
+      payload: { id: getId(), secret: getRandomArray(max) },
     });
   }, []);
 
@@ -31,8 +31,8 @@ const SceneManager = () => {
       <DndProvider backend={TouchBackend} options={dndOptions}>
         {game && (
           <Game
-            key={key}
-            secretLength={secretLength}
+            state={game}
+            dispatch={dispatch}
             restart={startNewGame}
             toggleMenu={toggleMenu}
             theme={theme}

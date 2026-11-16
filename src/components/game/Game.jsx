@@ -1,26 +1,15 @@
-import React, {
-  useReducer,
-} from 'react';
+import React from 'react';
 import Header from 'components/gameHeader';
 import { Win as WinScreen, Fail as FailScreen } from 'components/gameEndScreen';
 import Board from 'components/board';
 import ActiveBoard from 'components/boardActive';
-import { getRandomArray } from 'utils';
 import { GAME_STATUS } from 'const';
 import { useWakeLock } from 'hooks';
-import reducer from './reducer';
 import './style';
 
-const getInitialState = (length) => ({
-  status: GAME_STATUS.PROGRESS,
-  secret: getRandomArray(length),
-  history: [],
-  activeBoard: Array.from({ length }).map((v, i) => i),
-  attemptsNumber: (2 * length - 4) * 2,
-});
-
 const Game = ({
-  secretLength,
+  state,
+  dispatch,
   toggleMenu,
   restart,
   theme,
@@ -28,7 +17,6 @@ const Game = ({
 }) => {
   useWakeLock();
 
-  const [state, dispatch] = useReducer(reducer, secretLength, getInitialState);
   const {
     status,
     secret,
@@ -47,7 +35,7 @@ const Game = ({
         theme={theme}
         toggleTheme={toggleTheme}
       />
-      <div>
+      <div key={state.id}>
         {/* eslint-disable-next-line react/no-array-index-key */}
         {history.map((data, i) => <Board key={i} secret={secret} data={data} />)}
         {status === GAME_STATUS.PROGRESS && (

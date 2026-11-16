@@ -8,7 +8,7 @@ const useFadeIn = (trigger) => {
 
   useLayoutEffect(() => {
     const element = ref.current;
-    if (!element) return;
+    if (!element) return undefined;
 
     const handleAnimationEnd = (event) => {
       if (event.target === element) {
@@ -18,12 +18,14 @@ const useFadeIn = (trigger) => {
 
     // Restart the animation when the trigger changes
     element.classList.remove(ANIMATION_CLASS_NAME);
-    void element.offsetWidth;
+    // Reading layout commits removal before restarting the animation.
+    element.getBoundingClientRect();
     element.classList.add(ANIMATION_CLASS_NAME);
 
     element.addEventListener('animationend', handleAnimationEnd);
 
-    element.scrollIntoView({ behavior: 'smooth' });
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    element.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth' });
 
     return () => {
       element.removeEventListener('animationend', handleAnimationEnd);

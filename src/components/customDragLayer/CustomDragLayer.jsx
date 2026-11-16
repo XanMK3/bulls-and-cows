@@ -32,7 +32,7 @@ const CustomDragLayer = () => {
     didDrop,
   } = useDragLayer(collect);
 
-  if (!isDragging || didDrop) return null;
+  if (!isDragging || didDrop || !currentOffset) return null;
 
   return (
     <div className='custom-drag-layer'>

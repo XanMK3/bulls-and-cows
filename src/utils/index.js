@@ -15,7 +15,7 @@ export function getRandomInt(...args) {
 }
 
 export function getRandomArray(length) {
-  return Array.from({ length }).map(() => getRandomInt(length - 1));
+  return Array.from({ length }).map(() => getRandomInt(length));
 }
 
 export function isEqual(a1, a2) {
@@ -25,8 +25,7 @@ export function isEqual(a1, a2) {
 export function countMatchElements(array, target) {
   const exactMatch = target.reduce((sum, v, i) => (v === array[i] ? ++sum : sum), 0);
 
-  const sortedTarget = [...target]
-    .sort((a, b) => a > b)
+  const targetCounts = target
     .reduce((obj, v) => {
       if (obj[v] > 0) {
         obj[v]++;
@@ -38,8 +37,7 @@ export function countMatchElements(array, target) {
       return obj;
     }, {});
 
-  const sortedArray = [...array]
-    .sort((a, b) => a > b)
+  const arrayCounts = array
     .reduce((obj, v) => {
       if (obj[v] > 0) {
         obj[v]++;
@@ -52,9 +50,9 @@ export function countMatchElements(array, target) {
     }, {});
 
   const looseMatch = Object
-    .keys(sortedTarget)
+    .keys(targetCounts)
     .reduce(
-      (matchNumber, key) => matchNumber + Math.min(sortedTarget[key], sortedArray[key] || 0),
+      (matchNumber, key) => matchNumber + Math.min(targetCounts[key], arrayCounts[key] ?? 0),
       0,
     ) - exactMatch;
 

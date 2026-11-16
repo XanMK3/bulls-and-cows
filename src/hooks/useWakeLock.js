@@ -32,6 +32,11 @@ const useWakeLock = (enabled = true) => {
           wakeLock = lock;
         }
       }
+      catch (error) {
+        // Wake locks are optional and can be denied by browser policy or battery state.
+        // eslint-disable-next-line no-console
+        console.warn('Could not acquire screen wake lock:', error);
+      }
       finally {
         pending = false;
       }
